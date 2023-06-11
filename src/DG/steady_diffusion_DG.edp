@@ -1,0 +1,131 @@
+// Problem (P):
+// -\Delta u = f   en \Omega,
+// u = 0   sobre \partial\Omega
+//
+// We take:
+//   * \Omega= unit square,
+//   * Then u(x,y) = x(x-1)y(y-1)  is an exact solution of
+//     problem (P) with f(x,y) = 2y(y-1) + 2x(x-1)
+
+//
+// Global data
+//
+verbosity=1; // Do not let FreeFem++ show verbose info
+
+// Exact solution
+func uExac = -x*(x-1) * y*(y-1);
+func f = 2*y*(y-1) + 2*x*(x-1);
+
+// Errors
+real errL2SIP, errL2SIPold, errSIP, errSIPold;
+bool computeOrder=false; // Do not compute orders at first iteration
+bool saveErrors=true;
+ofstream fErrorL2SIP("erroresL2SIP_P2dc.txt");
+ofstream fErrorSIP("erroresSIP_P2dc.txt");
+
+// Numerical approximation parameters
+real Sigma = 10;
+
+// For plotting
+load "iovtk";
+int [int] vtkOrder = [1];
+string vtkBaseFile = "output_steady_diffusion";
+real [int] viso=[-0.062,-0.0584,-0.0548,-0.0512,-0.0476,-0.044,-0.0404,-0.0368,-0.0332,-0.0296,-0.026,-0.0224,-0.0188,-0.0152,-0.0116,-0.008,-0.0044,-0.0008,0.0028,0.0064,0.01];
+
+// Macros..........................................................................
+macro grad(u) [dx(u), dy(u) ] // EOM
+  ; // for emacs
+macro dot(u,v) ( u[0]*v[0] + u[1]*v[1] ) // EOM
+  ; // for emacs
+macro dotN(u) dot(u, [N.x, N.y]) // EOM
+  ; // for emacs
+macro pos(u) (0.5*(abs(u)+u)) // Postivie part
+  ; // for emacs
+macro neg(u) (0.5*(abs(u)-u)) // Negative part
+  ; // for emacs
+macro intInteriorEdges(expr) ( intalledges(Th)( (expr) * (nTonEdge-1)/nTonEdge) ) // EOM
+  ; // for emacs
+macro intAllEdges(expr) ( intalledges(Th)( (expr) * 1/nTonEdge) ) // EOM
+  ; // for emacs
+//................................................................................
+
+
+//
+// Actual function for solving problem
+//
+
+func int solvePDE( int nx ) {
+
+  // Solve PDE in a mesh discretized by nx boundary intervals
+
+  // Mesh and finite element spaces
+  border b1(t=0,1){ x=t; y=0;};
+  border b2(t=0,1){ x=1; y=t;};
+  border b3(t=1,0){ x=t; y=1;};
+  border b4(t=1,0){ x=0; y=t;};
+  mesh Th = buildmesh(b1(nx) + b2(nx) + b3(nx) + b4(nx));
+
+  fespace Uh(Th, P2dc);
+  Uh u, ub; // Unknown and test function
+
+  // Plot exact solution...
+  Uh uEX;
+  uEX = uExac;
+  //plot(uEX, fill=1, wait=1, value=1, dim=3, ShowAxes = 0, viso=viso,
+    //   cmm="Exact solution");
+
+  // ------------------------------------------------------------------------------------
+  // Symmetric interior penalty approximation
+  // ====================================================================================
+  problem DiffusionSIP(u,ub)=
+    int2d(Th)( dot(grad(u), grad(ub)) ) - intAllEdges( mean(dotN(grad(u))) * (-jump(ub)) // Diffusion term
+	                                           + mean(dotN(grad(ub))) * (-jump(u)) ) // Symmetry term
+    + intAllEdges( Sigma / lenEdge * jump(u) * jump(ub) ) //
+    - int2d(Th)( f(x,y) * ub );
+  // ------------------------------------------------------------------------------------
+
+  // Solve problem with symmetric interior penalty
+  //-------------------------------------------------
+  DiffusionSIP;
+  //plot(u, fill=1, wait=1, value=1, dim=3, ShowAxes = 0, viso=viso,
+  //     cmm="Approximate solution SIP");
+  ub = u - uExac;
+  real errL2SIP = sqrt(int2d(Th)(ub*ub));
+  cout << "errL2_SIP  = " << errL2SIP << endl;
+  real errSIP = sqrt( int2d(Th)( dot(grad(ub), grad(ub)) ) +  intAllEdges(nx * int2d(Th)(jump(ub) * jump(ub)) ) );
+  cout << "errSIP = " << errSIP << endl;
+
+  if(saveErrors){
+  fErrorL2SIP << errL2SIP << endl;
+  fErrorSIP  << errSIP << endl;
+  }
+
+  Uh uCF;
+  uCF = u; // Save for future save to VTK
+
+  if(computeOrder) {
+    real orderL2SIP = log(errL2SIPold/errL2SIP)/log(2.); // log_2( e_h / e_(h/2) )
+    cout << "OrderL2_SIP  = " << orderL2SIP << endl;
+    real orderSIP = log(errSIPold/errSIP)/log(2.);
+    cout << "Order_SIP  = " << orderSIP << endl;
+  }
+  else computeOrder=true; // Compute orders from next iteration
+  errL2SIPold = errL2SIP;
+  errSIPold = errSIP;
+
+  // Save to vtk for high quality plotting
+  //--------------------------------------
+  //string vtkFileName = vtkBaseFile + "_n=" + nx + ".vtk";
+  //savevtk(vtkFileName, Th, uEX, uCF, u, dataname="u_Exact, u_CF, u_UPW", order=vtkOrder);
+
+}
+
+// Main program
+int maxExp=5;
+for (int i=2; i<maxExp+1; i++) {
+  int n=2^i;
+  cout << "------------------------------------------------------" << endl;
+  cout << "Solving with_ n=" << n << endl;
+  cout << "------------------------------------------------------" << endl;
+  solvePDE(n);
+ }

@@ -1,2 +1,2 @@
-# UNICA_2023
-Slides for a seminar given at Università degli Studi di Cagliari on June 20.
+# CANA_2023
+Presentation for CANA 2023 conference.

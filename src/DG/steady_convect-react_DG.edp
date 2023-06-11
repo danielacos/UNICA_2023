@@ -1,0 +1,183 @@
+// Problem (P):
+// b \cdot \grad u + \mu \cdot u = f   en \Omega,
+// u = 0   sobre \partial\Omega^- = \{ x \in \partial\Omega, b(x)\cdot n(x) <0 \}
+//
+// We take:
+//   * \Omega= unit circle,
+//   * b(x1,x2) = [x2, -x1], then \Omega^- = empty
+//   * mu = 2A, A=10, x0=0.3, y0=0.3 (e.g.)
+//   * Then u(x,y) = exp( -A*( (x-x0)^2 + (y-y0)^2 ) )  is an exact solution of
+//     problem (P) with mu = 2*A and f(x,y) = -2*A(x*y0 - x0*y - 1)*u
+
+//
+// Global data
+//
+verbosity=1; // Do not let FreeFem++ show verbose info
+
+// Exact solution
+real A=10, x0=0.3, y0=0.3;
+real mu=2*A;
+func uExac = exp( -A*( (x-x0)^2 + (y-y0)^2 ) );
+func f = -2*A*(x*y0 - x0*y - 1)*uExac(x,y);
+
+// Errors
+real errL2CF, errL2CFold, errCf, errCFold, errL2UPW, errL2UPWold, errUPW, errUPWold;
+bool computeOrder=false; // Do not compute orders at first iteration
+bool saveErrors=true;
+ofstream fErrorL2CF("erroresL2CF.txt");
+ofstream fErrorCF("erroresCF.txt");
+ofstream fErrorL2UPW("erroresL2UPW.txt");
+ofstream fErrorUPW("erroresUPW.txt");
+
+// Numerical approximation parameters
+real eta = 1;
+real normaLinfgradb = 1;
+
+// For plotting
+load "iovtk";
+int [int] vtkOrder = [1];
+string vtkBaseFile = "output_steady_convect_react";
+real [int] viso=[-0.1,0,0.5,0.1,0.5,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.9,1];
+
+// Macros..........................................................................
+macro grad(u) [dx(u), dy(u) ] // EOM
+  ; // for emacs
+macro dot(u,v) ( u[0]*v[0] + u[1]*v[1] ) // EOM
+  ; // for emacs
+macro dotN(u) dot(u, [N.x, N.y]) // EOM
+  ; // for emacs
+macro pos(u) (0.5*(abs(u)+u)) // Postivie part
+  ; // for emacs
+macro neg(u) (0.5*(abs(u)-u)) // Negative part
+  ; // for emacs
+macro intInteriorEdges(expr) ( intalledges(Th)( (expr) * (nTonEdge-1)/nTonEdge) ) // EOM
+  ; // for emacs
+//................................................................................
+
+
+//
+// Actual function for solving problem
+//
+
+func int solvePDE( int nx ) {
+
+  // Solve PDE in a mesh discretized by nx boundary intervals
+
+  // Mesh and finite element spaces
+  border Gamma(t=0, 2*pi) { x=cos(t);  y=sin(t); };
+  mesh Th = buildmesh(Gamma(nx));
+
+  fespace Uh(Th, P1dc);
+  Uh u, ub; // Unknown and test function
+  Uh b1 = y, b2 = -x;
+  macro b() [b1, b2] // EOM
+    ; // emacs
+
+  // Plot exact solution...
+  Uh uEX;
+  uEX = uExac;
+  plot(uEX, fill=1, wait=1, value=1, dim=3, ShowAxes = 0, viso=viso,
+       cmm="Exact solution");
+
+  // ------------------------------------------------------------------------------------
+  // Centered fluxes approximation
+  // ====================================================================================
+  problem ConvectReactCF(u,ub)=
+    int2d(Th)( dot(b, grad(u)) * ub // Convection term
+	       + mu * u*ub // Reaction term
+	       )
+    //  - int1d(Th,C)(neg(dotN(b))*u*ub)  // unused because cc=0 on d(Omega)^-
+    - intInteriorEdges(dotN(b) * (-jump(u)) * mean(ub) )
+    - int2d(Th)( f(x,y)*ub );
+  // ------------------------------------------------------------------------------------
+
+  // ------------------------------------------------------------------------------------
+  // Upwind fluxes approximation
+  // ====================================================================================
+  problem ConvectReactUPW(u,ub)=
+    int2d(Th)( dot(b, grad(u)) * ub // Convection term
+	       + mu * u*ub // Reaction term
+	       )
+    //  - int1d(Th,C)(neg(dotN(b))*u*ub)  // unused because cc=0 on d(Omega)^-
+    - intInteriorEdges(dotN(b) * (-jump(u)) * mean(ub) )
+    + intInteriorEdges(eta/2 * abs(dotN(b)) * jump(u)*jump(ub) )
+    - int2d(Th)( f(x,y)*ub );
+  // ------------------------------------------------------------------------------------
+
+  // // Problem taken from FreeFem++ doc
+  // macro n()(N.x*b1+N.y*b2) //
+  // problem  Adual(u,ub) = int2d(Th)((mu*u+(b1*dx(u)+b2*dy(u)))*ub)
+  //   + intalledges(Th)((1-nTonEdge)*ub*(0.5*abs(n)-n/2)*jump(u))
+  // //  - int1d(Th,C)((n(u)<0)*abs(n(u))*cc*w)  // unused because cc=0 on d(Omega)^-
+  //   - int2d(Th)(f*ub);
+
+  // Solve problem with centered fluxes
+  //-----------------------------------
+  ConvectReactCF;
+  plot(u, fill=1, wait=1, value=1, dim=3, ShowAxes = 0, viso=viso,
+       cmm="Approximate solution CF");
+  ub = u - uExac;
+  real errL2CF = sqrt(int2d(Th)(ub*ub));
+  cout << "errL2_CF  = " << errL2CF << endl;
+  real errCF = sqrt(max(2*A,normaLinfgradb) * errL2CF^2 + 0.5 * int1d(Th,Gamma)(abs(dotN(b)) * ub^2));
+  cout << "errCF = " << errCF << endl;
+
+  if(saveErrors){
+  fErrorL2CF << errL2CF << endl;
+  fErrorCF  << errCF << endl;
+  }
+
+  Uh uCF;
+  uCF = u; // Save for future save to VTK
+
+  if(computeOrder) {
+    real orderL2CF = log(errL2CFold/errL2CF)/log(2.); // log_2( e_h / e_(h/2) )
+    cout << "OrderL2_CF  = " << orderL2CF << endl;
+    real orderCF = log(errCFold/errCF)/log(2.);
+    cout << "Order_CF  = " << orderCF << endl;
+  }
+  errL2CFold = errL2CF;
+  errCFold = errCF;
+
+  // Solve problem with upwind fluxes
+  //-----------------------------------
+  ConvectReactUPW;
+  plot(u, fill=1, wait=1, value=1, dim=3, ShowAxes = 0, viso=viso,
+      cmm="Approximate solution UPW", ps="PruebaP1dc.png");
+  ub = u - uExac;
+  real errL2UPW = sqrt(int2d(Th)(ub*ub));
+  cout << "errL2_UPW = " << errL2UPW << endl;
+  real errUPW = sqrt(max(2*A,normaLinfgradb) * int2d(Th)(ub*ub) + 0.5 * int1d(Th,Gamma)(abs(dotN(b)) * ub^2) + eta/2 * intInteriorEdges(abs(dotN(b))*(-jump(ub))^2));
+  cout << "errUPW = " << errUPW << endl;
+
+  if(saveErrors){
+  fErrorL2UPW << errL2UPW << endl;
+  fErrorUPW << errUPW << endl;
+  }
+
+  if(computeOrder) {
+    real orderL2UPW = log(errL2UPWold/errL2UPW)/log(2.); // log_2( e_h / e_(h/2) )
+    cout << "OrderL2_UPW = " << orderL2UPW << endl;
+    real orderUPW = log(errUPWold/errUPW)/log(2.);
+    cout << "Order_UPW = " << orderUPW << endl;
+  }
+  else computeOrder = true; // Compute orders from next iteration
+  errL2UPWold = errL2UPW;
+  errUPWold = errUPW;
+
+  // Save to vtk for high quality plotting
+  //--------------------------------------
+  //string vtkFileName = vtkBaseFile + "_n=" + nx + ".vtk";
+  //savevtk(vtkFileName, Th, uEX, uCF, u, dataname="u_Exact, u_CF, u_UPW", order=vtkOrder);
+
+}
+
+// Main program
+int maxExp=9;
+for (int i=4; i<maxExp+1; i++) {
+  int n=2^i;
+  cout << "------------------------------------------------------" << endl;
+  cout << "Solving with_ n=" << n << endl;
+  cout << "------------------------------------------------------" << endl;
+  solvePDE(n);
+ }

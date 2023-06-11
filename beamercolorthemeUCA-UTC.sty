@@ -1,0 +1,115 @@
+% Copyright 2007 by Marco Barisione
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+
+\mode<presentation>
+
+\setcounter{tocdepth}{1}
+\setbeamercovered{transparent} 
+
+%----- COLORS -----%
+
+\definecolor{PHDredA}{RGB}{255, 49, 0}
+\definecolor{PHDredB}{RGB}{243,0,33}
+\definecolor{PHDredC}{RGB}{166, 32, 0}
+\definecolor{PHDred}{RGB}{243,0,33}
+\definecolor{PHDblue}{RGB}{4, 55, 108}
+\definecolor{PHDblueA}{RGB}{239,246,247}
+\definecolor{PHDblueB}{RGB}{65,136,211}
+\definecolor{PHDblueC}{RGB}{20, 85, 116}
+\definecolor{PHDblue}{RGB}{20, 85, 116}
+\definecolor{PHDgreen}{RGB}{119, 175, 0}
+\definecolor{PHDyellow}{RGB}{255, 204, 0}
+\definecolor{PHDgreenA}{RGB}{52,216,0}
+\definecolor{PHDgreenB}{RGB}{34,141,0}
+\definecolor{PHDgreen}{RGB}{34,141,0}
+\definecolor{PHDgrayA}{RGB}{240, 240, 240}
+\definecolor{PHDgrayB}{RGB}{150, 150, 150}
+\definecolor{PHDgrayC}{RGB}{100, 100, 100}
+\definecolor{PHDgray}{RGB}{150, 150, 150}
+
+\setbeamercolor{structure}{fg=PHDblue}
+\setbeamercolor{alerted text}{fg=PHDredC}
+
+\setbeamercolor*{palette primary}{use=structure,fg=white,bg=structure.fg!70!black}
+\setbeamercolor*{palette secondary}{use=structure,fg=white,bg=structure.fg!90!white}
+\setbeamercolor*{palette tertiary}{use=structure,fg=white,bg=structure.fg!70!white}
+\setbeamercolor*{palette quaternary}{use=structure,fg=structure.fg!70!black,bg=structure.fg!20!white}
+
+\setbeamercolor*{sidebar}{use=structure,bg=structure.fg}
+  
+\setbeamercolor*{palette sidebar primary}{use=structure,fg=structure.fg!10}
+\setbeamercolor*{palette sidebar secondary}{fg=white}
+\setbeamercolor*{palette sidebar tertiary}{use=structure,fg=structure.fg!50}
+\setbeamercolor*{palette sidebar quaternary}{fg=white}
+
+\setbeamercolor*{titlelike}{parent=palette primary}
+\setbeamercolor*{item}{use=structure,fg=structure.fg!50!black}
+\setbeamercolor*{sectionlike}{fg=structure.fg!80!black, bg=white}
+\setbeamercolor*{subsectionlike}{fg=white, bg=structure.fg!90!black}
+\setbeamercolor*{subsubsectionlike}{fg=white, bg=PHDredC!80!white}
+\setbeamercolor*{section}{fg=white}
+\setbeamercolor*{frametitle}{bg=structure!50!black,fg=structure!90!black}
+\setbeamercolor*{part title}{bg=black,fg=black}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+%----- TEMPLATES -----%
+
+\defbeamertemplate*{section page}{mine}[1][\alert{\textbf{Section \thesection}}]{%
+	\begin{centering}
+		{\usebeamerfont{section name}\usebeamercolor[fg]{section name}#1}
+		\vskip1em\par
+		\begin{beamercolorbox}[sep=12pt,center]{sectionlike}
+			\usebeamerfont{section title}\textbf{\insertsection}\par
+		\end{beamercolorbox}
+	\end{centering}
+}
+\renewcommand*{\sectionpage}{\usebeamertemplate*{section page}}
+
+\defbeamertemplate*{subsection page}{mine}[1][]{%
+	\begin{centering}
+		\begin{beamercolorbox}[sep=12pt,center]{subsectionlike}
+			\usebeamerfont{subsection title}\textbf{\insertsubsection}\par
+		\end{beamercolorbox}
+	\end{centering}
+}
+\renewcommand*{\subsectionpage}{\usebeamertemplate*{subsection page}}
+
+\defbeamertemplate*{subsubsection page}{mine}[1][]{%
+	\begin{centering}
+		\begin{beamercolorbox}[sep=12pt,center,rounded=true]{subsubsectionlike}
+			\usebeamerfont{subsubsection title}\textbf{\insertsubsubsection}
+			\par
+		\end{beamercolorbox}
+	\end{centering}
+}
+\newcommand{\subsubsectionpage}{\usebeamertemplate*{subsubsection page}}
+
+\AtBeginSection{\frame{\sectionpage}}
+\AtBeginSubsection{\frame{\subsectionpage}}
+\AtBeginSubsubsection{\frame{\subsubsectionpage}}
+
+\setbeamertemplate{sections/subsections in toc}[square]
+
+%----- BLOCKS -----%
+\setbeamertemplate{blocks}[rounded]
+\setbeamercolor{block body}{bg=structure.fg!10!white,fg=black}
+\newcommand{\HideBlockTitle}{ % Set title background = body background
+	\setbeamercolor{block title}{bg=PHDgrayA,fg=white}}
+\newcommand{\ResetBlockTitle}{
+	\setbeamercolor{block title}{bg=PHDblue,fg=white}}
+\ResetBlockTitle
+
+%----- EMPHASIS -----%
+\newcommand<>{\myframed}[1]{\alt#2{\tikz[phd] \node[box] {#1};}{{#1}}}
+\newcommand<>{\myframedAlert}[1]{\alt#2{\tikz[phdB] \node[boxB] {\color{black}#1};}{{#1}}}
+\newcommand<>{\framedmath}[1]{%
+	\alt#2{\tikz[phd] \node[box] {\ensuremath{#1}};}{\ensuremath{#1}}}
+
+\mode
+<all>

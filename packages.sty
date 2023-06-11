@@ -1,0 +1,42 @@
+\ProvidesPackage{packages}
+
+%----- MIS PAQUETES -----%
+
+%%% Language %%%
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\usepackage{babel}[spanish] %%% Uncomment for Spanish
+
+%%% Mathematics %%%
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{mathtools}
+\RequirePackage[cal=boondox]{mathalpha}
+\RequirePackage{mathrsfs}
+
+%%% Graphics %%%
+\RequirePackage{tikz}
+\usetikzlibrary{arrows,shapes,backgrounds,calc}
+
+\RequirePackage{graphicx}
+
+\RequirePackage{caption,subcaption}
+
+%%% Tables %%%
+\RequirePackage{colortbl}
+
+\RequirePackage{tabularx}
+\RequirePackage{array, multirow, hhline, booktabs, rotating}
+
+\RequirePackage{arydshln}
+
+%%% Units %%%
+\RequirePackage{units}
+
+%%% Bibliography%%%
+\RequirePackage{cite}
+\def\citepunct{; \penalty\citepunctpenalty} % Semmicolon instead of commas to separate multiple references using apalike
+
+%\RequirePackage[style=authoryear, backend=bibtex]{biblatex}
+
+%------------------------%

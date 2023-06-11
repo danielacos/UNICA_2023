@@ -1,0 +1,40 @@
+\documentclass{beamer}
+
+\usetheme[%pageofpages=of,% String used between the current page and the
+                         % total page count.
+          bullet=circle,% Use circles instead of squares for bullets.
+          titleline=true,% Show a line below the frame title.
+          alternativetitlepage=true,% Use the fancy title page.
+          titlepagelogo=logo_UCA-UTC.png,% Logo for the first page.
+          watermark=,% Watermark used in every page.
+          watermarkheight=20.5px,% Height of the watermark.
+          watermarkheightmult=12,% The watermark image is 4 times bigger
+                                % than watermarkheight.
+          ]{Torino}
+          
+\usecolortheme{UCA-UTC}
+
+%----- MY PACKAGES -----%
+
+\usepackage{packages}
+
+%----- MY MACROS -----%
+
+\include{macros}
+
+%----- TITLE PAGE -----%
+
+\author{\alert{Daniel Acosta Soba}\vspace{-0.3cm}}
+\title{\textbf{A structure-preserving upwind DG scheme for a degenerate phase-field tumor model}}
+\institute{Universidad de C\'adiz\\University of Tennessee at Chattanooga \vspace*{-0.2cm}}
+\date{{\scriptsize
+		\structure{
+			J. Rafael Rodr\'iguez Galv\'an \\ (Universidad de C\'adiz)\\ \vspace{0.2cm}
+			Francisco Guill\'en Gonz\'alez \\\vspace*{-0.15cm}(Universidad de Sevilla)}}
+		\\\vspace{0.2cm}\em {\scriptsize \textbf{CANA 2023} - June 5, 2023}}
+
+\begin{document}
+\include{tikzstyles_UCA-UTC}
+\include{content}
+\end{document}
+

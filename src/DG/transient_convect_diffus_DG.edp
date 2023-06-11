@@ -1,0 +1,138 @@
+// Problem (P):
+// u_t - \mu \Delta u + b \cdot \grad u = 0   en \Omega,
+// u = 0   sobre \partial\Omega x (0,t_f)
+// u(\cdot,0)=u0 sobre \Omega
+//
+// We take:
+//   * \Omega= unit circle,
+//   * b(x1,x2) = [x2, -x1]
+//   *  A=10, x0=0.3, y0=0.3 (e.g.)
+//   * Initial condition u0 = exp( -A*( (x-x0)^2 + (y-y0)^2 ) )
+verbosity=0;
+load "iovtk";
+real [int] viso=[-0.0005, 0.039525, 0.07955, 0.119575, 0.1596, 0.199625, 0.23965, 0.279675, 0.3197, 0.359725, 0.39975, 0.439775, 0.4798, 0.519825, 0.55985, 0.599875, 0.6399, 0.679925, 0.71995, 0.759975, 0.8];
+
+//,---------------------------------------------------------------------
+//| Mesh and finite elements
+//`---------------------------------------------------------------------
+border Gamma(t=0, 2*pi) { x=cos(t);  y=sin(t); };
+int nx = 100;
+mesh Th = buildmesh(Gamma(nx));
+
+fespace Uh(Th, P1dc);
+Uh u, ub; // Unknown and test function
+Uh u0;
+Uh b1 = y, b2 = -x;
+macro b() [b1, b2] // EOM
+  ;
+
+//,---------------------------------------------------------------------
+//| Time parameters
+//`---------------------------------------------------------------------
+real t = 0;
+int niter = 201;
+real dt = 1.e-1;
+
+
+//,---------------------------------------------------------------------
+//| Problem data
+//`---------------------------------------------------------------------
+
+real diffusionCoeff = .000;
+real penaSIP = 4; // SIP DG interior penalty parameter
+real eta = 1; // UPW parameter
+
+real A=10, x0=0.3, y0=0.3;
+real mu=2*A;
+func initialUGaussian = exp( -A*( (x-x0)^2 + (y-y0)^2 ) );
+func initialURiemann = x<0;
+u0 = initialUGaussian;
+
+real integralU0=int2d(Th)(u0);
+cout <<"La integral del dato inicial es "<< integralU0 << endl;
+
+
+//,---------------------------------------------------------------------
+//| Variational problems
+//`---------------------------------------------------------------------
+
+// Macros..............................................................>
+macro grad(u) [ dx(u), dy(u) ] // End of Macro
+  ; // for emacs :)
+macro div(u,v) ( dx(u) + dy(v) ) // End of Macro
+  ; // for emacs :)
+macro dn(u) ( N.x*dx(u) + N.y*dy(u) ) //  Normal derivative
+  ; // for emacs :)
+macro dotN(v) ( N.x*v[0] + N.y*v[1]) // (v1,v2) * (Normal Vector)
+  ; // for emacs
+macro intInteriorEdges(Th, expr) ( intalledges(Th)( real(nTonEdge-1)/nTonEdge * (expr) ) ) // EOM
+  ; // for emacs
+macro intAllEdges(Th, expr) ( intalledges(Th)( (expr) * 1/nTonEdge) ) // EOM
+  ; // for emacs
+
+// Diffusion term using SIP DG
+NewMacro aSIP(coeff, u, ub)
+  (
+   int2d(Th)( coeff * grad(u)'*grad(ub) )  // Diffusion
+   - intAllEdges(Th, (coeff) * (
+				   mean(dn(u))*(-jump(ub))  +
+				   (-jump(u))*mean(dn(ub))
+				    ) )
+   + intAllEdges(Th, (coeff) * (
+		      penaSIP/lenEdge * jump(u)*jump(ub)
+				) )
+   ) EndMacro;
+
+// Upwind convection
+NewMacro aUPW(b, u, ub)
+  (
+   int2d(Th)( b'*grad(u) * ub )
+   + intInteriorEdges(Th,
+		       (
+			- dotN(b) * (-jump(u)) * mean(ub)
+			+ eta/2 *abs(dotN(b)) * jump(u)*jump(ub)
+			) )
+   ) EndMacro;
+;
+// ....................................................................>
+
+problem ConvectDiffImplicitEulerDG(u,ub) =
+  int2d(Th) (u*ub/dt)
+  + aUPW(b, u, ub)
+  + aSIP(diffusionCoeff, u, ub)
+  - int2d(Th)(u0*ub/dt);
+
+real theta; // if theta=0.5: Crank-Nicholson
+problem ConvectDiffThetaSchemeDG(u,ub) =
+  int2d(Th) (u*ub/dt)
+  + aUPW( theta*b, u, ub )
+  + aUPW( (1-theta)*b, u0, ub )
+  + aSIP( theta*diffusionCoeff, u, ub )
+  + aSIP( (1-theta)*diffusionCoeff, u0, ub )
+  - int2d(Th)(u0*ub/dt);
+
+//,---------------------------------------------------------------------
+//| Time loop
+//`---------------------------------------------------------------------
+
+for (int k=1; k<=niter; k++){
+  t=t+dt;
+  cout << "iter = " << k << "\t (t = " << t << ")" << endl;
+
+  theta = 0.5; // Crank-Nicholson
+   ConvectDiffThetaSchemeDG;
+   //ConvectDiffImplicitEulerDG;
+
+  cout << "  max(u) = " << u[].max << "  min(u) = " << u[].min << endl;
+  cout << "  int_Th(u) = " << int2d(Th)(u) << endl;
+
+  u0 = u;  // Prepare next iteration
+
+  plot(u, value=1, fill=1, viso=viso,
+    dim=3);
+
+  string vtkFile="Archivos_vtk/Crank_Nicholson_implicito/Conveccion/conv_diff_0_CN" + k + ".vtk";
+  int[int] vtkOrder=[1];
+  savevtk(vtkFile, Th, u, dataname="u", order=vtkOrder);
+
+ }
