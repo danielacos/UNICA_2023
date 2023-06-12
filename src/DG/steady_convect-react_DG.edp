@@ -17,8 +17,9 @@ verbosity=1; // Do not let FreeFem++ show verbose info
 // Exact solution
 real A=10, x0=0.3, y0=0.3;
 real mu=2*A;
+real conv=1e6;
 func uExac = exp( -A*( (x-x0)^2 + (y-y0)^2 ) );
-func f = -2*A*(x*y0 - x0*y - 1)*uExac(x,y);
+func f = -2*A*(conv * x*y0 - conv * x0*y - 1)*uExac(x,y);
 
 // Errors
 real errL2CF, errL2CFold, errCf, errCFold, errL2UPW, errL2UPWold, errUPW, errUPWold;
@@ -31,7 +32,7 @@ ofstream fErrorUPW("erroresUPW.txt");
 
 // Numerical approximation parameters
 real eta = 1;
-real normaLinfgradb = 1;
+real normaLinfgradb = conv;
 
 // For plotting
 load "iovtk";
@@ -67,9 +68,9 @@ func int solvePDE( int nx ) {
   border Gamma(t=0, 2*pi) { x=cos(t);  y=sin(t); };
   mesh Th = buildmesh(Gamma(nx));
 
-  fespace Uh(Th, P1dc);
+  fespace Uh(Th, P2dc);
   Uh u, ub; // Unknown and test function
-  Uh b1 = y, b2 = -x;
+  Uh b1 = conv * y, b2 = -conv * x;
   macro b() [b1, b2] // EOM
     ; // emacs
 
@@ -82,8 +83,8 @@ func int solvePDE( int nx ) {
   // ------------------------------------------------------------------------------------
   // Centered fluxes approximation
   // ====================================================================================
-  problem ConvectReactCF(u,ub)=
-    int2d(Th)( dot(b, grad(u)) * ub // Convection term
+  problem ConvectReactCF(u,ub,solver=LU)=
+    int2d(Th)(dot(b, grad(u)) * ub // Convection term
 	       + mu * u*ub // Reaction term
 	       )
     //  - int1d(Th,C)(neg(dotN(b))*u*ub)  // unused because cc=0 on d(Omega)^-
@@ -94,8 +95,8 @@ func int solvePDE( int nx ) {
   // ------------------------------------------------------------------------------------
   // Upwind fluxes approximation
   // ====================================================================================
-  problem ConvectReactUPW(u,ub)=
-    int2d(Th)( dot(b, grad(u)) * ub // Convection term
+  problem ConvectReactUPW(u,ub,solver=LU)=
+    int2d(Th)(dot(b, grad(u)) * ub // Convection term
 	       + mu * u*ub // Reaction term
 	       )
     //  - int1d(Th,C)(neg(dotN(b))*u*ub)  // unused because cc=0 on d(Omega)^-
@@ -119,7 +120,7 @@ func int solvePDE( int nx ) {
   ub = u - uExac;
   real errL2CF = sqrt(int2d(Th)(ub*ub));
   cout << "errL2_CF  = " << errL2CF << endl;
-  real errCF = sqrt(max(2*A,normaLinfgradb) * errL2CF^2 + 0.5 * int1d(Th,Gamma)(abs(dotN(b)) * ub^2));
+  real errCF = sqrt(max(2*A,normaLinfgradb) * int2d(Th)(ub*ub) + 0.5 * int1d(Th,Gamma)(abs(dotN(b)) * ub^2));
   cout << "errCF = " << errCF << endl;
 
   if(saveErrors){
