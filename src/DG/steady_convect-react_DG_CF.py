@@ -60,9 +60,9 @@ class problem_DG_CF(object):
         conv_react = self
         p = conv_react.parameters = conv_react_parameters
 
-        A = conv_react.A = float(p.A)
+        A_coef = conv_react.A_coef = float(p.A)
         conv = conv_react.conv = float(p.conv)
-        mu = conv_react.mu = 2 * A
+        mu = conv_react.mu = 2 * A_coef
 
         file_path = os.path.dirname(os.path.abspath(__file__))
         printMPI(f"file_path = {file_path}")
@@ -83,20 +83,22 @@ class problem_DG_CF(object):
         # Build DG, FE spaces and functions
         #
         conv_react.P1d = FiniteElement("DG", mesh.ufl_cell(), 1)
-        conv_react.P1dv = VectorElement(FiniteElement("DG", mesh.ufl_cell(), 1))
+        conv_react.P1cv = VectorElement(FiniteElement("Lagrange", mesh.ufl_cell(), 1))
         conv_react.Vh = FunctionSpace(mesh, conv_react.P1d)
-        conv_react.Vhv = FunctionSpace(mesh, conv_react.P1dv)
+        conv_react.Vhv = FunctionSpace(mesh, conv_react.P1cv)
         conv_react.u, conv_react.u_trial, conv_react.ub =  Function(conv_react.Vh), TrialFunction(conv_react.Vh), TestFunction(conv_react.Vh)
 
         x = SpatialCoordinate(conv_react.mesh)
 
-        u_exact = conv_react.u_exact = Expression(exp(-A * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)), conv_react.Vh.element.interpolation_points())
-        conv_react.u_exact = Function(conv_react.Vh)
-        conv_react.u_exact.interpolate(u_exact)
+        # u_exact = conv_react.u_exact = Expression(exp(-A_coef * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)), conv_react.Vh.element.interpolation_points())
+        # conv_react.u_exact = Function(conv_react.Vh)
+        # conv_react.u_exact.interpolate(u_exact)
+        u_exact = conv_react.u_exact = exp(-A_coef * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2))
 
-        f = conv_react.f = Expression(mu * exp(-A * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)) * (conv * 0.3 * x[1] - conv * 0.3 * x[0] + 1), conv_react.Vh.element.interpolation_points())
-        conv_react.f = Function(conv_react.Vh)
-        conv_react.f.interpolate(f)
+        # f = conv_react.f = Expression(mu * exp(-A_coef * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)) * (conv * 0.3 * x[1] - conv * 0.3 * x[0] + 1), conv_react.Vh.element.interpolation_points())
+        # conv_react.f = Function(conv_react.Vh)
+        # conv_react.f.interpolate(f)
+        f = conv_react.f = mu * u_exact * (conv * 0.3 * x[1] - conv * 0.3 * x[0] + 1)
 
         def beta(x):
             vals = np.zeros((mesh.geometry.dim, x.shape[1]))
@@ -128,7 +130,6 @@ class problem_DG_CF(object):
             + mu * u_trial * ub * dx \
             - inner(beta('+'), n_e('+')) * jump(u_trial) * avg(ub) * dS
         
-
         L_u = f * ub * dx
 
         conv_react.a_u = a_u
@@ -145,6 +146,7 @@ class problem_DG_CF(object):
         # PETSc options
         #
         petsc_options = {"ksp_type": "preonly", "pc_type": "lu"}
+        # petsc_options = {"ksp_type": "gmres", "pc_type": "ilu"}
 
         #
         # Define problem

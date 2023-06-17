@@ -17,7 +17,7 @@ verbosity=1; // Do not let FreeFem++ show verbose info
 // Exact solution
 real A=10, x0=0.3, y0=0.3;
 real mu=2*A;
-real conv=1e6;
+real conv=1e3;
 func uExac = exp( -A*( (x-x0)^2 + (y-y0)^2 ) );
 func f = -2*A*(conv * x*y0 - conv * x0*y - 1)*uExac(x,y);
 
@@ -38,7 +38,9 @@ real normaLinfgradb = conv;
 load "iovtk";
 int [int] vtkOrder = [1];
 string vtkBaseFile = "output_steady_convect_react";
-real [int] viso=[-0.1,0,0.5,0.1,0.5,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.9,1];
+// real [int] viso=[-0.1,0,0.5,0.1,0.5,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.9,1];
+// real [int] viso=[-5,-4,-3,-2,-1,0,1,2,3,4,5];
+real [int] viso=[-2,-1,0,1];
 
 // Macros..........................................................................
 macro grad(u) [dx(u), dy(u) ] // EOM
@@ -68,9 +70,9 @@ func int solvePDE( int nx ) {
   border Gamma(t=0, 2*pi) { x=cos(t);  y=sin(t); };
   mesh Th = buildmesh(Gamma(nx));
 
-  fespace Uh(Th, P2dc);
+  fespace Uh(Th, P1dc);
   Uh u, ub; // Unknown and test function
-  Uh b1 = conv * y, b2 = -conv * x;
+  Uh b1 = conv * y, b2 = - conv * x;
   macro b() [b1, b2] // EOM
     ; // emacs
 
@@ -168,17 +170,18 @@ func int solvePDE( int nx ) {
 
   // Save to vtk for high quality plotting
   //--------------------------------------
-  //string vtkFileName = vtkBaseFile + "_n=" + nx + ".vtk";
-  //savevtk(vtkFileName, Th, uEX, uCF, u, dataname="u_Exact, u_CF, u_UPW", order=vtkOrder);
+  string vtkFileName = vtkBaseFile + "_n=" + nx + ".vtk";
+  savevtk(vtkFileName, Th, uEX, uCF, u, dataname="u_Exact, u_CF, u_UPW", order=vtkOrder);
 
 }
 
 // Main program
-int maxExp=9;
-for (int i=4; i<maxExp+1; i++) {
-  int n=2^i;
-  cout << "------------------------------------------------------" << endl;
-  cout << "Solving with_ n=" << n << endl;
-  cout << "------------------------------------------------------" << endl;
-  solvePDE(n);
- }
+// int maxExp=9;
+// for (int i=4; i<maxExp+1; i++) {
+//   int n=2^i;
+//   cout << "------------------------------------------------------" << endl;
+//   cout << "Solving with_ n=" << n << endl;
+//   cout << "------------------------------------------------------" << endl;
+//   solvePDE(n);
+//  }
+solvePDE(2^6);

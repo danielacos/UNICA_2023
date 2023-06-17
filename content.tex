@@ -5,42 +5,42 @@
 \titlepage
 \end{frame}
 
-\begin{frame}{Structure of the talk}
+\begin{frame}{Outline}
 	\tableofcontents
 \end{frame}
 
 %============================================================================
-\section{Fundamentos básicos}
+\section{Preliminaries}
 %============================================================================
 
-\subsection{Distribuciones}
+\subsection{Distributions}
 
-\begin{frame}{Distribuciones}
+\begin{frame}{Distributions}
 
 \begin{itemize}\itemsep1em
 	\item $\Omega\subset\R^d$ open and bounded set.
 	\item $\D(\Omega)=\{\varphi\in\mathcal{C}^\infty(\Omega)\colon\varphi\text{ tiene soporte compacto en }\Omega\}$. 
 	
-	\item \structure{\textbf{Espacio de las distribuciones}}: $\D'(\Omega)$ (espacio dual)
+	\item \structure{\textbf{Space of distributions}}: $\D'(\Omega)$ (dual space)
 	\begin{itemize}\itemsep1em
-		\item $L^p(\Omega)\hookrightarrow\D '(\Omega)$ definida para toda $v\in L^p(\Omega)$ como $\alert{\dualD{v}{\varphi}}=v(\varphi)\coloneqq\int_\Omega v \varphi$, $\forall \varphi\in\D(\Omega)$;
+		\item $L^p(\Omega)\hookrightarrow\D '(\Omega)$ defined for every $v\in L^p(\Omega)$ as $\alert{\dualD{v}{\varphi}}=v(\varphi)\coloneqq\int_\Omega v \varphi$, $\forall \varphi\in\D(\Omega)$;
 	\end{itemize}
 
-	\item Dada $v\in L^p(\Omega)$ si $g_\alpha=\partial^\alpha v=D^\alpha v\in L^p(\Omega)$ verifica $\dualD{D^\alpha v}{\varphi}=(-1)^{\left|\alpha\right|}\int_\Omega v D^\alpha \varphi$ para todo $\varphi\in\D(\Omega)$ entonces $g_\alpha$ se denomina \structure{\textbf{derivada débil}}.
+	\item Let $v\in L^p(\Omega)$, if $g_\alpha=\partial^\alpha v=D^\alpha v\in L^p(\Omega)$ verifies $\dualD{D^\alpha v}{\varphi}=(-1)^{\left|\alpha\right|}\int_\Omega v D^\alpha \varphi$ for every $\varphi\in\D(\Omega)$ then $g_\alpha$ is named \structure{\textbf{weak derivative}}.
 
 \end{itemize}
 \end{frame}
 
-\subsection{Espacios de Sobolev}
-\begin{frame}{Espacios de Sobolev}
-Supongamos que $m\in\N\cup\left\{0\right\}$ y $1\leq p\leq+\infty$, $p\in\N$.
+\subsection{Sobolev spaces}
+\begin{frame}{Sobolev spaces}
+Assume that $m\in\N\cup\left\{0\right\}$ and $1\leq p\leq+\infty$, $p\in\N$.
 \begin{itemize}\itemsep1em
 	\item$\displaystyle\alert{W^{m,p}(\Omega)}\coloneqq\{v\in L^p(\Omega):\forall\alpha\in\N^d\mbox{ con }\left|\alpha\right|\leq m, \partial^\alpha v\in L^p(\Omega)\}$
 	\begin{itemize}\itemsep1em
-		\item Para $p=2$, $\alert{H^{m}(\Omega)}\coloneqq W^{m,2}(\Omega).$
+		\item For $p=2$, $\alert{H^{m}(\Omega)}\coloneqq W^{m,2}(\Omega).$
 	\end{itemize}
 	
-	\item Normas definidas $\forall v\in W^{m,p}(\Omega)$:
+	\item Norms defined $\forall v\in W^{m,p}(\Omega)$:
 	\begin{itemize}\itemsep1em
 		\item $\displaystyle \alert{\|v\|_{W^{m,p}(\Omega)}}\coloneqq\left(\suma{\substack{\alpha\in\N^d \\ \left|\alpha\right|\leq m}}{}\|\partial^\alpha v\|^p_{L^p(\Omega)}\right)^{1/p}\text{ si }p<+\infty$,
 		\item $\displaystyle \alert{\|v\|_{W^{m,\infty}(\Omega)}}\coloneqq\max_{\substack{\alpha\in\N^d \\ \left|\alpha\right|\leq m}}{}\|\partial^\alpha v\|_{L^\infty(\Omega)}\text{ si }p=+\infty$.
@@ -53,27 +53,27 @@ Supongamos que $m\in\N\cup\left\{0\right\}$ y $1\leq p\leq+\infty$, $p\in\N$.
 
 \end{frame}
 
-\begin{frame}{Traza}
+\begin{frame}{Trace}
 
-	\begin{theorem}[Traza]
+	\begin{theorem}[Trace]
 		
-		La aplicación traza
+		The trace mapping
 		\begin{align*}
 		\alert{\gamma}\colon H^1(\Omega)\cap\mathcal{C}^0(\bar{\Omega})&\to L^2(\partial\Omega)\cap \mathcal{C}(\bar{\partial\Omega})\\
 		v	&\mapsto\alert{\gamma(v)}\coloneqq v_{|_{\partial\Omega}}.
 		\end{align*}
-		se extiende por continuidad a una aplicación lineal y continua de $H^1(\Omega)$ en $L^2(\partial\Omega)$  también llamada $\gamma$.
+		is extended by continuity to a continuous linear mapping of $H^1(\Omega)$ into $L^2(\partial\Omega)$,  again called $\gamma$.
 		
-		Existe $C>0$ tal que $\forall v\in H^1(\Omega)$ es $$\norma{\gamma(v)}_{L^2(\partial \Omega)}\leq C\norma{v}_{H^1(\Omega)}.$$
+		There is $C>0$ such that $\forall v\in H^1(\Omega)$ it is $$\norma{\gamma(v)}_{L^2(\partial \Omega)}\leq C\norma{v}_{H^1(\Omega)}.$$
 	\end{theorem}
 	%\pause
-	\textbf{Nota}: generaliza la Fórmula de integración por partes a funciones de $H^1(\Omega)$.
+	% \textbf{Remark}: extends integration by parts formula to functions of $H^1(\Omega)$.
 	
 \end{frame}
 
-\subsection{Formulación variacional}
+\subsection{Variational formulation}
 
-\begin{frame}{EDP lineal de orden 2}
+\begin{frame}{Linear PDE of order 2}
 \begin{block}{}
 \begin{equation*}
 \label{ecuacion_general}
@@ -88,19 +88,18 @@ Supongamos que $m\in\N\cup\left\{0\right\}$ y $1\leq p\leq+\infty$, $p\in\N$.
 
 \begin{itemize}\itemsep1em
 \item $\Omega\subset \R^d$ a regular enough open and bounded set (for instance, a polygonal domain).
-\item Operador diferencial $\mathcal{L}$ definido para todo $u\colon\Omega\to\R$ como $$\mathcal{L}u=-\nabla\cdot(a\nabla u)+b\nabla u+c u$$ con $a\in [L^\infty(\Omega)]^{d,d}$, $\mathbf{b}\in [L^\infty(\Omega)]^d$ y $c\in L^\infty(\Omega)$.
+\item Differential operator $\mathcal{L}$ defined for every $u\colon\Omega\to\R$ as $$\mathcal{L}u=-\nabla\cdot(a\nabla u)+b\nabla u+c u$$ with $a\in [L^\infty(\Omega)]^{d,d}$, $\mathbf{b}\in [L^\infty(\Omega)]^d$ y $c\in L^\infty(\Omega)$.
 \item $f\in L^2(\Omega)$.
-\item Operador $\mathcal{B}$.
+\item Boundary condition operator $\mathcal{B}$.
 \item $g\colon\Omega\to\R$.
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}{Fórmula de integración por partes}
-	\textcolor{red}{Cambiar por variacional.}
-	\begin{theorem}[Fórmula de integración por partes]
+\begin{frame}{Integration by parts formula}
+	\begin{theorem}[Integration by parts formula]
 		
-		Dadas $u, v\in \mathcal{C}^1(\bar\Omega)$ dos funciones con soporte contenido en $\bar\Omega$, se verifica
+		Let $u, v\in \mathcal{C}^1(\bar\Omega)$, they satisfy
 		\begin{equation*}
 		\label{formula_int_por_partes}
 		\int_\Omega u(x)\frac{\partial v}{\partial x_i}(x)dx=-\int_\Omega v(x)\frac{\partial u}{\partial x_i}(x)dx+\int_{\partial \Omega}u(x)v(x)\mathbf{n}_i(x)ds.
@@ -110,43 +109,49 @@ Supongamos que $m\in\N\cup\left\{0\right\}$ y $1\leq p\leq+\infty$, $p\in\N$.
 	
 \end{frame}
 
-\begin{frame}{Problema variacional}
+\begin{frame}{Variational problem}
 
 \begin{enumerate}
-	\item Definir espacio de soluciones $\S\subseteq H^1(\Omega)$  lo suficientemente regular (sentido débil).
-	\item \structure{\textbf{Formulación variacional}}: encontrar una función $u\in \S$ que verifique $$a(u,v)=L(v)\text{ para todo }v\in \S.$$
+	\item Defined the solution space $\S\subseteq H^1(\Omega)$  regular enough (in the weak sense).
+	\item \structure{\textbf{Formulación variacional}}: find a function $u\in \S$ that verifies $$a(u,v)=L(v)\text{ for every }v\in \S.$$
 		\begin{itemize}\itemsep1em
-			\item $a\colon\S\times\S\to\R$ forma bilineal; 
-			\item $L\colon\S\to\R$ forma lineal.
+			\item $a\colon\S\times\S\to\R$ bilinear form; 
+			\item $L\colon\S\to\R$ linear form.
 		\end{itemize}
 \end{enumerate}
 
 \end{frame}
 
-\begin{frame}{theorem de Lax-Milgram}
+\begin{frame}{Properties of bilinear form}
+	\begin{definicion}
+		Let $V$ a Hilbert space and let $a(\cdot,\cdot):V\times V\longrightarrow\R$ a bilinear form. Then, $a(\cdot,\cdot)$ is
+		\begin{itemize}
+			\item \structure{\textbf{continuous}} if there is $M>0$ such that $$a(v,w)\geq\nu\norma{v}\norma{w}\text{ for every } v,w\in V.$$
+			\item \structure{\textbf{coercive}} if there is $\nu>0$ such that $$a(v,v)\geq\nu\norma{v}^2\text{ for every } v\in V.$$
+		\end{itemize}
+	\end{definicion}
+\end{frame}
 
-\begin{definicion}
-	Sea $V$ un espacio de Hilbert y sea $a(\cdot,\cdot):V\times V\longrightarrow\R$ una forma bilineal. Diremos que $a(\cdot,\cdot)$ es \structure{\textbf{coercitiva}} si existe $\nu>0$ tal que $$a(v,v)\geq\nu\norma{v}^2\text{ para todo } v\in V.$$
-\end{definicion}
+\begin{frame}{Lax-Milgram Theorem}
 
 \begin{theorem}[Lax-Milgram]
 	\label{theorem:Lax_Milgram}
-	Sean $V$ un espacio de Hilbert real, $L(\cdot)$ una forma lineal continua en $V$ y $a(\cdot,\cdot)$ una forma bilineal coercitiva y continua en $V$. La formulación variacional $$a(u,v)=L(v)\text{ para todo }v\in V$$ tiene una única solución $u\in V$ que depende continuamente de la forma lineal $L$.
+	Let $V$ be a real Hilbert space, $L(\cdot)$ continuous linear form in $V$ y $a(\cdot,\cdot)$ a coercive (with coercivity constant $\alpha$) and continuous bilinear form in $V$. The variational formulation $$a(u,v)=L(v)\text{ for every }v\in V$$ have a unique solution $u\in V$ which depends continuously on the linear form $L$ as follows
+	$$\norma{u}_V\le \frac{1}{\alpha}\norma{L}_{V'}.$$
 \end{theorem}
 
 \end{frame}
 
 %-------------------------------
-\section{Método de los Elementos Finitos}
+\section{Finite Element Method}
 %-------------------------------
 
-\subsection{Problema elíptico}
+\subsection{Elliptic problem}
 
-\begin{frame}{Problema elíptico}
-Consideramos el problema de Poisson:
+\begin{frame}{Elliptic problem}
+Consider the Poisson problem:
 \begin{block}{}
 \begin{equation*}
-\label{prob_modelo_Poisson}
 \left\{
 \begin{aligned}
 -\Delta u&=f & \text{en } &\Omega, \\
@@ -155,70 +160,69 @@ u&=0 & \text{en } &\partial\Omega,
 \right.
 \end{equation*}
 \end{block}
-donde $f\in L^2\left(\Omega\right)$.
+where $f\in L^2\left(\Omega\right)$.
 \end{frame}
 
 % \subsection{Formulación variacional continua}
 
-\begin{frame}[allowframebreaks]{Formulación variacional continua}
+\begin{frame}[allowframebreaks]{Continuous variational formulation}
 
-\textbf{Espacio de soluciones}: $\alert{H_0^1(\Omega)}$.
+\textbf{Space of solutions}: $\alert{H_0^1(\Omega)}$.
 \begin{itemize}\itemsep1em
 	\item $a\colon H^1_0(\Omega)\times H_0^1(\Omega)\to\R$, $\displaystyle \alert{a(u,v)}\coloneqq\int_\Omega\nabla u\nabla v$;
 	\item $L\colon H_0^1(\Omega)\to\R$, $\displaystyle \alert{L(v)}\coloneqq\int_\Omega f v$.
 \end{itemize}
-\textbf{Problema variacional}:
+\textbf{Variational problem}:
 \begin{block}{}
 	\begin{center}
-	\label{form_var_Poisson}
-	$\text{encontrar } u\in H^1_0(\Omega) \text{ tal que } a(u,v)=L(v)\text{ para todo } v\in H_0^1(\Omega)$.
+	$\text{find } u\in H^1_0(\Omega) \text{ such that } a(u,v)=L(v)\text{ for every } v\in H_0^1(\Omega)$.
 	\end{center}
 \end{block}
 \framebreak
 \begin{theorem}
-	La forma bilineal $a(\cdot,\cdot)$ es coercitiva y continua.
+	The bilinear form $a(\cdot,\cdot)$ is coercive and continuous.
 \end{theorem}
 
 \begin{itemize}\itemsep1em
-	\item El problema modelo y su formulación variacional son \alert{equivalentes}.
+	\item The model problem and its weak variational formulation are \alert{equivalent}.
 	\begin{itemize}\itemsep1em
-		\item Si $u\in H^2(\Omega)$ es solución del problema modelo $\Rightarrow$ es solución del problema variacional.
-		\item Si $u\in H_0^1(\Omega)$ es solución del problema variacional $\Rightarrow$ es solución del problema modelo.
+		\item If $u\in H^2(\Omega)$ is a solution of the model problem $\Rightarrow$ it is a solution of the variational problem.
+		\item If $u\in H_0^1(\Omega)$ is solution of the variational problem $\Rightarrow$ it is solution of the model problem.
 	\end{itemize}
-	\item \alert{Lax-Milgram} $\Rightarrow$ existe solución y es única.
+	\item \alert{Lax-Milgram} $\Rightarrow$ there is a unique solution.
 \end{itemize}
 
 \end{frame}
 
 \subsubsection{Numerical approximation}
 
-\begin{frame}{Método de Galerkin}
+\begin{frame}{Galerkin method}
 	\begin{block}{}
 	\begin{center}
-	Elegir $\alert{V_h\subseteq V}$ finito-dimensional con base $\left\{\varphi_i\right\}_{i\in\left\{1,2,\ldots,N_h \right\}}$
+	Choose $\alert{V_h\subseteq V}$ finite-dimensional with a basis $\left\{\varphi_i\right\}_{i\in\left\{1,2,\ldots,N_h \right\}}$
 	\end{center}
 	\end{block}
 	
 	\vspace*{-0.3cm}
 	\begin{itemize}
-	\item Encontrar $u\in V$ tal que $a(u,v)=L(v)$ para todo $v\in V$.
+	\item Find $u\in V$ such that $a(u,v)=L(v)$ for every $v\in V$.
 	\end{itemize}
 	\vspace*{0.1cm}
 	$$\Big{\downarrow}$$
 	\vspace*{-0.3cm}
 	\begin{itemize}
-	\item Encontrar $u_h\in V_h$ tal que $a(u_h,v_h)=L(v_h)$ para todo $v_h\in V_h$.
+	\item Choose $u_h\in V_h$ such that $a(u_h,v_h)=L(v_h)$ for every $v_h\in V_h$.
 	\end{itemize}
 	\vspace*{0.1cm}
 	$$\Big{\Updownarrow}$$
 	\vspace*{-0.3cm}
 	\begin{itemize}
-	\item Resolver el sistema lineal $A\mathbf{U}=\mathbf{F}$ donde:
+	\item Solve the linear system $A\mathbf{U}=\mathbf{F}$ where:
 	\vspace*{0.3cm}
 	\begin{itemize}
-		\item $A=\left(A_{i j}\right)_{i, j\in\left\{1,2,\ldots,N_h\right\}}$ con $A_{i j}=a(\varphi_j,\varphi_i)$;
-		\item $\mathbf{U}=\left(U_1,U_2,\ldots,U_{N_h}\right)^t$ con $u_h=\displaystyle\sum_{i=1}^{N_h}U_i\varphi_i$;
-		\item $\mathbf{F}=\left(F_1,F_2,\ldots,F_{N_h}\right)^t$ con $F_i=L\left(\varphi_i\right)$.
+		\item $A=\left(A_{i j}\right)_{i, j\in\left\{1,2,\ldots,N_h\right\}}$ with $A_{i j}=a(\varphi_j,\varphi_i)$;
+		\item $\mathbf{U}=\left(U_1,U_2,\ldots,U_{N_h}\right)^t$ with $u_h=\displaystyle\sum_{i=1}^{N_h}U_i\varphi_i$;
+		\item $\mathbf{F}=\left(F_1,F_2,\ldots,F_{N_h}\right)^t$ with $F_i=L\left(\varphi_i\right)$.
 	\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -234,64 +238,65 @@ donde $f\in L^2\left(\Omega\right)$.
 	
 % \end{frame}
 
-\begin{frame}{Elemento finito unisolvente}
+\begin{frame}{Unisolvent finite element}
 
 \begin{definicion}
-	Denominamos \structure{\textbf{elemento finito unisolvente}} a la terna $\alert{\left(K,\mathcal{P},\Sigma\right)}$ donde
+	The triple $\alert{\left(K,\mathcal{P},\Sigma\right)}$ is said to be an \structure{\textbf{unisolvent finite element}} if
 	\begin{itemize}
-		\item $K\subseteq \R^d$ es un compacto con interior no vacío y frontera de Lipschitz;
-		\item $\mathcal{P}$ es un espacio de funciones $p\colon K\longrightarrow\R$ finito-dimensional de dimensión $N_\mathcal{P}$;
-		\item $\Sigma=\left\{\sigma_1,\sigma_2,\ldots,\sigma_{N_\mathcal{P}}\right\}\subseteq\mathcal{L}\left(\mathcal{P},\R\right)$ es tal que
+		\item $K\subseteq \R^d$ (\textbf{element domain}) is a compact subset with nonempty interior and Lipschitz-continuous boundary;
+		\item $\mathcal{P}$ is a finite-dimensional space of functions $p\colon K\longrightarrow\R$ of dimension $N_\mathcal{P}$ (\textbf{shape functions});
+		\item $\Sigma=\left\{\sigma_1,\sigma_2,\ldots,\sigma_{N_\mathcal{P}}\right\}\subseteq\mathcal{L}\left(\mathcal{P},\R\right)$ (\textbf{nodal basis}) is such that
 		\begin{align*}
 		\sigma\colon\mathcal{P}&\longrightarrow \R^{N_\mathcal{P}}\\
 		p&\longmapsto \left(\sigma_1(p),\sigma_2(p),\ldots,\sigma_{N_\mathcal{P}}(p)\right)
 		\end{align*}
-		es biyectiva.
+		is bijective.
 	\end{itemize}
 \end{definicion}
 
 \end{frame}
 
-\begin{frame}{Malla de $\bar{\Omega}$}
+\begin{frame}{Mesh of $\bar{\Omega}$}
 
 \begin{definicion}
-	Una \structure{\textbf{malla}} de $\bar{\Omega}$ es un conjunto $\alert{\mathcal{T}_h}$ de $d$-símplices $\left(K_i\right)_{i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}}$ no degenerados que satisfacen:
+	A \structure{\textbf{mesh}} of $\bar{\Omega}$ is a set $\alert{\mathcal{T}_h}$ of non-degenerated $d$-simplices $\left(K_i\right)_{i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}}$ that satisfy:
 	\begin{itemize}
-		\item $K_i\subseteq\bar\Omega$ para todo $i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}$;
-		\item $\text{int}\left(K_i\right)\cap\text{int}\left(K_j\right)=\varnothing$ para $i,j\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}$ con $i\neq j$;
+		\item $K_i\subseteq\bar\Omega$ for every $i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}$;
+		\item $\text{int}\left(K_i\right)\cap\text{int}\left(K_j\right)=\varnothing$ for $i,j\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}$ with $i\neq j$;
 		\item $\displaystyle \bigcup_{i=1}^{N_{\mathcal{T}_h}} K_i=\bar\Omega$.
 	\end{itemize}	
-	La malla es \structure{\textbf{conforme}} si además verifica que:
+	The mesh is \structure{\textbf{conforming}} if it also satisfies that:
 	\begin{itemize}
-		\item $K_i\cap K_j$ para $i,j\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}$ con $i\neq j$ es un $m$-símplice con $m\in\left\{0,1,\ldots,d-1 \right\}$ cuyos vértices son también de $K_i$ y $K_j$.
+		\item $K_i\cap K_j$ for $i,j\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}$ with $i\neq j$ is an $m$-simplex with $m\in\left\{0,1,\ldots,d-1 \right\}$ whose vertices are also in $K_i$ and $K_j$.
 	\end{itemize}
 \end{definicion}
 
 \end{frame}
 
-\begin{frame}{Elementos finitos de Lagrange}
+\begin{frame}{Lagrange finite elements}
 	\scriptsize
 \begin{definicion}
-	Sea $\left(K,\mathcal{P},\Sigma\right)$ un elemento finito unisolvente. Si existen un conjunto de puntos $\{a_1,a_2,\ldots,a_{N_\mathcal{P}}\}\subset K$ tales que para todo $p\in\mathcal{P}$ se verifica que $$\sigma_i(p)=p(a_i)\quad\text{para todo}\quad i\in\{1,2,\ldots,N_{\mathcal{P}}\},$$ llamamos a la terna $\alert{\left(K,\mathcal{P},\Sigma\right)}$ \structure{\textbf{elemento finito de Lagrange}}.
+	Let $\left(K,\mathcal{P},\Sigma\right)$ be an unisolvent finite element. Assume that there is a set of points $\{a_1,a_2,\ldots,a_{N_\mathcal{P}}\}\subset K$ such that for every $p\in\mathcal{P}$ they verify $$\sigma_i(p)=p(a_i)\quad\text{for every}\quad i\in\{1,2,\ldots,N_{\mathcal{P}}\},$$ then the triple $\alert{\left(K,\mathcal{P},\Sigma\right)}$ is named \structure{\textbf{Lagrange finite element}}.
 	
-	Los puntos $\{a_1,a_2,\ldots,a_{N_\mathcal{P}}\}$ de llaman \structure{\textbf{nodos del elemento finito}} y la base de Lagrange definida como $$B_L\coloneqq\left\{L_i\in\mathbb{P}_k\colon L_i(a_j)=\delta_{ij}\quad\forall i,j\in\{1,2,\ldots,N_\mathcal{P}\} \right\}$$ se denomina \structure{\textbf{base nodal}} de $\mathcal{P}$.
+	The points $\{a_1,a_2,\ldots,a_{N_\mathcal{P}}\}$ are named \structure{\textbf{finite element nodes}} and the Lagrange basis defined as $$B_L\coloneqq\left\{L_i\in\mathbb{P}_k\colon L_i(a_j)=\delta_{ij}\quad\forall i,j\in\{1,2,\ldots,N_\mathcal{P}\} \right\}$$ is named \structure{\textbf{nodal basis}} of $\mathcal{P}$.
 \end{definicion}
-En la práctica: \structure{\textbf{elementos finitos simpliciales de Lagrange}}.
+In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 
 \begin{block}{}
 	\begin{center}
-	$V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathcal{P}_i \text{ con } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}$
+	$V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathcal{P}_i \text{ with } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}$
 	\end{center}
 	\end{block}
 	
 	
-	Generalmente $\mathcal{P}_i=\mathbb{P}_k(K_i)$.
+	Generally $\mathcal{P}_i=\mathbb{P}_k(K_i)$.
 \end{frame}
 
 \begin{frame}{Error analysis}
+	We consider
 	\begin{block}{}
 		\begin{center}
-		$V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathbb{P}_k(K_i) \text{ con } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}$
+		{\small $V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathbb{P}_k(K_i) \text{ con } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}$}
 		\end{center}
 	\end{block}
 
@@ -309,20 +314,19 @@ En la práctica: \structure{\textbf{elementos finitos simpliciales de Lagrange}}
 
 \subsection{Hyperbolic problem}
 
-\begin{frame}{Problema modelo}
-	Consideramos el problema de convección-reacción:
+\begin{frame}{Model problem}
+	We consider the convection-reaction problem:
 	\begin{block}{}
 	\begin{equation*}
-	\label{prob_modelo_hiperbolica}
 	\left\{
 	\begin{aligned}
-	\beta\cdot\nabla u+\mu u&=f & \text{en } &\Omega, \\
-	u&=0 & \text{en } &\partial\Omega^-,
+	\beta\cdot\nabla u+\mu u&=f & \text{in } &\Omega, \\
+	u&=0 & \text{on } &\partial\Omega^-,
 	\end{aligned}
 	\right.
 	\end{equation*}
 	\end{block}
-	donde 
+	where 
 	\begin{itemize}
 		\item $\partial\Omega^-=\left\{x\in\partial\Omega\colon \beta(x)\mathbf{n}(x)<0\right\},$
 		\item $\mu\in L^\infty(\Omega)$,
@@ -330,103 +334,103 @@ En la práctica: \structure{\textbf{elementos finitos simpliciales de Lagrange}}
 		\item $f\in L^2(\Omega)$.
 	\end{itemize}
 	\vspace*{.5cm}
-	Asumimos que existe $\mu_0>0$ tal que $\displaystyle\mu-\frac{1}{2}\nabla\cdot\beta\geq\mu_0$ en $\Omega$.
+	We assume that there is $\mu_0>0$ such that $\displaystyle\mu-\frac{1}{2}\nabla\cdot\beta\geq\mu_0$ in $\Omega$.
 	
 	\end{frame}
 	
-	\begin{frame}{Espacio de los grafos}
+	\begin{frame}{Graph space}
 	
 	\begin{definicion}
-	Se define el \structure{\textbf{espacio de los grafos}} como $$\alert{V}\coloneqq\left\{v\in L^2(\Omega)\colon\beta\cdot\nabla v\in L^2(\Omega) \right\},$$
+	We define the \structure{\textbf{graph space}} such as $$\alert{V}\coloneqq\left\{v\in L^2(\Omega)\colon\beta\cdot\nabla v\in L^2(\Omega) \right\},$$
 	which is a Hilbert space with the norm:
 	$$
 	\norma{v}_V=\sqrt{\norma{v}_{L^2(\Omega)}^2+\norma{\beta\cdot\nabla v}_{L^2(\Omega)^d}}^2.
 	$$
 	\end{definicion}
-	
-	\begin{definicion}
-	Se define el \structure{\textbf{espacio de Lebesgue con peso}} $$\alert{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}\coloneqq\left\{v\text{ es medible en }\Omega\colon\int_{\partial\Omega}|\beta\cdot\mathbf{n}|v^2<\infty \right\}$$ y la norma $\forall v\in L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)$ como $$\alert{\norma{v}_{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}}\coloneqq\norma{\sqrt{|\beta\cdot\mathbf{n}|}v}_{L^2(\partial\Omega)}.$$
-	\end{definicion}
 	\end{frame}
-	\begin{frame}{Trazas e integración por partes}
-	\begin{lemma}[Trazas e integración por partes]
-	La aplicación traza
+	
+	\begin{frame}[allowframebreaks]{Traces and integration by parts}
+		\begin{definicion}
+			We define the \structure{\textbf{weighted Lebesgue space}} $$\alert{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}\coloneqq\left\{v\text{ is measurable in }\Omega\colon\int_{\partial\Omega}|\beta\cdot\mathbf{n}|v^2<\infty \right\}$$ and the norm $\forall v\in L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)$ as $$\alert{\norma{v}_{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}}\coloneqq\norma{\sqrt{|\beta\cdot\mathbf{n}|}v}_{L^2(\partial\Omega)}.$$
+			\end{definicion}
+	\begin{lemma}[Traces and integration by parts]
+	The trace mapping
 	\begin{align*}
 	\alert{\gamma}\colon {C}^0(\bar{\Omega})&\to L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)\\
 	v	&\mapsto\alert{\gamma(v)}\coloneqq v_{|_{\partial\Omega}}.
 	\end{align*}
-	se extiende por continuidad a $V$.
+	is extended by continuity to a continuous linear mapping of $V$ into $L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)$.
 	 
-	Existe una constante $C>0$ tal que $\forall v\in V$ tenemos que $$\norma{\gamma(v)}_{L^2(|\beta\cdot\mathbf{n}|;\partial \Omega)}\leq C\norma{v}_V.$$
+	% Existe una constante $C>0$ tal que $\forall v\in V$ tenemos que $$\norma{\gamma(v)}_{L^2(|\beta\cdot\mathbf{n}|;\partial \Omega)}\leq C\norma{v}_V.$$
 	
-	Se verifica $\forall v,w\in V$ la siguiente fórmula de integración por partes: $$\int_\Omega\left[(\beta\cdot\nabla v)w+(\beta\cdot\nabla w)v+(\nabla\cdot\beta)vw\right]=\int_{\partial\Omega}(\beta\cdot \mathbf{n})\gamma(v)\gamma(w).$$
+	Moreover, for every $v,w\in V$ it holds the following integration by parts formula: $$\int_\Omega\left[(\beta\cdot\nabla v)w+(\beta\cdot\nabla w)v+(\nabla\cdot\beta)vw\right]=\int_{\partial\Omega}(\beta\cdot \mathbf{n})\gamma(v)\gamma(w).$$
 	\end{lemma}
 	
 	\end{frame}
 	
-	\begin{frame}{Formulación variacional continua}
-	\textbf{Espacio de soluciones}: $\alert{V}$ (espacio de los grafos).
+	\begin{frame}{Continuous variational formulation}
+	\textbf{Space of solutions}: $\alert{V}$ (graph space).
 	\begin{itemize}\itemsep1em
 		\item $a\colon V\times V\to \R$, $$\alert{a(u,v)}\coloneqq\int_\Omega(\beta\cdot\nabla u)v+\int_\Omega\mu u v+\int_{\partial\Omega}(\beta\mathbf{n})^-uv;$$
 		\item $L\colon V\to\R$, $$\alert{L(v)}\coloneqq\int_\Omega f v.$$
 	\end{itemize}
-	\textbf{Problema variacional}:
+	\textbf{Variational problem}:
 	\begin{block}{}
 		\begin{center}
-			$\text{encontrar }u\in V\text{ tal que }a(u,v)=L(v)\text{ para todo } v\in V.$
+			$\text{find }u\in V\text{ such that }a(u,v)=L(v)\text{ for every } v\in V.$
 		\end{center}
 	\end{block}
 	
-	\begin{itemize}\itemsep1em
+	\begin{itemize}%\itemsep1em
 		\item In this case, $a(\cdot,\cdot)$ is \alert{not coercive in $V$}.
-		\item El problema modelo y su formulación variacional son \alert{equivalentes} en $V$.
-		\item Existe solución y es única.
+		\item The model problem and its variational formulation are \alert{equivalent} in $V$.
+		\item There is a unique solution.
 	\end{itemize}
 	
 	\end{frame}
 
 \subsubsection{Numerical approximation}
 
-\begin{frame}{Método de Galerkin}
+\begin{frame}{Galerkin method}
 	\begin{block}{}
 	\begin{center}
-	Elegir $\alert{V_h\subseteq V}$ finito-dimensional con base $\left\{\varphi_i\right\}_{i\in\left\{1,2,\ldots,N_h \right\}}$
+	Choose $\alert{V_h\subseteq V}$ finite-dimensional with a basis $\left\{\varphi_i\right\}_{i\in\left\{1,2,\ldots,N_h \right\}}$
 	\end{center}
 	\end{block}
 	
 	\vspace*{-0.3cm}
 	\begin{itemize}
-	\item Encontrar $u\in V$ tal que $a(u,v)=L(v)$ para todo $v\in V$.
+	\item Find $u\in V$ such that $a(u,v)=L(v)$ for every $v\in V$.
 	\end{itemize}
 	\vspace*{0.1cm}
 	$$\Big{\downarrow}$$
 	\vspace*{-0.3cm}
 	\begin{itemize}
-	\item Encontrar $u_h\in V_h$ tal que $a(u_h,v_h)=L(v_h)$ para todo $v_h\in V_h$.
+	\item Choose $u_h\in V_h$ such that $a(u_h,v_h)=L(v_h)$ for every $v_h\in V_h$.
 	\end{itemize}
 	\vspace*{0.1cm}
 	$$\Big{\Updownarrow}$$
 	\vspace*{-0.3cm}
 	\begin{itemize}
-	\item Resolver el sistema lineal $A\mathbf{U}=\mathbf{F}$ donde:
+	\item Solve the linear system $A\mathbf{U}=\mathbf{F}$ where:
 	\vspace*{0.3cm}
 	\begin{itemize}
-		\item $A=\left(A_{i j}\right)_{i, j\in\left\{1,2,\ldots,N_h\right\}}$ con $A_{i j}=a(\varphi_j,\varphi_i)$;
-		\item $\mathbf{U}=\left(U_1,U_2,\ldots,U_{N_h}\right)^t$ con $u_h=\displaystyle\sum_{i=1}^{N_h}U_i\varphi_i$;
-		\item $\mathbf{F}=\left(F_1,F_2,\ldots,F_{N_h}\right)^t$ con $F_i=L\left(\varphi_i\right)$.
+		\item $A=\left(A_{i j}\right)_{i, j\in\left\{1,2,\ldots,N_h\right\}}$ with $A_{i j}=a(\varphi_j,\varphi_i)$;
+		\item $\mathbf{U}=\left(U_1,U_2,\ldots,U_{N_h}\right)^t$ with $u_h=\displaystyle\sum_{i=1}^{N_h}U_i\varphi_i$;
+		\item $\mathbf{F}=\left(F_1,F_2,\ldots,F_{N_h}\right)^t$ with $F_i=L\left(\varphi_i\right)$.
 	\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Error analysis}
-	\begin{block}{}
-		In this case, the-non coercitivity of $a(\cdot,\cdot)$ implies that, in general, we cannot have error estimates of the type:
+	\begin{block}{Remark}
+		In this case, the-non coercivity of $a(\cdot,\cdot)$ implies that, in general, we cannot have error estimates of the type:
 		$$
 		\norma{u-u_h}_V\le c h^s,
 		$$
 		for some $c,s>0$.
 
-		\vspace*{1cm}
+		\vspace*{0.5cm}
 		$\Longrightarrow$ \alert{The error may not decrease!!}
 	\end{block}
 \end{frame}
@@ -437,11 +441,10 @@ En la práctica: \structure{\textbf{elementos finitos simpliciales de Lagrange}}
 
 	\subsection{Elliptic problem}
 
-	\begin{frame}{Problema elíptico}
-		Consideramos el problema de Poisson:
+	\begin{frame}{Elliptic problem}
+		Consider the Poisson problem:
 		\begin{block}{}
 		\begin{equation*}
-		\label{prob_modelo_Poisson}
 		\left\{
 		\begin{aligned}
 		-\Delta u&=f & \text{en } &\Omega, \\
@@ -450,62 +453,66 @@ En la práctica: \structure{\textbf{elementos finitos simpliciales de Lagrange}}
 		\right.
 		\end{equation*}
 		\end{block}
-		donde $f\in L^2\left(\Omega\right)$.
-		\end{frame}
+		where $f\in L^2\left(\Omega\right)$.
+	\end{frame}
 
 	\subsubsection{Numerical approximation}
 
-\begin{frame}[allowframebreaks]{Espacios de Sobolev rotos}
+\begin{frame}[allowframebreaks]{Broken Sobolev spaces}
+
+{\small
 \begin{definicion}
-	Definimos para $m\in\N\cup\{0\}$ y $1\leq p\leq+\infty$ el \structure{\textbf{espacio de Sobolev roto}}
+	Let $m\in\N\cup\{0\}$ and $1\leq p\leq+\infty$ the \structure{\textbf{broken Sobolev space}} is defined as
 	$$\alert{W^{m,p}(\T_h)}\coloneqq\left\{v\in L^p(\Omega)\colon \forall K\in\T_h, v_{|_K}\in W^{m,p}(K)\right\}$$
-	con la norma
+	with the norm
 	$\displaystyle\alert{\norma{v}_{W^{m,p}(\T_h)}}\coloneqq\left(\sum_{K\in\T_h} \norma{v}^p_{W^{m,p}(K)}\right)^{1/p}.$
-	Asimismo, se define el espacio
+	
+	Moreover, for $p=2$ the space is denoted by
 	$$\alert{H^m(\mathcal{T}_h)}\coloneqq W^{m,2}(\T_h)= \left\{v\in L^2(\Omega)\colon \forall K\in\T_h, v_{|_K}\in H^m(K) \right\}$$
-	con la norma
+	with the norm
 	$\displaystyle\alert{\norma{v}_{H^m(\T_h)}}\coloneqq \left(\sum_{K\in\T_h}\norma{v}^2_{H^m(K)} \right)^{1/2}.$
 \end{definicion}
-\framebreak
+}
+
 \begin{definicion}
-	El \structure{\textbf{gradiente roto}} $\nabla_h\colon H^1(\T_h)\to (L^2(\Omega))^d$ se define tal que $\forall v\in H^1(\T_h)$, $$\alert{(\nabla_h v)_{|_T}}\coloneqq\nabla(v_{|_T})\text{ para todo } T\in\T_h.$$
+	The \structure{\textbf{broken gradient}} $\nabla_h\colon H^1(\T_h)\to (L^2(\Omega))^d$ is defined $\forall v\in H^1(\T_h)$ as $$\alert{(\nabla_h v)_{|_T}}\coloneqq\nabla(v_{|_T})\text{ para todo } T\in\T_h.$$
 \end{definicion}
 
 \begin{lemma}
 	\label{lemma:inclusion_sobolev}
-	Sea $m\in\N\cup\{0\}$ y sea $1\leq p\leq+\infty$. Se tiene que $\alert{W^{m,p}(\Omega)\subset W^{m,p}(\T_h)}$. Más aún, para todo $v\in W^{1,p}(\Omega)$ se verifica que $\nabla_h v=\nabla v$ en $\left(L^p(\Omega)\right)^d$.
+	Let $m\in\N\cup\{0\}$ and $1\leq p\leq+\infty$. It holds that $\alert{W^{m,p}(\Omega)\subset W^{m,p}(\T_h)}$. In addition, every $v\in W^{1,p}(\Omega)$ satisfies that $\nabla_h v=\nabla v$ in $\left(L^p(\Omega)\right)^d$.
 \end{lemma}
-\end{frame}
 
-\begin{frame}{Otro espacio roto}
+% \begin{frame}{Otro espacio roto}
 \begin{definicion}
-	Se define el espacio roto $$\alert{H(\text{div};\T_h)}\coloneqq\left\{\tau\in(L^2(\Omega))^d\colon \forall T\in\T_h, \tau_{|_T}\in H(\text{div};T)\right\}$$ y el \structure{\textbf{operador divergencia roto}} $\nabla_h\cdot\colon H(\text{div};\T_h)\to L^2(\Omega)$ tal que para todo $\tau\in H(\text{div};\T_h)$ se tiene que $$(\nabla_h\cdot\tau)_{|_T}\coloneqq \nabla\cdot(\tau_{|_T})\text{ para todo }T\in\T_h.$$
+	We define the broken space $$\alert{H(\text{div};\T_h)}\coloneqq\left\{\tau\in(L^2(\Omega))^d\colon \forall T\in\T_h, \tau_{|_T}\in H(\text{div};T)\right\}$$ and the \structure{\textbf{broken divergence operator}} $\nabla_h\cdot\colon H(\text{div};\T_h)\to L^2(\Omega)$ such that for every $\tau\in H(\text{div};\T_h)$ it holds that $$(\nabla_h\cdot\tau)_{|_T}\coloneqq \nabla\cdot(\tau_{|_T})\text{ for every }T\in\T_h.$$
 \end{definicion}
 
 \end{frame}
 
-\begin{frame}{Saltos y medias}
+\begin{frame}{Jumps and averages}
+	\scriptsize
 \begin{itemize}
-	\item $\alert{\E_h^i}\subset\Omega$ es el conjunto de los $(d-1)$-símplices interiores a la malla $\T_h$;
-	\item $\alert{\E_h^b}\subset\partial\Omega$ es el conjunto de los $(d-1)$-símplices en la frontera de la malla $\T_h$.
+	\item $\alert{\E_h^i}\subset\Omega$ is the set of the interior $(d-1)$-simplices of the mesh $\T_h$;
+	\item $\alert{\E_h^b}\subset\partial\Omega$ is the set of the $(d-1)$-simplices on the boundary of the set $\T_h$.
 \end{itemize}
 
 \begin{definicion}
-	Sean $K_1,K_2\in\T_h$ dos elementos de la malla.
+	Let $K_1,K_2\in\T_h$ two elements of the mesh.
 	
 	\begin{itemize}
-		\item Si $e=K_1\cap K_2\in \E_h^i$ definimos para todo $v\in H^m(\T_h)$ con $m\in\N$
+		\item If $e=K_1\cap K_2\in \E_h^i$ we define for every $v\in H^m(\T_h)$ with $m\in\N$
 		
 		\begin{itemize}\itemsep1em
-			\item \structure{\textbf{salto}}: $\alert{\salto{v}_e}\coloneqq v_{|_{K_1^e}}-v_{|_{K_{2}^e}}$;
-			\item \structure{\textbf{media}}: $\alert{\media{v}_e}\coloneqq \dfrac{1}{2}\left(v_{|_{K_1^e}}+v_{|_{K_{2}^e}}\right) $.
+			\item \structure{\textbf{jump}}: $\alert{\salto{v}_e}\coloneqq v_{|_{K_1^e}}-v_{|_{K_{2}^e}}$;
+			\item \structure{\textbf{average}}: $\alert{\media{v}_e}\coloneqq \dfrac{1}{2}\left(v_{|_{K_1^e}}+v_{|_{K_{2}^e}}\right) $.
 		\end{itemize}
 		
-		\item Si $e=K_1\cap \partial\Omega\in \E_h^b$ definimos para todo $v\in H^m(\T_h)$ con $m\in\N$
+		\item If $e=K_1\cap \partial\Omega\in \E_h^b$ we define for every $v\in H^m(\T_h)$ with $m\in\N$
 		
 		\begin{itemize}\itemsep1em
-			\item \structure{\textbf{salto}}: $\alert{\salto{v}_e}\coloneqq v_{|_{K_1^e}}$;
-			\item \structure{\textbf{media}}: $\alert{\media{v}_e}\coloneqq v_{|_{K_1^e}}$.
+			\item \structure{\textbf{jump}}: $\alert{\salto{v}_e}\coloneqq v_{|_{K_1^e}}$;
+			\item \structure{\textbf{average}}: $\alert{\media{v}_e}\coloneqq v_{|_{K_1^e}}$.
 		\end{itemize}
 		
 	\end{itemize}
@@ -513,34 +520,35 @@ En la práctica: \structure{\textbf{elementos finitos simpliciales de Lagrange}}
 \end{definicion}
 \end{frame}
 
-\begin{frame}{Caracterización de espacios de Sobolev}
+\begin{frame}{Sobolev spaces characterization}
 
-\begin{lemma}[Caracterización de $W^{1,p}(\Omega)$]
+\begin{lemma}[$W^{1,p}(\Omega)$ characterization]
 	\label{lemma:caracterizacion_sobolev}
-	Sea $1\leq p\leq \infty$. Una función $v\in W^{1,p}(\T_h)$ pertenece a $W^{1,p}(\Omega)$ si y sólo si $\salto{v}=0$ para todo $e\in\E_h^i$.
+	Let $1\leq p\leq \infty$. A function $v\in W^{1,p}(\T_h)$ belongs to $W^{1,p}(\Omega)$ if and only if $\salto{v}=0$ for every $e\in\E_h^i$.
 \end{lemma}
 
-\begin{lemma}[Caracterización de $H(\text{div};\Omega)$]
-	Una función $\tau\in H(\text{div};\T_h)\cap \left[W^{1,1}(\T_h)\right]^d$ pertenece a $H(\text{div};\Omega)$ si y solo si $\salto{\tau\cdot\mathbf{n}_e}=0$ para todo $e\in\E_h^i$.
+\begin{lemma}[$H(\text{div};\Omega)$ characterization]
+	A function $\tau\in H(\text{div};\T_h)\cap \left[W^{1,1}(\T_h)\right]^d$ belongs to $H(\text{div};\Omega)$ if and only if $\salto{\tau\cdot\mathbf{n}_e}=0$ for every $e\in\E_h^i$.
 \end{lemma}
 
 \end{frame}
 
-\begin{frame}{Espacio finito-dimensional}
-\textbf{Espacio finito dimensional}:$$\alert{\mathbb{P}_k^d(\T_h)}\coloneqq\left\{v_h\in L^2(\Omega)\colon v_{h|_{K_i}}\in\mathbb{P}_k(K_i)\text{ con } K_i\in\T_h,\forall i\in\left\{1,2,\ldots,N_{\T_h}\right\}\right\}$$ con base $\left\{\phi_i\right\}_{i=1}^{N_h^{\text{sip}}}$.
+\begin{frame}{Finite-dimensional space}
+\textbf{Finite-dimensional space}:{\small $$\alert{\mathbb{P}_k^d(\T_h)}\coloneqq\left\{v_h\in L^2(\Omega)\colon v_{h|_{K_i}}\in\mathbb{P}_k(K_i)\text{ con } K_i\in\T_h,\forall i\in\left\{1,2,\ldots,N_{\T_h}\right\}\right\}$$ with the basis $\left\{\phi_i\right\}_{i=1}^{N_h^{\text{sip}}}$.}
 \vspace*{1cm}
 
-Denotamos
+We denote
 \begin{itemize}\itemsep1em
 \item $\S_h\coloneqq\mathbb{P}_k^d(\T_h)$,
 \item $\S_{*h}\coloneqq H^1_0(\Omega)\cap H^2(\Omega)+\S_h$.
 \end{itemize}
 \vspace*{1cm}
 \pause
-$\alert{\mathbb{P}_k^d(\T_h)\not\subset H_0^1(\Omega)}$ (espacio no conforme \alert{!!})
+$\alert{\mathbb{P}_k^d(\T_h)\not\subset H_0^1(\Omega)}$ (non-conforming space \alert{!!})
 \end{frame}
 
-\begin{frame}{Método de Penalización Interior Simétrico}
+\begin{frame}{Symmetric Interior Penalty Method}
+	\scriptsize
 \begin{itemize}\itemsep1em
 	\item $a_h^{\text{sip}}:\S_{*h}\times \S_h\to\R$,
 	\begin{equation*}
@@ -550,81 +558,84 @@ $\alert{\mathbb{P}_k^d(\T_h)\not\subset H_0^1(\Omega)}$ (espacio no conforme \al
 	\end{aligned}
 	\end{equation*}
 	\begin{itemize}
-		\item<2> \myframed{Fórmula de integracion por partes}
-		\item<3> \myframed{Simetría}
-		\item<4> \myframed{Coercitividad}
+		\item<2> \myframed{Integration by parts formula}
+		\item<3> \myframed{Symmetry}
+		\item<4> \myframed{Coercivity}
 	\end{itemize}
 	\item $L_h:\S_h\to\R$, $\displaystyle \alert{L_h(v_h)}\coloneqq \int_\Omega f v_h.$
 \end{itemize}
 
 \end{frame}
 
-\begin{frame}{Problema discreto}
+\begin{frame}{Discrete problem}
 
 \begin{itemize}
-\item $\text{Encontrar }u_h\in\S_h\text{ tal que }\asip{u_h}{v_h}=L_h(v_h)\text{ para todo }v_h\in\S_h.$
+\item $\text{Find }u_h\in\S_h\text{ such that }\asip{u_h}{v_h}=L_h(v_h)\text{ for every }v_h\in\S_h.$
 \end{itemize}
 \vspace*{0.1cm}
 $$\Big{\Updownarrow}$$
 \vspace*{-0.3cm}
 \begin{itemize}
-\item Resolver el sistema lineal $A^{\text{sip}}\mathbf{U}^{\text{sip}}=\mathbf{F}^{\text{sip}}$ donde:
+\item Solve the linear system $A^{\text{sip}}\mathbf{U}^{\text{sip}}=\mathbf{F}^{\text{sip}}$ where:
 \vspace*{0.3cm}
 \begin{itemize}
-	\item $A^{\text{sip}}=\left(A_{ij}^{\text{sip}}\right)_{i,j\in\left\{1,2,\ldots,N_h^{\text{sip}}\right\}}$ con $A_{ij}^{\text{sip}}=\asip{\phi_j}{\phi_i}$;
-	\item $\mathbf{U}^{\text{sip}}=\left(U_1^{\text{sip}},U_2^{\text{sip}},\ldots,U_{N_h^{\text{sip}}}^{\text{sip}}\right)^t$ con $u_h=\displaystyle\sum_{i=1}^{N_h^{\text{sip}}}U_i^{\text{sip}}\phi_i$;
-	\item $\mathbf{F}^{\text{sip}}=\left(F_1^{\text{sip}},F_2^{\text{sip}},\ldots,F_{N_h^{\text{sip}}}^{\text{sip}}\right)^t$ con $F_i^{\text{sip}}=L_h(\phi_i)$.
+	\item $A^{\text{sip}}=\left(A_{ij}^{\text{sip}}\right)_{i,j\in\left\{1,2,\ldots,N_h^{\text{sip}}\right\}}$ with $A_{ij}^{\text{sip}}=\asip{\phi_j}{\phi_i}$;
+	\item $\mathbf{U}^{\text{sip}}=\left(U_1^{\text{sip}},U_2^{\text{sip}},\ldots,U_{N_h^{\text{sip}}}^{\text{sip}}\right)^t$ with $u_h=\displaystyle\sum_{i=1}^{N_h^{\text{sip}}}U_i^{\text{sip}}\phi_i$;
+	\item $\mathbf{F}^{\text{sip}}=\left(F_1^{\text{sip}},F_2^{\text{sip}},\ldots,F_{N_h^{\text{sip}}}^{\text{sip}}\right)^t$ with $F_i^{\text{sip}}=L_h(\phi_i)$.
 \end{itemize}
 \end{itemize}
 
 \vspace*{0.3cm}
-El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Omega)\cap H^2(\Omega)$.
+The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Omega)\cap H^2(\Omega)$.
 
 \end{frame}
 
-\subsubsection{Buen planteamiento y análisis de errores}
+% \subsubsection{Buen planteamiento y análisis de errores}
 
-\begin{frame}[allowframebreaks]{Propiedades del problema discreto}
+\begin{frame}[allowframebreaks]{Properties of the discrete problem}
 
 \begin{definicion}
-	Definimos para todo $u\in\S_{*h}$ la norma
+	Let $u\in\S_{*h}$, we define the norm
 	\begin{equation*}
 	\norma{u}_{\text{sip}}\coloneqq\escalarsip{u}{u}^{1/2}=\left(\norma{\nabla_h u}^2_{[L^2(\Omega)]^d}+\left|u\right|^2_{\text{s}}\right)^{1/2}
 	\end{equation*}
-	donde
+	where
 	\begin{equation*}
 	\left|u\right|_{\text{s}}\coloneqq \left(\sum_{e\in\E_h}\frac{1}{h_e}\escalar{\salto{u}}{\salto{u}}_{L^2(e)}\right)^{1/2}=\left(\sum_{e\in\E_h}\frac{1}{h_e}\norma{\salto{u}}^2_{L^2(e)}\right)^{1/2}
 	\end{equation*}
-	es la \textbf{seminorma de salto}.
+	is the \textbf{jump seminorm}.
 \end{definicion}
 \framebreak
+{\small
 \begin{lemma}
-	Existe $C>0$ tal que $$\asip{u_h}{v_h}\leq C\norma{u_h}_{\text{sip}}\normasip{v_h}\text{ para todos }u_h,v_h\in\mathbb{P}_k^d(\T_h).$$ Por tanto, $\asip{\cdot}{\cdot}$ es continua en $\S_h\times\S_h$.
+	There is $C>0$ such that $$\asip{u_h}{v_h}\leq C\norma{u_h}_{\text{sip}}\normasip{v_h}\text{ for every }u_h,v_h\in\mathbb{P}_k^d(\T_h).$$ Therefore, $\asip{\cdot}{\cdot}$ is continuous in $\S_h\times\S_h$.
 \end{lemma}
 
 \begin{lemma}
 	\label{lemma:eliptico_coercitividad}
-	Existe $\sigma_0>0$ tal que si $\sigma>\sigma_0$ entonces existe $C(\sigma)>0$ tal que $$\asip{u_h}{u_h}\geq C(\sigma)\norma{u_h}_{\text{sip}}^2\text{ para todo }u_h\in\mathbb{P}_k^d(\T_h).$$ Por tanto, $\asip{\cdot}{\cdot}$ es coercitiva en $\S_h\times\S_h$.
+	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ then there exists $C(\sigma)>0$ such that $$\asip{u_h}{u_h}\geq C(\sigma)\norma{u_h}_{\text{sip}}^2\text{ para todo }u_h\in\mathbb{P}_k^d(\T_h).$$ Therefore, $\asip{\cdot}{\cdot}$ is coercive in $\S_h\times\S_h$.
 \end{lemma}
+}
 \framebreak
 \begin{lemma}
 	\label{lemma:buen_planteamiento_form_var_DG_elpitica}
-	Existe $\sigma_0>0$ tal que si $\sigma>\sigma_0$ entonces el problema de encontrar $u_h\in\S_h$ tal que $$\asip{u_h}{v_h}=L_h(v_h)$$ para todo $v_h\in\S_h$ tiene solución y es única.
+	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ then the problem of finding $u_h\in\S_h$ such that $$\asip{u_h}{v_h}=L_h(v_h)$$ for every $v_h\in\S_h$ has a unique solution.
 \end{lemma}
-\textbf{Demostraciones}:
-\begin{enumerate}
-	\item Lax-Milgram.
-	\item Unicidad de solución.
-\end{enumerate}
+% \textbf{Demostraciones}:
+% \begin{enumerate}
+% 	\item Lax-Milgram.
+% 	\item Unicidad de solución.
+% \end{enumerate}
 
 \end{frame}
 
-\begin{frame}{Análisis de errores}
+\begin{frame}{Error analysis}
+\small
 \begin{theorem}
 	\label{theorem:eliptico_orden_norma_SIP}
-	Sea $u\in H^{k+1}(\Omega)$, $k\in\N$, la solución de la formulación variacional continua. Sea $u_h\in\mathbb{P}_d^k(\T_h)$ la solución del problema discreto.
+	Let $u\in H^{k+1}(\Omega)$, $k\in\N$, be the solution of the continuous variational formulation. Let $u_h\in\mathbb{P}_d^k(\T_h)$ be the solution of the discrete problem.
 	
-	Existe $\sigma_0>0$ tal que si $\sigma>\sigma_0$ existe $C>0$ (independiente de $h$) tal que $$\norma{u-u_h}_{\text{sip}}\leq C\norma{u}_{H^{k+1}(\Omega)}h^k.$$
+	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ there is $C>0$ (independent of $h$) so that $$\norma{u-u_h}_{\text{sip}}\leq C\norma{u}_{H^{k+1}(\Omega)}h^k.$$
 \end{theorem}
 
 %\begin{lemma}[Desigualdad del tipo Poincaré para la norma $\norma{\cdot}_{\text{sip}}$]
@@ -635,16 +646,16 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 
 \begin{theorem}
 	\label{corolario:eliptico_orden_norma_L2}
-	Supongamos $d\in\{2,3\}$. Sea $u\in H^{k+1}(\Omega)$, $k\in\N$, la solución de la formulación variacional continua. Sea $u_h\in\mathbb{P}_d^k(\T_h)$ la solución del problema discreto.
+	Assume $d\in\{2,3\}$. Let $u\in H^{k+1}(\Omega)$, $k\in\N$ be the solution of the continuous variational formulation. Let $u_h\in\mathbb{P}_d^k(\T_h)$ the solution of the discrete problem.
 	
-	Existe $\sigma_0>0$ tal que si $\sigma>\sigma_0$ existe $C>0$ (independiente de $h$) tal que $$\norma{u-u_h}_{L^2(\Omega)}\leq C\norma{u}_{H^{k+1}(\Omega)}h^k.$$
+	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ there exists $C>0$ (independent of $h$) so that $$\norma{u-u_h}_{L^2(\Omega)}\leq C\norma{u}_{H^{k+1}(\Omega)}h^k.$$
 \end{theorem}
 \end{frame}
 
 	\subsubsection{Numerical experiments}
 
-	\begin{frame}{Problema elíptico}
-		Consideramos el problema elíptico:
+	\begin{frame}{Elliptic problem}
+		We consider the elliptic problem:
 		\begin{block}{}
 		\begin{equation*}
 		\left\{
@@ -655,7 +666,7 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 		\right.
 		\end{equation*}
 		\end{block}
-		con
+		with
 		\begin{itemize}
 			\item $d=2$;
 			\item $\Omega=(0,1)\times(0,1)$;
@@ -663,84 +674,85 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 		\end{itemize}
 		\vspace*{0.3cm}
 		
-		$u_{\text{ex}}\colon\Omega\to\R$ definida como
+		$u_{\text{ex}}\colon\Omega\to\R$ defined as
 		\begin{equation*}
 		\label{sol_experimento_eliptico}
 		u_{\text{ex}}(x,y)\coloneqq x(x-1)y(y-1)
 		\end{equation*}
-		es la \alert{única solución exacta} ($\alert{u_{\text{ex}}\in H_0^1(\Omega)\cap H^2(\Omega)}$).
+		is the \alert{unique exact solution} ($\alert{u_{\text{ex}}\in H_0^1(\Omega)\cap H^2(\Omega)}$).
 		\end{frame}
 
-	\begin{frame}{Soluciones con $\sigma=4$ y $\mathbb{P}^2_1(\T_h)$}
+	\begin{frame}{Solutions with $\sigma=4$ y $\mathbb{P}^2_1(\T_h)$}
 		\begin{figure}[h!]
-			\begin{subfigure}[b]{0.215\textwidth}
+			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
 				\includegraphics[scale=0.16]{img/Difusion/Recortes/steady_diffusion_exact_n_4.png}
-				\caption{Solución exacta.}
+				\caption{\scriptsize Exact.}
 			\end{subfigure}
-			\begin{subfigure}[b]{0.215\textwidth}
+			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
 				\includegraphics[scale=0.16]{img/Difusion/Recortes/steady_diffusion_approx_n_4.png}
-				\caption{Solución discreta.}
+				\caption{\scriptsize Approx.}
 			\end{subfigure}
-			\begin{subfigure}[b]{0.11\textwidth}
+			\begin{subfigure}[b]{0.1\textwidth}
 				\centering
 				\includegraphics[scale=0.23]{img/Difusion/Recortes/steady_diffusion_values.png}
 				%\caption*{ }
 			\end{subfigure}
-			\begin{subfigure}[b]{0.215\textwidth}
+			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
 				\includegraphics[scale=0.16]{img/Difusion/Recortes/steady_diffusion_exact_n_8.png}
-				\caption{Solución exacta.}
+				\caption{\scriptsize Exact.}
 			\end{subfigure}
-			\begin{subfigure}[b]{0.215\textwidth}
+			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
 				\includegraphics[scale=0.16]{img/Difusion/Recortes/steady_diffusion_approx_n_8.png}
-				\caption{Solución discreta.}
+				\caption{\scriptsize Approx.}
 			\end{subfigure}
-			\caption{A la izquierda $h\approx\frac{1}{4}$. A la derecha $h\approx\frac{1}{8}$}
+			\caption{\scriptsize Left, $h\approx\frac{1}{4}$. Right, $h\approx\frac{1}{8}$.}
 		\end{figure}
+
 		\begin{figure}[h!]
-			\begin{subfigure}[b]{0.215\textwidth}
+			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
 				\includegraphics[scale=0.16]{img/Difusion/Recortes/steady_diffusion_exact_n_16.png}
-				\caption{Solución exacta.}
+				\caption{\scriptsize Exact.}
 			\end{subfigure}
-			\begin{subfigure}[b]{0.215\textwidth}
+			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
 				\includegraphics[scale=0.16]{img/Difusion/Recortes/steady_diffusion_approx_n_16.png}
-				\caption{Solución discreta.}
+				\caption{\scriptsize Approx.}
 			\end{subfigure}
-			\begin{subfigure}[b]{0.11\textwidth}
+			\begin{subfigure}[b]{0.1\textwidth}
 				\centering
 				\includegraphics[scale=0.23]{img/Difusion/Recortes/steady_diffusion_values.png}
 				%\caption*{ }
 			\end{subfigure}
-			\begin{subfigure}[b]{0.215\textwidth}
+			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
 				\includegraphics[scale=0.16]{img/Difusion/Recortes/steady_diffusion_exact_n_32.png}
-				\caption{Solución exacta.}
+				\caption{\scriptsize Exact.}
 			\end{subfigure}
-			\begin{subfigure}[b]{0.215\textwidth}
+			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
 				\includegraphics[scale=0.16]{img/Difusion/Recortes/steady_diffusion_approx_n_32.png}
-				\caption{Solución discreta.}
+				\caption{\scriptsize Approx.}
 			\end{subfigure}
-			\caption{A la izquierda $h\approx\frac{1}{16}$. A la derecha $h\approx\frac{1}{32}$}
+			\caption{\scriptsize Left, $h\approx\frac{1}{16}$. Right, $h\approx\frac{1}{32}$.}
 		\end{figure}
 		\end{frame}
 		
-		\begin{frame}{Errores con $\sigma=4$ y $\mathbb{P}^2_1(\T_h)$}
+		\begin{frame}{Errors with $\sigma=4$ and $\mathbb{P}^2_1(\T_h)$}
 		\begin{minipage}{0.50\textwidth}
 			\centering
 			\includegraphics[scale=0.30]{img/Difusion/errores_difusion_P1dc.png}
-			\captionof{figure}{Errores en escala logarítmica.}
+			\captionof{figure}{Errors in logarithmic scale.}
 		\end{minipage}
 		\begin{minipage}{0.49\textwidth}
 			\centering
 			\begin{tabular}{|c|c|c|}
 				\hline 
-				\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Orden} \\
+				\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Order} \\
 				\cline{2-3}
 				&  $\normasip{\cdot}$ & $\norma{\cdot}_{L^2(\Omega)}$ \\ 
 				\hline
@@ -752,17 +764,17 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 				$\frac{1}{16}\to\frac{1}{32}$ & $1.12$ & $2.19$\\
 				\hline
 			\end{tabular}
-			\captionof{table}{Orden de convergencia.}
+			\captionof{table}{Convergence order.}
 		\end{minipage}
 		\end{frame}
 		
 		
-		\begin{frame}{Errores con $\sigma=10$ y $\mathbb{P}^2_2(\T_h)$}
+		\begin{frame}{Errors with $\sigma=10$ and $\mathbb{P}^2_2(\T_h)$}
 		\begin{minipage}{0.49\textwidth}
 			\centering
 			\begin{tabular}{|c|c|c|}
 				\hline 
-				\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Orden} \\
+				\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Order} \\
 				\cline{2-3}
 				&  $\normasip{\cdot}$ & $\norma{\cdot}_{L^2(\Omega)}$ \\ 
 				\hline
@@ -774,36 +786,36 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 				$\frac{1}{16}\to\frac{1}{32}$ & $1.95$ & $2.95$\\
 				\hline
 			\end{tabular}
-			\captionof{table}{Orden de convergencia.}
+			\captionof{table}{Order of convergence.}
 		\end{minipage}
 		\begin{minipage}{0.5\textwidth}
 			\centering
 			\includegraphics[scale=0.30]{img/Difusion/errores_difusion_P2dc.png}
-			\captionof{figure}{Errores en escala logarítmica.}
+			\captionof{figure}{Errors in logarithmic scale.}
 		\end{minipage}
 		\end{frame}
 		
-		\begin{frame}{Soluciones al variar $\sigma$ con $\mathbb{P}_1^2(\T_h)$}
+		\begin{frame}{Solutions with different $\sigma$ and $\mathbb{P}_1^2(\T_h)$}
 		
 		\begin{figure}[h!]
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.20]{img/Difusion/Recortes/steady_diffusion_approx_sigma_0_01.png}
-				\caption{$\sigma=0,01$.}
+				\includegraphics[scale=0.18]{img/Difusion/Recortes/steady_diffusion_approx_sigma_0_01.png}
+				\caption{\scriptsize $\sigma=0,01$.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.20]{img/Difusion/Recortes/steady_diffusion_approx_sigma_0_5.png}
-				\caption{$\sigma=0,5$.}
+				\includegraphics[scale=0.18]{img/Difusion/Recortes/steady_diffusion_approx_sigma_0_5.png}
+				\caption{\scriptsize $\sigma=0,5$.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.20]{img/Difusion/Recortes/steady_diffusion_approx_sigma_1.png}
-				\caption{$\sigma=1$.}
+				\includegraphics[scale=0.18]{img/Difusion/Recortes/steady_diffusion_approx_sigma_1.png}
+				\caption{\scriptsize $\sigma=1$.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
-				\includegraphics[scale=0.25]{img/Difusion/Recortes/steady_diffusion_values.png}
+				\includegraphics[scale=0.23]{img/Difusion/Recortes/steady_diffusion_values.png}
 				%\caption*{ }
 			\end{subfigure}
 			%\end{figure}
@@ -811,145 +823,146 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 			%	\ContinuedFloat
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.20]{img/Difusion/Recortes/steady_diffusion_approx_sigma_2.png}
-				\caption{$\sigma=2$.}
+				\includegraphics[scale=0.18]{img/Difusion/Recortes/steady_diffusion_approx_sigma_2.png}
+				\caption{\scriptsize $\sigma=2$.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.20]{img/Difusion/Recortes/steady_diffusion_approx_sigma_3.png}
-				\caption{$\sigma=3$.}
+				\includegraphics[scale=0.18]{img/Difusion/Recortes/steady_diffusion_approx_sigma_3.png}
+				\caption{\scriptsize $\sigma=3$.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.20]{img/Difusion/Recortes/steady_diffusion_approx_sigma_4.png}
-				\caption{$\sigma=4$.}
+				\includegraphics[scale=0.18]{img/Difusion/Recortes/steady_diffusion_approx_sigma_4.png}
+				\caption{\scriptsize $\sigma=4$.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
-				\includegraphics[scale=0.25]{img/Difusion/Recortes/steady_diffusion_values.png}
+				\includegraphics[scale=0.23]{img/Difusion/Recortes/steady_diffusion_values.png}
 				%\caption*{ }
 			\end{subfigure}
-			\caption{Gráficas de soluciones discretas con $h\approx\frac{1}{32}$.}
+			\caption{\scriptsize Discrete solutions with $h\approx\frac{1}{32}$.}
 		\end{figure}
 		
 		\end{frame}
 		
-		\begin{frame}{Errores al variar $\sigma$ con $\mathbb{P}_1^2(\T_h)$}
+		\begin{frame}{Errors with different $\sigma$ and $\mathbb{P}_1^2(\T_h)$}
 			\begin{figure}[h!]
 				\centering
 				\includegraphics[scale=0.37]{img/Difusion/errores_difusion_sigma.png}
-				\caption{Errores con $h\approx\frac{1}{32}$.}
+				\caption{Errors with $h\approx\frac{1}{32}$.}
 			\end{figure}
 		\end{frame}
 
 	\subsection{Hyperbollic problem}
 	
-	\begin{frame}{Problema modelo}
-		Consideramos el problema de convección-reacción:
+	\begin{frame}{Model problem}
+		We consider the convection-reaction problem:
 		\begin{block}{}
 		\begin{equation*}
-		\label{prob_modelo_hiperbolica}
 		\left\{
 		\begin{aligned}
-		\beta\cdot\nabla u+\mu u&=f & \text{en } &\Omega, \\
-		u&=0 & \text{en } &\partial\Omega^-,
+		\beta\cdot\nabla u+\mu u&=f & \text{in } &\Omega, \\
+		u&=0 & \text{on } &\partial\Omega^-,
 		\end{aligned}
 		\right.
 		\end{equation*}
 		\end{block}
-		donde 
+		where 
 		\begin{itemize}
 			\item $\partial\Omega^-=\left\{x\in\partial\Omega\colon \beta(x)\mathbf{n}(x)<0\right\},$
 			\item $\mu\in L^\infty(\Omega)$,
-			\item $\beta\in\left[\text{Lip}(\Omega)\right]^d$,
+			\item $\beta\in\left[\text{Lip}(\Omega)\right]^d \Rightarrow \norma{\nabla\beta_i}_{L^\infty(\Omega)^d}\le C_\beta$ for some $C_\beta >0$.
 			\item $f\in L^2(\Omega)$.
 		\end{itemize}
 		\vspace*{.5cm}
-		Asumimos que existe $\mu_0>0$ tal que $\displaystyle\mu-\frac{1}{2}\nabla\cdot\beta\geq\mu_0$ en $\Omega$.
+		We assume that there is $\mu_0>0$ such that $\displaystyle\mu-\frac{1}{2}\nabla\cdot\beta\geq\mu_0$ in $\Omega$.
 		
-	\end{frame}
+		\end{frame}
 
 	\subsubsection{Numerical approximation}
 	
-	\begin{frame}{Espacio finito-dimensional}
+	\begin{frame}{Finite-dimensional space}
 	
-	\textbf{Espacio finito-dimensional}: $$V_h\coloneqq\alert{\mathbb{P}_k^d(\T_h)}$$ con base $\left\{\phi_i\right\}_{i=1}^{N_h^{\text{cf}}}$.
+	\textbf{Finite-dimensional space}: $$V_h\coloneqq\alert{\mathbb{P}_k^d(\T_h)}$$ with basis $\left\{\phi_i\right\}_{i=1}^{N_h^{\text{cf}}}$.
 	\vspace*{1cm}
 	
-	Denotamos:
+	We denote:
 	\begin{itemize}
 		\item $V_*\coloneqq V\cap H^1(\T_h)$;
 		\item $V_{*h}\coloneqq V_*+V_h$.
 	\end{itemize}
 	\end{frame}
 	
-	\begin{frame}{Método de los Flujos Centrados}
+	\begin{frame}{Centered Fluxes Method}
 	\begin{itemize}\itemsep1em
 		\item $a_h^{\text{cf}}\colon V_{*h}\times V_h\to\R$,
 		\begin{align*}
-		\alert{\acf{u}{v_h}}&\coloneqq\framedmath<2>{\displaystyle \int_\Omega(\beta\cdot\nabla_h u)v_h+\int_\Omega\mu u v_h}\\&\framedmath<3>{\displaystyle +\int_{\partial\Omega}(\beta\mathbf{n})^-uv_h}\framedmath<4>{\displaystyle -\sum_{e\in\E_h^i}\int_e(\beta\cdot\mathbf{n}_e)\salto{u}\media{v_h}};
+		\alert{\acf{u}{v_h}}&\coloneqq\framedmath<2>{\displaystyle \int_\Omega(\beta\cdot\nabla_h u)v_h+\int_\Omega\mu u v_h}\\&\framedmath<3>{\displaystyle +\int_{\partial\Omega}(\beta\cdot\mathbf{n})^\ominus uv_h}\framedmath<4>{\displaystyle -\sum_{e\in\E_h^i}\int_e(\beta\cdot\mathbf{n}_e)\salto{u}\media{v_h}},
 		\end{align*}
+		where $(w)^\ominus=\frac{\vert w\vert - w}{2}$.
+		\vspace*{0.3cm}
 		\begin{itemize}
-			\item<2> \myframed{Términos anteriores.}
-			\item<3> \myframed{Condiciones de frontera de forma débil.}
-			\item<4> \myframed{Coercitividad.}
+			\item<2> \myframed{Terms of the model.}
+			\item<3> \myframed{Weak boundary conditions.}
+			\item<4> \myframed{Coercivity.}
 		\end{itemize}
 		\item $L_h\colon V_h\to\R$, $\displaystyle \alert{L_h(v_h)}\coloneqq\int_\Omega f v_h.$
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Problema discreto}
+\begin{frame}{Discrete problem}
 	\begin{itemize}
-		\item $\text{Encontrar }u_h\in V_h\text{ tal que }\acf{u_h}{v_h}=L_h(v_h)\text{ para todo }v_h\in V_h$.
+		\item $\text{Find }u_h\in V_h\text{ such that }\acf{u_h}{v_h}=L_h(v_h)\text{ for every }v_h\in V_h$.
 	\end{itemize}
 	\vspace*{0.1cm}
 	$$\Big{\Updownarrow}$$
 	\vspace*{-0.3cm}
 	\begin{itemize}
-		\item Resolver el sistema lineal $A^{\text{cf}}\mathbf{U}^{\text{cf}}=\mathbf{F}^{\text{cf}}$ donde:
+		\item Solve the linear system $A^{\text{cf}}\mathbf{U}^{\text{cf}}=\mathbf{F}^{\text{cf}}$ where:
 		\vspace*{0.3cm}
 		\begin{itemize}
-			\item $A^{\text{cf}}=\left(A_{ij}^{\text{cf}}\right)_{i,j\in\left\{1,2,\ldots,N_h^{\text{cf}}\right\}}$ con $A_{ij}^{\text{cf}}=\acf{\phi_j}{\phi_i}$;
-			\item $\mathbf{U}^{\text{cf}}=\left(U_1^{\text{cf}},U_2^{\text{cf}},\ldots,U_{N_h^{\text{cf}}}^{\text{cf}}\right)^t$ con $u_h=\displaystyle\sum_{i=1}^{N_h^{\text{cf}}}U_i^{\text{cf}}\phi_i$;
-			\item $\mathbf{F}^{\text{cf}}=\left(F_1^{\text{cf}},F_2^{\text{cf}},\ldots,F_{N_h^{\text{cf}}}^{\text{cf}}\right)^t$ con $F_i^{\text{cf}}=L_h(\phi_i)$.
+			\item $A^{\text{cf}}=\left(A_{ij}^{\text{cf}}\right)_{i,j\in\left\{1,2,\ldots,N_h^{\text{cf}}\right\}}$ with $A_{ij}^{\text{cf}}=\acf{\phi_j}{\phi_i}$;
+			\item $\mathbf{U}^{\text{cf}}=\left(U_1^{\text{cf}},U_2^{\text{cf}},\ldots,U_{N_h^{\text{cf}}}^{\text{cf}}\right)^t$ with $u_h=\displaystyle\sum_{i=1}^{N_h^{\text{cf}}}U_i^{\text{cf}}\phi_i$;
+			\item $\mathbf{F}^{\text{cf}}=\left(F_1^{\text{cf}},F_2^{\text{cf}},\ldots,F_{N_h^{\text{cf}}}^{\text{cf}}\right)^t$ with $F_i^{\text{cf}}=L_h(\phi_i)$.
 		\end{itemize}
 	\end{itemize}
 	
 	\vspace*{0.3cm}
-	El problema discreto es consistente con el problema modelo en $V_*$.
+	The model problem and the discrete problem are \alert{equivalent} in $H^1(\Omega)$.
 	
 	\end{frame}
 	
-	\begin{frame}[allowframebreaks]{Propiedades del problema discreto}
+	\begin{frame}[allowframebreaks]{Properties of the discrete problem}
 	\begin{definicion}
-		En el espacio $V_{*h}$ se define la norma $\normacf{\cdot}\colon V_{*h}\to\R$ como $$\normacf{u}\coloneqq\escalarcf{u}{u}^{1/2}= \left(\max\{\norma{\mu}_{L^\infty(\Omega)},C_\beta\}\norma{u}_{L^2(\Omega)}^2+\frac{1}{2}\norma{u}_{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}^2\right)^{1/2}.$$
+		In the space $V_{*h}$ we define the norm $\normacf{\cdot}\colon V_{*h}\to\R$ as {\small $$\normacf{u}\coloneqq\escalarcf{u}{u}^{1/2}= \left(\max\{\norma{\mu}_{L^\infty(\Omega)},C_\beta\}\norma{u}_{L^2(\Omega)}^2+\frac{1}{2}\norma{u}_{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}^2\right)^{1/2}.$$}
 	\end{definicion}
 	\framebreak
 	\begin{lemma}
-		La forma bilineal $\acf{\cdot}{\cdot}$ es continua en $V_h$ con la norma $\normacf{\cdot}$, esto es, existe $C>0$ tal que para todos $u_h,v_h\in V_h$ se verifica que $$\acf{u_h}{v_h}\leq C\normacf{u_h}\normacf{v_h}.$$
+		The bilinear form $\acf{\cdot}{\cdot}$ is continuous in $V_h$ with the norm $\normacf{\cdot}$, i.e., there is $C>0$ such that for every $u_h,v_h\in V_h$ it holds that $$\acf{u_h}{v_h}\leq C\normacf{u_h}\normacf{v_h}.$$
 	\end{lemma}
 	
 	\begin{lemma}
-		La forma bilineal $\acf{\cdot}{\cdot}$ es coercitiva en $V_h$ con la norma $\normacf{\cdot}$, esto es, existe $C>0$ tal que para todo $v_h\in V_h$ se verifica que $$\acf{v_h}{v_h}\geq C\normacf{v_h}^2.$$
+		The bilinear form $\acf{\cdot}{\cdot}$ is coercitive in $V_h$ with the norm $\normacf{\cdot}$, i.e., there is $C>0$ such that for every $v_h\in V_h$ it holds that $$\acf{v_h}{v_h}\geq C\normacf{v_h}^2.$$
 	\end{lemma}
 	\framebreak
 	\begin{lemma}
-		El problema de encontrar $u_h\in V_h$ tal que $$\acf{u_h}{v_h}=L_h(v_h)$$ para todo $v_h\in V_h$ tiene solución y es única.
+		There is a unique solution $u_h\in V_h$ of the discrete problem $$\acf{u_h}{v_h}=L_h(v_h)$$ for every $v_h\in V_h$.
 	\end{lemma}
-	\textbf{Demostraciones}:
-	\begin{enumerate}
-		\item Lax-Milgram.
-		\item Unicidad de solución.
-	\end{enumerate}
+	% \textbf{Demostraciones}:
+	% \begin{enumerate}
+	% 	\item Lax-Milgram.
+	% 	\item Unicidad de solución.
+	% \end{enumerate}
 	
 	\end{frame}
 	
-	\begin{frame}{Análisis de errores}
+	\begin{frame}{Error analysis}
 	\begin{theorem}
 		\label{theorem:hiperbolico_CF_orden_norma_CF}
-		Sea $u\in H^{k+1}(\Omega)$, $k\in\N$ la solución del problema modelo y sea $u_h\in \mathbb{P}_k^d(\T_h)$ la solución del problema discreto.
+		Let $u\in H^{k+1}(\Omega)$, $k\in\N$ be the solution of the model problem and $u_h\in \mathbb{P}_k^d(\T_h)$ the solution of the discrete problem.
 		
-		Entonces existe $C>0$ independiente de $h$ y dependiente de los datos únicamente a través del factor $\left(\min\{1,\max\{\norma{\mu}_{L^\infty(\Omega)},C_\beta\}\mu_0\}\right)^{-1}$ tal que
+		Then, there is $C>0$ independent of $h$ and depending on the data only through the factor $\left(\min\{1,\max\{\norma{\mu}_{L^\infty(\Omega)},C_\beta\}\mu_0\}\right)^{-1}$ so that
 		\begin{equation*}
 		\label{theorem:orden_convergencia_CF}
 		\normacf{u-u_h}\leq C\norma{u}_{H^{k+1}(\Omega)}h^k.
@@ -957,13 +970,13 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 	\end{theorem}
 	\end{frame}
 	
-	\begin{frame}{Método de Aguas Arriba}
+	\begin{frame}{Upwind Method}
 	
 	\begin{itemize}\itemsep1em
 		\item $a_h^{\text{upw}}\colon V_{*h}\times V_h\to \R$, $$\alert{\aupw{u}{v_h}}\coloneqq \framedmath<2>{\displaystyle \acf{u}{v_h}}+\framedmath<3>{\displaystyle \sum_{e\in\E_h^i}\int_e\frac{\eta}{2}|\beta\cdot\mathbf{n}_e|\salto{u}\salto{v_h}};$$
 		\begin{itemize}
-			\item<2> \myframed{Método de los Flujos Centrados.}
-			\item<3> \myframed{Estabilidad.}
+			\item<2> \myframed{Centered Fluxes Method.}
+			\item<3> \myframed{Stability.}
 		\end{itemize}
 		\item $L_h\colon V_h\to\R$, $\displaystyle \alert{L_h(v_h)}\coloneqq\int_\Omega f v_h.$
 	\end{itemize}
@@ -972,61 +985,61 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 	\begin{frame}{Problema discreto}
 	
 	\begin{itemize}
-		\item $\text{Encontrar }u_h\in V_h\text{ tal que }\aupw{u_h}{v_h}=L_h(v_h)\text{ para todo }v_h\in V_h$.
+		\item $\text{Find }u_h\in V_h\text{ such that }\aupw{u_h}{v_h}=L_h(v_h)\text{ for every }v_h\in V_h$.
 	\end{itemize}
 	\vspace*{0.1cm}
 	$$\Big{\Updownarrow}$$
 	\vspace*{-0.3cm}
 	\begin{itemize}
-		\item Resolver el sistema lineal $A^{\text{upw}}\mathbf{U}^{\text{upw}}=\mathbf{F}^{\text{upw}}$ donde:
+		\item Solve the linear system $A^{\text{upw}}\mathbf{U}^{\text{upw}}=\mathbf{F}^{\text{upw}}$ where:
 		\vspace*{0.3cm}
 		\begin{itemize}
-			\item $A^{\text{upw}}=\left(A_{ij}^{\text{upw}}\right)_{i,j\in\left\{1,2,\ldots,N_h^{\text{upw}}\right\}}$ con $A_{ij}^{\text{upw}}=\aupw{\phi_j}{\phi_i}$;
-			\item $\mathbf{U}^{\text{upw}}=\left(U_1^{\text{upw}},U_2^{\text{upw}},\ldots,U_{N_h^{\text{upw}}}^{\text{upw}}\right)^t$ con $u_h=\displaystyle\sum_{i=1}^{N_h^{\text{upw}}}U_i^{\text{upw}}\phi_i$;
-			\item $\mathbf{F}^{\text{upw}}=\left(F_1^{\text{upw}},F_2^{\text{upw}},\ldots,F_{N_h^{\text{upw}}}^{\text{upw}}\right)^t$ con $F_i^{\text{upw}}=L_h(\phi_i)$.
+			\item $A^{\text{upw}}=\left(A_{ij}^{\text{upw}}\right)_{i,j\in\left\{1,2,\ldots,N_h^{\text{upw}}\right\}}$ with $A_{ij}^{\text{upw}}=\aupw{\phi_j}{\phi_i}$;
+			\item $\mathbf{U}^{\text{upw}}=\left(U_1^{\text{upw}},U_2^{\text{upw}},\ldots,U_{N_h^{\text{upw}}}^{\text{upw}}\right)^t$ with $u_h=\displaystyle\sum_{i=1}^{N_h^{\text{upw}}}U_i^{\text{upw}}\phi_i$;
+			\item $\mathbf{F}^{\text{upw}}=\left(F_1^{\text{upw}},F_2^{\text{upw}},\ldots,F_{N_h^{\text{upw}}}^{\text{upw}}\right)^t$ with $F_i^{\text{upw}}=L_h(\phi_i)$.
 		\end{itemize}
 	\end{itemize}
 	
 	\vspace*{0.3cm}
-	El problema discreto es consistente con el problema modelo en $V_*$.
+	The model problem and the discrete problem are \alert{equivalent} in $H^1(\Omega)$.
 	
 	\end{frame}
 	
-	\begin{frame}[allowframebreaks]{Propiedades del problema discreto}
+	\begin{frame}[allowframebreaks]{Properties of the discrete problem}
 	\begin{definicion}
-		En el espacio $V_{*h}$ se define la norma $\normaupw{\cdot}\colon V_{*h}\to\R$ como $$\normaupw{u}\coloneqq\escalarupw{u}{u}^{1/2}= \left(\normacf{u}^2+\frac{\eta}{2}\sum_{e\in\E_h^i}\norma{\salto{u}}^2_{L^2(|\beta\cdot\mathbf{n}_e|;e)} \right)^{1/2}.$$
+		In the space $V_{*h}$ we define the norm $\normaupw{\cdot}\colon V_{*h}\to\R$ as $$\normaupw{u}\coloneqq\escalarupw{u}{u}^{1/2}= \left(\normacf{u}^2+\frac{\eta}{2}\sum_{e\in\E_h^i}\norma{\salto{u}}^2_{L^2(|\beta\cdot\mathbf{n}_e|;e)} \right)^{1/2}.$$
 	\end{definicion}
 	\framebreak
 	\begin{lemma}
-		La forma bilineal $\aupw{\cdot}{\cdot}$ es continua en $V_h$ con la norma $\normaupw{\cdot}$, esto es, existe $C>0$ tal que para todos $u_h,v_h\in V_h$ se verifica que $$\aupw{u_h}{v_h}\leq C\normaupw{u_h}\normaupw{v_h}.$$
+		The bilinear form $\aupw{\cdot}{\cdot}$ is continuous in $V_h$ with the norm $\normaupw{\cdot}$, i.e., there is $C>0$ such that for every $u_h,v_h\in V_h$ it holds that $$\aupw{u_h}{v_h}\leq C\normaupw{u_h}\normaupw{v_h}.$$
 	\end{lemma}
 	
 	\begin{proposition}
-		La forma bilineal $\aupw{\cdot}{\cdot}$ es coercitiva en $V_h$ con la norma $\normaupw{\cdot}$, esto es, existe $C>0$ tal que para todo $v_h\in V_h$ se verifica que $$\aupw{v_h}{v_h}\geq C\normaupw{v_h}^2.$$
+		The bilinear form $\aupw{\cdot}{\cdot}$ is coercive in $V_h$ with the norm $\normaupw{\cdot}$, i.e., there is $C>0$ such that for every $v_h\in V_h$ it holds that $$\aupw{v_h}{v_h}\geq C\normaupw{v_h}^2.$$
 	\end{proposition}
 	\framebreak
 	\begin{lemma}
-		El problema de encontrar $u_h\in V_h$ tal que $$\aupw{u_h}{v_h}=L_h(v_h)$$ para todo $v_h\in V_h$ tiene solución y es única.
+		There is a unique solution $u_h\in V_h$ of the discrete problem $$\aupw{u_h}{v_h}=L_h(v_h)$$ for every $v_h\in V_h$.
 	\end{lemma}
-	\textbf{Demostraciones}:
-	\begin{enumerate}
-		\item Lax-Milgram.
-		\item Unicidad de solución.
-	\end{enumerate}
+	% \textbf{Demostraciones}:
+	% \begin{enumerate}
+	% 	\item Lax-Milgram.
+	% 	\item Unicidad de solución.
+	% \end{enumerate}
 	\end{frame}
 	
-	\begin{frame}{Análisis de errores}
+	\begin{frame}{Error analysis}
 	\begin{theorem}
-		\label{theorem:hiperbolico_UPW_orden_norma_UPW}
-		Sea $u\in H^{k+1}(\Omega)$, $k\in\N$ la solución del problema modelo y sea $u_h\in \mathbb{P}_k^d(\T_h)$ la solución del problema discreto.
+		Let $u\in H^{k+1}(\Omega)$, $k\in\N$ the solution of the model problem and $u_h\in \mathbb{P}_k^d(\T_h)$ the solution of the discrete problem.
 		
-		Entonces existe $C>0$ independiente de $h$ y dependiente de los datos únicamente a través del factor $\left(\min\{1,\max\{\norma{\mu}_{L^\infty(\Omega)},C_\beta\}\mu_0\}\right)^{-1}$ tal que $$\normaupw{u-u_h}\leq C\norma{u}_{H^{k+1}(\Omega)}h^{k+1/2}.$$
+		Then, there is $C>0$ independent of $h$ and depending on the data only through the factor  $\left(\min\{1,\max\{\norma{\mu}_{L^\infty(\Omega)},C_\beta\}\mu_0\}\right)^{-1}$ such that $$\normaupw{u-u_h}\leq C\norma{u}_{H^{k+1}(\Omega)}h^{k+1/2}.$$
 	\end{theorem}
 \end{frame}
 
 	\subsubsection{Numerical experiments}
-	\begin{frame}{Problema hiperbólico}
-		Consideramos el problema hiperbólico:
+	\begin{frame}{Hyperbolic problem}
+		\scriptsize
+		We consider the hyperbolic problem:
 		\begin{block}{}
 		\begin{equation*}
 		\left\{
@@ -1037,7 +1050,7 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 		\right.
 		\end{equation*}
 		\end{block}
-		con
+		with
 		\begin{itemize}
 			\item $d=2$;
 			\item $\Omega=\left\{(x,y)\in\R^2\colon x^2+y^2<1 \right\}$;
@@ -1048,130 +1061,130 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 		\end{itemize}
 		
 		\vspace*{0.3cm}
-		$u_{\text{ex}}\colon\Omega\to\R$ definida como
+		$u_{\text{ex}}\colon\Omega\to\R$ defined as
 		\begin{equation*}
 		\label{sol_experimento_hiperbolico}
 		\uex (x,y)\coloneqq e^{-A\left((x-x_0)^2+(y-y_0)^2\right)}
 		\end{equation*}
-		es la \alert{única solución exacta} ($\alert{u_\text{ex}\in V}$).
+		is the \alert{unique exact solution} ($\alert{u_\text{ex}\in V}$).
 		
 		\end{frame}
 		
-		\begin{frame}{Soluciones con $\mathbb{P}_1^2(\T_h)$}
+		\begin{frame}{Solutions with $\mathbb{P}_1^2(\T_h)$}
 		\vspace{-0.2cm}
 		\begin{figure}[h!]
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_32.png}
-				\caption{Solución exacta.}
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_32.png}
+				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_32.png}
-				\caption{Flujos Centrados.}
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_32.png}
+				\caption{Centered fluxes.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_32.png}
-				\caption{Aguas Arriba.}
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_32.png}
+				\caption{Upwind.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
 				%\caption*{ }
 			\end{subfigure}
-			\caption{Gráficas obtenidas con $h\approx\frac{\pi}{16}$.}
+			\caption{Solutions obtained with $h\approx\frac{\pi}{16}$.}
 		\end{figure}
 		\vspace{-0.7cm}
 		\begin{figure}[h!]
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_64.png}
-				\caption{Solución exacta.}
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_64.png}
+				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_64.png}
-				\caption{Flujos Centrados.}
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_64.png}
+				\caption{Centered fluxes.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_64.png}
-				\caption{Aguas Arriba.}
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_64.png}
+				\caption{Upwind.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
 				%\caption*{ }
 			\end{subfigure}
-			\caption{Gráficas obtenidas con $h\approx\frac{\pi}{32}$.}
+			\caption{Solutions obtained with $h\approx\frac{\pi}{32}$.}
 		\end{figure}
 		\end{frame}
 		
-		\begin{frame}{Soluciones con $\mathbb{P}_1^2(\T_h)$}
+		\begin{frame}{Solutions with $\mathbb{P}_1^2(\T_h)$}
 		\vspace{-0.2cm}
 		\begin{figure}[h!]
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
 				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_128.png}
-				\caption{Solución exacta.}
+				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
 				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_128.png}
-				\caption{Flujos Centrados.}
+				\caption{Centered fluxes.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
 				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_128.png}
-				\caption{Aguas Arriba.}
+				\caption{Upwind.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
 				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
 				%\caption*{ }
 			\end{subfigure}
-			\caption{Gráficas obtenidas con $h\approx\frac{\pi}{64}$.}
+			\caption{Solutions obtained with $h\approx\frac{\pi}{64}$.}
 		\end{figure}
 		\vspace{-0.7cm}
 		\begin{figure}[h!]
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
 				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_256.png}
-				\caption{Solución exacta.}
+				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
 				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_256.png}
-				\caption{Flujos Centrados.}
+				\caption{Centered fluxes.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
 				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_256.png}
-				\caption{Aguas Arriba.}
+				\caption{Upwind.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
 				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
 				%\caption*{ }
 			\end{subfigure}
-			\caption{Gráficas obtenidas con $h\approx\frac{\pi}{128}$.}
+			\caption{Solutions obtained with $h\approx\frac{\pi}{128}$.}
 		\end{figure}
 		\end{frame}
 		
-		\begin{frame}{Errores con $\mathbb{P}_1^2(\T_h)$}
+		\begin{frame}{Errors with $\mathbb{P}_1^2(\T_h)$}
 		\hspace{-0.3cm}
 		\begin{minipage}{0.5\textwidth}
 			\centering
 			\includegraphics[scale=0.30]{img/Conveccion_Reaccion/errores_conveccion_reaccion_P1dc.png}
-			\captionof{figure}{Errores en escala logarítmica.}
+			\captionof{figure}{Errors in logarithmic scale.}
 		\end{minipage}
 		\begin{minipage}{0.49\textwidth}
-			\small
+			\scriptsize
 			\centering
 				\begin{tabular}{|c|c|c|c|}
 					\hline
-					\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Orden} & \multirow{2}{*}{Método}\\
+					\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Order} & \multirow{2}{*}{Method}\\
 					\cline{2-3}
 					& $\norma{\cdot}_*$ & $\norma{\cdot}_{L^2(\Omega)}$ & \\ 
 					\hline
@@ -1202,19 +1215,19 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 					\hline
 				\end{tabular}
 			%\captionof{table}{Orden de convergencia en cada iteración para ambos métodos en normas $\normacf{\cdot}$ o $\normaupw{\cdot}$ y $\norma{\cdot}_{L^2(\Omega)}$ con espacio discreto $\mathbb{P}^2_1(\T_h)$.}
-			\captionof{table}{Orden de convergencia.}
+			\captionof{table}{Order of convergence.}
 		\end{minipage}
 		
 		\end{frame}
 		
-		\begin{frame}{Errores con $\mathbb{P}_2^2(\T_h)$}
+		\begin{frame}{Errors with $\mathbb{P}_2^2(\T_h)$}
 		\hspace*{-0.5cm}
-		\begin{minipage}{0.49\textwidth}
-			\small
+		\begin{minipage}{0.48\textwidth}
+			\scriptsize
 			\centering
 				\begin{tabular}{|c|c|c|c|}
 					\hline
-					\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Orden} & \multirow{2}{*}{Método}\\
+					\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Orden} & \multirow{2}{*}{Method}\\
 					\cline{2-3}
 					& $\norma{\cdot}_*$ & $\norma{\cdot}_{L^2(\Omega)}$ & \\ 
 					\hline
@@ -1245,14 +1258,37 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 					\hline
 				\end{tabular}
 			%\captionof{table}{Orden de convergencia en cada iteración para ambos métodos en normas $\normacf{\cdot}$ o $\normaupw{\cdot}$ y $\norma{\cdot}_{L^2(\Omega)}$ con espacio discreto $\mathbb{P}^2_2(\T_h)$.}
-			\captionof{table}{Orden de convergencia.}
+			\captionof{table}{Order of convergence.}
 		\end{minipage}
 		\hspace*{0.35cm}
-		\begin{minipage}{0.5\textwidth}
+		\begin{minipage}{0.48\textwidth}
 			\centering
 			\includegraphics[scale=0.30]{img/Conveccion_Reaccion/errores_conveccion_reaccion_P2dc.png}
-			\captionof{figure}{Errores en escala logarítmica.}
+			\captionof{figure}{Errors in logarithmic scale.}
 		\end{minipage}
+		\end{frame}
+
+	\section{Nontrivial examples}
+		\begin{frame}{Properties of upwind $\mathbb{P}_0(\T_h)$ DG methods}
+		Generalizing the upwind DG approximation and using $\mathbb{P}_0(\T_h)$ we have been able to develop approximations of several models that satisfy: 
+		\vspace*{0.5cm}
+			\begin{itemize}\itemsep1em
+				\item Local mass conservation.
+				\item Bound preserving.
+				\item Energy stability.
+			\end{itemize}
+		\end{frame}
+
+		\begin{frame}{Advective Cahn-Hilliard equation}
+			
+		\end{frame}
+
+		\begin{frame}{Keller-Segel model}
+			
+		\end{frame}
+
+		\begin{frame}{Phase-field tumor model}
+			
 		\end{frame}
 
 \begin{frame}{References}
@@ -1270,12 +1306,9 @@ El problema modelo y el problema discreto son \alert{equivalentes} en $H_0^1(\Om
 		\emph{Thanks for your attention!}}
 	
 	\vspace*{0.5cm}
-	\emph{Happy birthday Giuseppe!}
 	
 	\vspace*{1cm}
 	\begin{acknowledgements}
 		The speaker has been supported by a \textit{Graduate Scholarship funded by the University of Tennessee at Chattanooga}; by \textit{UCA FPU contract UCA/REC14VPCT/2020, Erasmus+ KA131 and travel grants funded by Universidad de Cádiz}.
-		
-		The collaborators have been supported by \textit{Grant US-4931381261 (US/JUNTA/FEDER, UE)}.
 	\end{acknowledgements}
 \end{frame}
