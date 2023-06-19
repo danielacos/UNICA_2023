@@ -311,6 +311,114 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 \end{frame}
 
 \subsubsection{Numerical experiments}
+\begin{frame}{Elliptic problem}
+	We consider the elliptic problem:
+	\begin{block}{}
+	\begin{equation*}
+	\left\{
+	\begin{aligned}
+	-\Delta u&=f & \text{en } &\Omega, \\
+	u&=0 & \text{en } &\partial\Omega,
+	\end{aligned}
+	\right.
+	\end{equation*}
+	\end{block}
+	with
+	\begin{itemize}
+		\item $d=2$;
+		\item $\Omega=(0,1)\times(0,1)$;
+		\item $f\colon\Omega\to\R$, $f(x,y)\coloneqq2y(y-1) + 2x(x-1)$.
+	\end{itemize}
+	\vspace*{0.3cm}
+	
+	$u_{\text{ex}}\colon\Omega\to\R$ defined as
+	\begin{equation*}
+	\label{sol_experimento_eliptico}
+	u_{\text{ex}}(x,y)\coloneqq x(x-1)y(y-1)
+	\end{equation*}
+	is the \alert{unique exact solution} ($\alert{u_{\text{ex}}\in H_0^1(\Omega)\cap H^2(\Omega)}$).
+	\end{frame}
+
+\begin{frame}{Solutions with $\mathbb{P}_1$ ($h\approx 1/4$)}
+	\begin{figure}[h!]
+		\begin{subfigure}{0.49\textwidth}
+			\centering
+			\includegraphics[scale=0.2]{img/Difusion/diff_u_ex_nx-4.png}
+			\caption{Exact.}
+		\end{subfigure}
+		\begin{subfigure}{0.49\textwidth}
+			\centering
+			\includegraphics[scale=0.2]{img/Difusion/diff_u_FE_nx-4.png}
+			\caption{Approx.}
+		\end{subfigure}
+	\end{figure}
+	\end{frame}
+	\begin{frame}{Solutions with $\mathbb{P}_1$ ($h\approx 1/32$)}
+		\begin{figure}[h!]
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{img/Difusion/diff_u_ex_nx-32.png}
+				\caption{Exact.}
+			\end{subfigure}
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{img/Difusion/diff_u_FE_nx-32.png}
+				\caption{Approx.}
+			\end{subfigure}
+		\end{figure}
+	\end{frame}
+
+\begin{frame}{Errors with $\mathbb{P}^2_1$}
+	\begin{minipage}{0.50\textwidth}
+		\centering
+		\includegraphics[scale=0.30]{img/Difusion/errores_difusion_P1c.png}
+		\captionof{figure}{Errors in logarithmic scale.}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\begin{tabular}{|c|c|c|}
+			\hline 
+			\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Order} \\
+			\cline{2-3}
+			 & $\norma{\cdot}_{H^1(\Omega)}$ & $\norma{\cdot}_{L^2(\Omega)}$\\ 
+			\hline
+			\hline
+			$\frac{1}{4}\to\frac{1}{8}$ & $0.99$ & $1.98$  \\ 
+			\hline 
+			$\frac{1}{8}\to\frac{1}{16}$ & $0.99$ & $1.99$ \\ 
+			\hline 
+			$\frac{1}{16}\to\frac{1}{32}$ & $0.99$ & $2.00$ \\
+			\hline
+		\end{tabular}
+		\captionof{table}{Convergence order.}
+	\end{minipage}
+	\end{frame}
+
+	\begin{frame}{Errors with $\mathbb{P}^2_2$}
+		\begin{minipage}{0.50\textwidth}
+			\centering
+			\includegraphics[scale=0.30]{img/Difusion/errores_difusion_P2c.png}
+			\captionof{figure}{Errors in logarithmic scale.}
+		\end{minipage}
+		\begin{minipage}{0.49\textwidth}
+			\centering
+			\begin{tabular}{|c|c|c|}
+				\hline 
+				\multirow{2}{*}{$h$} & \multicolumn{2}{c|}{Order} \\
+				\cline{2-3}
+				 & $\norma{\cdot}_{H^1(\Omega)}$ & $\norma{\cdot}_{L^2(\Omega)}$\\ 
+				\hline
+				\hline
+				$\frac{1}{4}\to\frac{1}{8}$ & $2.17$ & $3.22$  \\ 
+				\hline 
+				$\frac{1}{8}\to\frac{1}{16}$ & $2.08$ & $3.12$ \\ 
+				\hline 
+				$\frac{1}{16}\to\frac{1}{32}$ & $2.02$ & $3.03$ \\
+				\hline
+			\end{tabular}
+			\captionof{table}{Convergence order.}
+		\end{minipage}
+		\end{frame}
 
 \subsection{Hyperbolic problem}
 
@@ -344,7 +452,7 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 	We define the \structure{\textbf{graph space}} such as $$\alert{V}\coloneqq\left\{v\in L^2(\Omega)\colon\beta\cdot\nabla v\in L^2(\Omega) \right\},$$
 	which is a Hilbert space with the norm:
 	$$
-	\norma{v}_V=\sqrt{\norma{v}_{L^2(\Omega)}^2+\norma{\beta\cdot\nabla v}_{L^2(\Omega)^d}}^2.
+	\norma{v}_V=\sqrt{\norma{v}_{L^2(\Omega)}^2+\norma{\beta\cdot\nabla v}_{L^2(\Omega)^d}^2}.
 	$$
 	\end{definicion}
 	\end{frame}
@@ -431,11 +539,78 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 		for some $c,s>0$.
 
 		\vspace*{0.5cm}
-		$\Longrightarrow$ \alert{The error may not decrease!!}
+		$\Longrightarrow$ \alert{The error may not decrease in norm $\norma{\cdot}_{V}$!!}
+		\vspace*{0.5cm}
+
+		\textbf{Reminder:}
+		$$
+		\norma{v}_V=\sqrt{\norma{v}_{L^2(\Omega)}^2+\norma{\beta\cdot\nabla v}_{L^2(\Omega)^d}^2}.
+		$$
 	\end{block}
 \end{frame}
 
 \subsubsection{Numerical experiments}
+
+\begin{frame}{Hyperbolic problem}
+	\scriptsize
+	We consider the hyperbolic problem:
+	\begin{block}{}
+	\begin{equation*}
+	\left\{
+	\begin{aligned}
+	\beta\cdot\nabla u+\mu u&=f & \text{en } &\Omega, \\
+	u&=0 & \text{en } &\partial\Omega^-,
+	\end{aligned}
+	\right.
+	\end{equation*}
+	\end{block}
+	with
+	\begin{itemize}
+		\item $d=2$;
+		\item $\Omega=\left\{(x,y)\in\R^2\colon x^2+y^2<1 \right\}$;
+		\item $A=10$, $x_0=y_0=0.3$;
+		\item $\mu=2A$;
+		\item $\beta(x,y)\coloneqq10^6(y,-x)$;
+		\item $f\colon\Omega\to\R$, $f(x,y)\coloneqq 1000\mu e^{-100A\left((x-x_0)^2+(y-y_0)^2\right)}(100(x_0 y -x y_0) + 1)$.
+	\end{itemize}
+	
+	\vspace*{0.3cm}
+	$u_{\text{ex}}\colon\Omega\to\R$ defined as
+	\begin{equation*}
+	\uex (x,y)\coloneqq 1000e^{-100A\left((x-x_0)^2+(y-y_0)^2\right)}
+	\end{equation*}
+	is the \alert{unique exact solution} ($\alert{u_\text{ex}\in V}$).
+	
+	\end{frame}
+
+\begin{frame}{Solutions with $\mathbb{P}_1$ ($h\approx \pi/32$)}
+	\begin{figure}[h!]
+		\begin{subfigure}{0.49\textwidth}
+			\centering
+			\includegraphics[scale=0.2]{img/Conveccion_Reaccion/strong/conv_react_u_ex_nx-64.png}
+			\caption{Exact.}
+		\end{subfigure}
+		\begin{subfigure}{0.49\textwidth}
+			\centering
+			\includegraphics[scale=0.2]{img/Conveccion_Reaccion/strong/conv_react_u_FE_nx-64.png}
+			\caption{Approx.}
+		\end{subfigure}
+	\end{figure}
+	\end{frame}
+	\begin{frame}{Solutions with $\mathbb{P}_1$ ($h\approx \pi/128$)}
+		\begin{figure}[h!]
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/strong/conv_react_u_ex_nx-256.png}
+				\caption{Exact.}
+			\end{subfigure}
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/strong/conv_react_u_FE_nx-256.png}
+				\caption{Approx.}
+			\end{subfigure}
+		\end{figure}
+	\end{frame}
 
 \section{Discontinuous Galerkin methods}
 
@@ -613,7 +788,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 
 \begin{lemma}
 	\label{lemma:eliptico_coercitividad}
-	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ then there exists $C(\sigma)>0$ such that $$\asip{u_h}{u_h}\geq C(\sigma)\norma{u_h}_{\text{sip}}^2\text{ para todo }u_h\in\mathbb{P}_k^d(\T_h).$$ Therefore, $\asip{\cdot}{\cdot}$ is coercive in $\S_h\times\S_h$.
+	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ then there exists $C(\sigma)>0$ such that $$\asip{u_h}{u_h}\geq C(\sigma)\norma{u_h}_{\text{sip}}^2\text{ for every }u_h\in\mathbb{P}_k^d(\T_h).$$ Therefore, $\asip{\cdot}{\cdot}$ is coercive in $\S_h\times\S_h$.
 \end{lemma}
 }
 \framebreak
@@ -648,7 +823,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 	\label{corolario:eliptico_orden_norma_L2}
 	Assume $d\in\{2,3\}$. Let $u\in H^{k+1}(\Omega)$, $k\in\N$ be the solution of the continuous variational formulation. Let $u_h\in\mathbb{P}_d^k(\T_h)$ the solution of the discrete problem.
 	
-	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ there exists $C>0$ (independent of $h$) so that $$\norma{u-u_h}_{L^2(\Omega)}\leq C\norma{u}_{H^{k+1}(\Omega)}h^k.$$
+	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ there exists $C>0$ (independent of $h$) so that $$\norma{u-u_h}_{L^2(\Omega)}\leq C\norma{u}_{H^{k+1}(\Omega)}h^{k+1}.$$
 \end{theorem}
 \end{frame}
 
@@ -1007,7 +1182,10 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 	
 	\begin{frame}[allowframebreaks]{Properties of the discrete problem}
 	\begin{definicion}
-		In the space $V_{*h}$ we define the norm $\normaupw{\cdot}\colon V_{*h}\to\R$ as $$\normaupw{u}\coloneqq\escalarupw{u}{u}^{1/2}= \left(\normacf{u}^2+\frac{\eta}{2}\sum_{e\in\E_h^i}\norma{\salto{u}}^2_{L^2(|\beta\cdot\mathbf{n}_e|;e)} \right)^{1/2}.$$
+		In the space $V_{*h}$ we define the norm $\normaupw{\cdot}\colon V_{*h}\to\R$ as {\footnotesize 
+		\begin{align*}
+		\normaupw{u}&\coloneqq\escalarupw{u}{u}^{1/2}\\&= \left(\normacf{u}^2+\frac{\eta}{2}\sum_{e\in\E_h^i}\norma{\salto{u}}^2_{L^2(|\beta\cdot\mathbf{n}_e|;e)} + \sum_{K\in\T_h}\frac{h_K}{\norma{\beta}_{L^\infty(\Omega)^d}}\norma{\beta\cdot\nabla v}_{L^2(K)}^2 \right)^{1/2}.
+		\end{align*}}
 	\end{definicion}
 	\framebreak
 	\begin{lemma}
@@ -1063,7 +1241,6 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		\vspace*{0.3cm}
 		$u_{\text{ex}}\colon\Omega\to\R$ defined as
 		\begin{equation*}
-		\label{sol_experimento_hiperbolico}
 		\uex (x,y)\coloneqq e^{-A\left((x-x_0)^2+(y-y_0)^2\right)}
 		\end{equation*}
 		is the \alert{unique exact solution} ($\alert{u_\text{ex}\in V}$).
@@ -1268,6 +1445,91 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		\end{minipage}
 		\end{frame}
 
+		\begin{frame}{Hyperbolic problem}
+			\scriptsize
+			We consider the hyperbolic problem:
+			\begin{block}{}
+			\begin{equation*}
+			\left\{
+			\begin{aligned}
+			\beta\cdot\nabla u+\mu u&=f & \text{en } &\Omega, \\
+			u&=0 & \text{en } &\partial\Omega^-,
+			\end{aligned}
+			\right.
+			\end{equation*}
+			\end{block}
+			with
+			\begin{itemize}
+				\item $d=2$;
+				\item $\Omega=\left\{(x,y)\in\R^2\colon x^2+y^2<1 \right\}$;
+				\item $A=10$, $x_0=y_0=0.3$;
+				\item $\mu=2A$;
+				\item $\beta(x,y)\coloneqq10^6(y,-x)$;
+				\item $f\colon\Omega\to\R$, $f(x,y)\coloneqq 1000\mu e^{-100A\left((x-x_0)^2+(y-y_0)^2\right)}(100(x_0 y -x y_0) + 1)$.
+			\end{itemize}
+			
+			\vspace*{0.3cm}
+			$u_{\text{ex}}\colon\Omega\to\R$ defined as
+			\begin{equation*}
+			\uex (x,y)\coloneqq 1000e^{-100A\left((x-x_0)^2+(y-y_0)^2\right)}
+			\end{equation*}
+			is the \alert{unique exact solution} ($\alert{u_\text{ex}\in V}$).
+			
+			\end{frame}
+
+			\begin{frame}{Solutions with $\mathbb{P}_1^2(\T_h)$ ($h\approx\frac{\pi}{32}$)}
+				\vspace*{-0.5cm}
+				\begin{figure}[h!]
+					\begin{subfigure}[b]{0.49\textwidth}
+						\centering
+						\includegraphics[scale=0.16]{img/Conveccion_Reaccion/strong/conv_react_u_ex_nx-64.png}
+						\caption{Exact.}
+					\end{subfigure}
+					\begin{subfigure}[b]{0.49\textwidth}
+						\centering
+						\includegraphics[scale=0.16]{img/Conveccion_Reaccion/strong/conv_react_u_FE_nx-64.png}
+						\caption{Continuous Finite Element.}
+					\end{subfigure}
+					\begin{subfigure}[b]{0.49\textwidth}
+						\centering
+						\includegraphics[scale=0.16]{img/Conveccion_Reaccion/strong/conv_react_u_CF_nx-64.png}
+						\caption{Centered Fluxes.}
+					\end{subfigure}
+					\begin{subfigure}[b]{0.49\textwidth}
+						\centering
+						\includegraphics[scale=0.16]{img/Conveccion_Reaccion/strong/conv_react_u_UPW_nx-64.png}
+						\caption{Upwind.}
+					\end{subfigure}
+					% \caption{Solutions obtained with $h\approx\frac{\pi}{16}$.}
+				\end{figure}
+			\end{frame}
+			\begin{frame}{Solutions with $\mathbb{P}_1^2(\T_h)$ ($h\approx\frac{\pi}{128}$)}
+				\vspace*{-0.5cm}
+				\begin{figure}[h!]
+					\begin{subfigure}[b]{0.49\textwidth}
+						\centering
+						\includegraphics[scale=0.16]{img/Conveccion_Reaccion/strong/conv_react_u_ex_nx-256.png}
+						\caption{Exact.}
+					\end{subfigure}
+					\begin{subfigure}[b]{0.49\textwidth}
+						\centering
+						\includegraphics[scale=0.16]{img/Conveccion_Reaccion/strong/conv_react_u_FE_nx-256.png}
+						\caption{Continuous Finite Element.}
+					\end{subfigure}
+					\begin{subfigure}[b]{0.49\textwidth}
+						\centering
+						\includegraphics[scale=0.16]{img/Conveccion_Reaccion/strong/conv_react_u_CF_nx-256.png}
+						\caption{Centered Fluxes.}
+					\end{subfigure}
+					\begin{subfigure}[b]{0.49\textwidth}
+						\centering
+						\includegraphics[scale=0.16]{img/Conveccion_Reaccion/strong/conv_react_u_UPW_nx-256.png}
+						\caption{Upwind.}
+					\end{subfigure}
+					% \caption{Solutions obtained with $h\approx\frac{\pi}{150}$.}
+				\end{figure}
+				\end{frame}
+
 	\section{Nontrivial examples}
 		\begin{frame}{Properties of upwind $\mathbb{P}_0(\T_h)$ DG methods}
 		Generalizing the upwind DG approximation and using $\mathbb{P}_0(\T_h)$ we have been able to develop approximations of several models that satisfy: 
@@ -1280,18 +1542,78 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		\end{frame}
 
 		\begin{frame}{Advective Cahn-Hilliard equation}
-			
+			\begin{figure}
+				\vspace*{-0.5cm}
+				\begin{tabular}{l r}
+					\rotatebox[origin=c]{90}{t=0.025} &
+					\hspace*{-0.5cm}
+					\begin{minipage}{0.49\textwidth}
+						\centering
+						\textbf{\footnotesize FE}
+
+						\includegraphics[scale=0.25]{img/ch/u_FE+Eyre_nt-100_t-0.02500_P1_adv-100.0_nx-50.png}
+					\end{minipage}
+					\begin{minipage}{0.49\textwidth}
+						\centering
+						\textbf{\footnotesize DG-UPW}
+
+						\includegraphics[scale=0.25]{img/ch/w_DG-UPW+Eyre_nt-100_t-0.02500_P0_adv-100.0_nx-50.png}
+					\end{minipage}
+				\end{tabular}
+				\begin{tabular}{l r}
+					\rotatebox[origin=c]{90}{t=0.1} &
+					\hspace*{-0.5cm}
+				\begin{minipage}{0.49\textwidth}
+					\centering
+					\includegraphics[scale=0.25]{img/ch/u_FE+Eyre_nt-100_t-0.10000_P1_adv-100.0_nx-50.png}
+				\end{minipage}
+				\begin{minipage}{0.49\textwidth}
+					\centering
+					\includegraphics[scale=0.25]{img/ch/w_DG-UPW+Eyre_nt-100_t-0.10000_P0_adv-100.0_nx-50.png}
+				\end{minipage}
+			\end{tabular}
+				\caption{Aggregation of circular regions over time with a strong convection.}
+			\end{figure}
+			\end{frame}
+
+		\begin{frame}{Keller-Segel model (DG-UPW)}
+			\begin{figure}[t]
+			\centering
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.07]{img/ks/u-1_sin-cos.pdf}
+			\end{subfigure}
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.07]{img/ks/u-2_sin-cos.pdf}
+			\end{subfigure}
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.07]{img/ks/u-5_sin-cos.pdf}
+			\end{subfigure}
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.07]{img/ks/u-10_sin-cos.pdf}
+			\end{subfigure}
+			\caption{Pattern formation with multiple peaks.}
+		\end{figure}
 		\end{frame}
 
-		\begin{frame}{Keller-Segel model}
-			
+	\begin{frame}{Phase-field tumor model}
+		\scriptsize
+		\begin{figure}
+			\centering
+			\hspace*{-0.6cm}
+			\begin{tabular}{cc}
+				\hspace*{-1cm} FE & \hspace*{-1cm} DG \\
+				\animategraphics[autoplay,loop,width=5cm]{5}{img/tumor/test_FEM_P0-125_chi-10_dt-5e-6_nx-200_symmetric/tumor/tumor_FEM_u_i_cropped-}{0}{80} &
+				\animategraphics[autoplay,loop,width=5cm]{5}{img/tumor/test_DG_P0-125_chi-10_dt-5e-6_nx-200_symmetric/tumor/tumor_DG-UPW_Pi1_u_i_cropped-}{0}{80}
+			\end{tabular}
+			\caption{Three tumors aggregation.}
+		\end{figure}
 		\end{frame}
 
-		\begin{frame}{Phase-field tumor model}
-			
-		\end{frame}
-
-\begin{frame}{References}
+\begin{frame}[allowframebreaks]{References}
 	\scriptsize 
 	\vspace*{-0.25cm}
 	\nocite*

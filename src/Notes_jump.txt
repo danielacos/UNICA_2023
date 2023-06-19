@@ -1,1 +1,0 @@
-In FreeFem++ jump(u) = external(u) - internal(u) (the opposite orientation from how it was considered in the DFP) so we have to change the orientation. That's why we use (-jump(u)) instead of (jump(u)) in the sip and upw bilinear forms.

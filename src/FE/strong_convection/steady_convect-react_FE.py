@@ -4,20 +4,17 @@
 #
 
 import dolfinx
-from dolfinx import fem
 from dolfinx.fem import (
-    Expression, Function, FunctionSpace, Constant,
-    assemble_scalar, form, petsc
+    Expression, Function, FunctionSpace,
+    assemble_scalar, form
 )
-from dolfinx.fem.petsc import NonlinearProblem, LinearProblem
-from dolfinx.nls.petsc import NewtonSolver
+from dolfinx.fem.petsc import LinearProblem
 from dolfinx import log
 from ufl import(
      TestFunction, TrialFunction, FiniteElement, VectorElement,
      SpatialCoordinate,
-     dx, dS, inner, grad, div, avg, jump,
-     exp, ln,
-     split,
+     dx, dS, inner, grad, avg, jump,
+     exp,
      FacetArea, FacetNormal 
 )
 from dolfinx.io import (
@@ -46,7 +43,7 @@ DOLFIN_EPS = 1e-16
 #
 # Problem class
 #
-class problem_DG_UPW(object):
+class problem_FE(object):
     r"""
     DG numerical solution of
     b \cdot \grad u + \mu \cdot u = f   en \Omega,
@@ -60,13 +57,13 @@ class problem_DG_UPW(object):
         conv_react = self
         p = conv_react.parameters = conv_react_parameters
 
-        A = conv_react.A = float(p.A)
+        A_coef = conv_react.A_coef = float(p.A)
         conv = conv_react.conv = float(p.conv)
-        mu = conv_react.mu = 2 * A
+        mu = conv_react.mu = 2 * A_coef
 
         file_path = os.path.dirname(os.path.abspath(__file__))
         printMPI(f"file_path = {file_path}")
-        mesh_file = f"{file_path}/../meshes/" + f"mesh_{p.mesh}_nx-{p.nx}.xdmf"
+        mesh_file = f"{file_path}/../../meshes/" + f"mesh_{p.mesh}_nx-{p.nx}.xdmf"
         printMPI(f"mesh_file = {mesh_file}")
 
         #
@@ -82,21 +79,19 @@ class problem_DG_UPW(object):
         #
         # Build DG, FE spaces and functions
         #
-        conv_react.P1d = FiniteElement("DG", mesh.ufl_cell(), 1)
-        conv_react.P1dv = VectorElement(FiniteElement("DG", mesh.ufl_cell(), 1))
-        conv_react.Vh = FunctionSpace(mesh, conv_react.P1d)
-        conv_react.Vhv = FunctionSpace(mesh, conv_react.P1dv)
+        conv_react.P1c = FiniteElement("Lagrange", mesh.ufl_cell(), 1)
+        conv_react.P1cv = VectorElement(FiniteElement("Lagrange", mesh.ufl_cell(), 1))
+        conv_react.Vh = FunctionSpace(mesh, conv_react.P1c)
+        conv_react.Vhv = FunctionSpace(mesh, conv_react.P1cv)
         conv_react.u, conv_react.u_trial, conv_react.ub =  Function(conv_react.Vh), TrialFunction(conv_react.Vh), TestFunction(conv_react.Vh)
 
         x = SpatialCoordinate(conv_react.mesh)
 
-        u_exact = conv_react.u_exact = Expression(exp(-A * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)), conv_react.Vh.element.interpolation_points())
+        u_exact = conv_react.u_exact = Expression(exp(-A_coef * 1000 * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)), conv_react.Vh.element.interpolation_points())
         conv_react.u_exact = Function(conv_react.Vh)
         conv_react.u_exact.interpolate(u_exact)
 
-        f = conv_react.f = Expression(mu * exp(-A * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)) * (conv * 0.3 * x[1] - conv * 0.3 * x[0] + 1), conv_react.Vh.element.interpolation_points())
-        conv_react.f = Function(conv_react.Vh)
-        conv_react.f.interpolate(f)
+        f = conv_react.f = mu * exp(-A_coef * 1000 * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)) * (1000 * conv * 0.3 * x[1] - 1000 * conv * 0.3 * x[0] + 1)
 
         def beta(x):
             vals = np.zeros((mesh.geometry.dim, x.shape[1]))
@@ -125,18 +120,14 @@ class problem_DG_UPW(object):
         l = 1.0/nx
 
         a_u = inner(beta, grad(u_trial)) * ub * dx \
-            + mu * u_trial * ub * dx \
-            - inner(beta('+'), n_e('+')) * jump(u_trial) * avg(ub) * dS \
-            + 1/2 * abs(inner(beta('+'), n_e('+'))) * jump(u_trial) * jump(ub) * dS 
+            + mu * u_trial * ub * dx
         
-
         L_u = f * ub * dx
 
         conv_react.a_u = a_u
         conv_react.L_u = L_u
     
     def problem_solve(self, verbosity=0):
-        """Time iterator"""
         #
         # Load variables from conv_react problem
         #
@@ -146,6 +137,7 @@ class problem_DG_UPW(object):
         # PETSc options
         #
         petsc_options = {"ksp_type": "preonly", "pc_type": "lu"}
+        # petsc_options = {"ksp_type": "gmres", "pc_type": "ilu"}
 
         #
         # Define problem
@@ -185,17 +177,10 @@ def define_parameters():
     parser.add_argument('--plot', default=10, help="Plot shown every number of time steps")
     parser.add_argument('--plot_mesh', default=0, help="Plot mesh")
     parser.add_argument('--save', default=1, help="No figures and output saved")
-    parser.add_argument('--savefile', default="conv_react_DG-UPW", help="Name of output file")
+    parser.add_argument('--savefile', default="conv_react", help="Name of output file")
     parser.add_argument('--server', default=0, help="Set to 1 if the code is set to run on a server")
 
     param = parser.parse_args()
-
-    # # Post-process parameters
-    # if param.vtk != 0:
-    #     N = param.tsteps
-    #     n = min(param.vtk, N)
-    #     param.add_argument('vtk_steps', default=[N/n * i for i in range(n)])
-    #     # param.add_argument('vtk_saving', default=int(param.tsteps)//100)
 
     return param
 
@@ -224,8 +209,8 @@ if(__name__ == "__main__"):
     #
     # Init problem
     #
-    conv_react_UPW = problem_DG_UPW(parameters)
-    conv_react_UPW.variational_problem_u()
+    conv_react_FE = problem_FE(parameters)
+    conv_react_FE.variational_problem_u()
 
     #
     # Save output
@@ -247,7 +232,7 @@ if(__name__ == "__main__"):
     pyvista.set_plot_theme("document")
 
     if plot_mesh: # Plot mesh
-        topology, cell_types, geometry = plot.create_vtk_mesh(conv_react_UPW.mesh, conv_react_UPW.mesh.topology.dim)
+        topology, cell_types, geometry = plot.create_vtk_mesh(conv_react_FE.mesh, conv_react_FE.mesh.topology.dim)
         grid = pyvista.UnstructuredGrid(topology, cell_types, geometry)
         plotter = pyvista.Plotter()
         plotter.add_mesh(grid, show_edges=True, color="white")
@@ -274,9 +259,9 @@ if(__name__ == "__main__"):
     # More info
     #  
     printMPI("More info:")
-    tdim = conv_react_UPW.mesh.topology.dim
-    num_cells = conv_react_UPW.mesh.topology.index_map(tdim).size_local
-    h = dolfinx.cpp.mesh.h(conv_react_UPW.mesh, tdim, range(num_cells))
+    tdim = conv_react_FE.mesh.topology.dim
+    num_cells = conv_react_FE.mesh.topology.index_map(tdim).size_local
+    h = dolfinx.cpp.mesh.h(conv_react_FE.mesh, tdim, range(num_cells))
 
     #
     # Save max, min and energy
@@ -290,16 +275,22 @@ if(__name__ == "__main__"):
     printMPI("u_max u_min")
 
     #
-    # Space iterations
+    # Solve problem
     #
-    conv_react_iterations = conv_react_UPW.problem_solve(verbosity=int(p.verbosity))
+    conv_react_iterations = conv_react_FE.problem_solve(verbosity=int(p.verbosity))
 
-    u = conv_react_UPW.u
+    u = conv_react_FE.u
+    u_ex = conv_react_FE.u_exact
+
+    # Print error
+    printMPI(f"Error L2: {np.sqrt(assemble_scalar(form((u-u_ex)**2*dx))): .2e}")
+    printMPI(f"Error V: {np.sqrt(assemble_scalar(form((u-u_ex)**2*dx + inner(conv_react_FE.beta, grad(u-u_ex))**2*dx))): .2e}")
 
     #
     # Print info
     #
     u_max, u_min = comm.allreduce(max(u.x.array), MPI.MAX), comm.allreduce(min(u.x.array), MPI.MIN)
+    u_ex_max, u_ex_min = comm.allreduce(max(u_ex.x.array), MPI.MAX), comm.allreduce(min(u_ex.x.array), MPI.MIN)
     if rank == 0:
         max_u_list.append(u_max)
         min_u_list.append(u_min)
@@ -314,37 +305,69 @@ if(__name__ == "__main__"):
     # Properties of the scalar bar
     sargs = dict(height=0.6, vertical=True, position_x=0.8, position_y=0.2, title='', label_font_size=24, shadow=True,n_labels=5, fmt="%.2g", font_family="arial")
 
-    # Create a grid to attach the DoF values
-    cells, types, x = plot.create_vtk_mesh(conv_react_UPW.Vh)
-    grid = pyvista.UnstructuredGrid(cells, types, x)
-    grid.point_data["u"] = u.x.array[:]
+    # Plot exact solution
 
-    grid.set_active_scalars("u")
+    # Create a grid to attach the DoF values
+    cells, types, x = plot.create_vtk_mesh(conv_react_FE.Vh)
+    grid = pyvista.UnstructuredGrid(cells, types, x)
+
+    grid.point_data["u_ex"] = u_ex.x.array[:]
+    grid.set_active_scalars("u_ex")
 
     plotter = pyvista.Plotter()
-    # warped = grid.warp_by_scalar(factor=1/(max_p1c_u_list[-1])+0.01*(1-max_p1c_u_list[0]/max_p1c_u_list[-1]))
-    warped = grid.warp_by_scalar()
+
+    # warped = grid.warp_by_scalar()
+    warped = grid.warp_by_scalar(factor=1.75*1/(np.max([u_ex_max, 1])))
     plotter.add_mesh(warped, show_edges=False, show_scalar_bar=True, scalar_bar_args=sargs,  cmap=mpl.colormaps["plasma"])
-    # plotter.show_bounds(grid='back', location='outer', axes_ranges=[-1.0, 1.0, 1.0, 0.0, 0.0, max_p1c_u_list[-1]], color="gray", xlabel="", ylabel="", zlabel="", fmt=".2g", font_family="arial")
-    plotter.view_xz()
-    # plotter.camera.azimuth = 20.0
-    # plotter.add_mesh(grid, show_edges=False, show_scalar_bar=True, cmap=mpl.colormaps["plasma"], scalar_bar_args=sargs)
-    # plotter.view_xy()
+    plotter.view_yz()
 
     # If environment variable PYVISTA_OFF_SCREEN is set to true save a png
     # otherwise create interactive plot
     if pyvista.OFF_SCREEN:
-        figure = plotter.screenshot(f"./{base_name_save}_uh_nx-{int(p.nx)}.png", transparent_background=True)
+        figure = plotter.screenshot(f"./{base_name_save}_u_ex_nx-{int(p.nx)}.png", transparent_background=True)
                 
     comm.Barrier()
     if rank == 0:
-        img = Image.open(f"./{base_name_save}_uh_nx-{int(p.nx)}.png")
+        img = Image.open(f"./{base_name_save}_u_ex_nx-{int(p.nx)}.png")
         width, height = img.size
         # Setting the points for cropped image
-        left = width/7
+        left = 0.2 * width
         top = 0.15 * height
-        right = 0.8 * width
+        right = 0.93 * width
         bottom = 0.85 * height
+        im_cropped = img.crop((left, top, right, bottom)) # default window size is 1024x768
+        im_cropped.save(f"./{base_name_save}_u_ex_nx-{int(p.nx)}.png")
+    else:
+        plotter.show()
+    plotter.close()
+
+    # Plot approximation
+    grid.point_data["u"] = u.x.array[:]
+    grid.set_active_scalars("u")
+
+    plotter = pyvista.Plotter()
+
+    # warped = grid.warp_by_scalar()
+    warped = grid.warp_by_scalar(factor=1.75*1/(np.max([u_max, 1])))
+    plotter.add_mesh(warped, show_edges=False, show_scalar_bar=True, scalar_bar_args=sargs,  cmap=mpl.colormaps["plasma"])
+    plotter.view_yz()
+
+    # If environment variable PYVISTA_OFF_SCREEN is set to true save a png
+    # otherwise create interactive plot
+    if pyvista.OFF_SCREEN:
+        figure = plotter.screenshot(f"./{base_name_save}_u_FE_nx-{int(p.nx)}.png", transparent_background=True)
+                
+    comm.Barrier()
+    if rank == 0:
+        img = Image.open(f"./{base_name_save}_u_FE_nx-{int(p.nx)}.png")
+        width, height = img.size
+        # Setting the points for cropped image
+        left = 0.3 * width
+        top = 0.15 * height
+        right = 0.93 * width
+        bottom = 0.9 * height
+        im_cropped = img.crop((left, top, right, bottom)) # default window size is 1024x768
+        im_cropped.save(f"./{base_name_save}_u_FE_nx-{int(p.nx)}.png")
     else:
         plotter.show()
     plotter.close()
