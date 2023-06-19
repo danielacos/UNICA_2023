@@ -99,7 +99,7 @@ Assume that $m\in\N\cup\left\{0\right\}$ and $1\leq p\leq+\infty$, $p\in\N$.
 \begin{frame}{Integration by parts formula}
 	\begin{theorem}[Integration by parts formula]
 		
-		Let $u, v\in \mathcal{C}^1(\bar\Omega)$, they satisfy
+		Let $u, v\in H^1(\bar\Omega)$, they satisfy
 		\begin{equation*}
 		\label{formula_int_por_partes}
 		\int_\Omega u(x)\frac{\partial v}{\partial x_i}(x)dx=-\int_\Omega v(x)\frac{\partial u}{\partial x_i}(x)dx+\int_{\partial \Omega}u(x)v(x)\mathbf{n}_i(x)ds.
@@ -256,7 +256,7 @@ where $f\in L^2\left(\Omega\right)$.
 
 \end{frame}
 
-\begin{frame}{Mesh of $\bar{\Omega}$}
+\begin{frame}[allowframebreaks]{Mesh of $\bar{\Omega}$}
 
 \begin{definicion}
 	A \structure{\textbf{mesh}} of $\bar{\Omega}$ is a set $\alert{\mathcal{T}_h}$ of non-degenerated $d$-simplices $\left(K_i\right)_{i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}}$ that satisfy:
@@ -271,17 +271,21 @@ where $f\in L^2\left(\Omega\right)$.
 	\end{itemize}
 \end{definicion}
 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3]{img/mesh.png}
+	\caption{Example of a mesh.}
+\end{figure}
+
 \end{frame}
 
 \begin{frame}{Lagrange finite elements}
 	\scriptsize
 \begin{definicion}
 	Let $\left(K,\mathcal{P},\Sigma\right)$ be an unisolvent finite element. Assume that there is a set of points $\{a_1,a_2,\ldots,a_{N_\mathcal{P}}\}\subset K$ such that for every $p\in\mathcal{P}$ they verify $$\sigma_i(p)=p(a_i)\quad\text{for every}\quad i\in\{1,2,\ldots,N_{\mathcal{P}}\},$$ then the triple $\alert{\left(K,\mathcal{P},\Sigma\right)}$ is named \structure{\textbf{Lagrange finite element}}.
-	
-	The points $\{a_1,a_2,\ldots,a_{N_\mathcal{P}}\}$ are named \structure{\textbf{finite element nodes}} and the Lagrange basis defined as $$B_L\coloneqq\left\{L_i\in\mathbb{P}_k\colon L_i(a_j)=\delta_{ij}\quad\forall i,j\in\{1,2,\ldots,N_\mathcal{P}\} \right\}$$ is named \structure{\textbf{nodal basis}} of $\mathcal{P}$.
 \end{definicion}
-In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 
+Finite-dimensional space:
 \begin{block}{}
 	\begin{center}
 	$V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathcal{P}_i \text{ with } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}$
@@ -290,19 +294,25 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 	
 	
 	Generally $\mathcal{P}_i=\mathbb{P}_k(K_i)$.
+
+	\begin{block}{}
+		The points $\{a_1,a_2,\ldots,a_{N_\mathcal{P}}\}$ are named \structure{\textbf{finite element nodes}} and the Lagrange basis defined as $$B_L\coloneqq\left\{L_i\in\mathbb{P}_k\colon L_i(a_j)=\delta_{ij}\quad\forall i,j\in\{1,2,\ldots,N_\mathcal{P}\} \right\}$$ is named \structure{\textbf{nodal basis}} of $\mathcal{P}$.
+	\end{block}
+
+	In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 \end{frame}
 
 \begin{frame}{Error analysis}
 	We consider
 	\begin{block}{}
 		\begin{center}
-		{\small $V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathbb{P}_k(K_i) \text{ con } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}$}
+		{\scriptsize $V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathbb{P}_k(K_i) \text{ con } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}\eqqcolon\Pc_k(\T_h)$}
 		\end{center}
 	\end{block}
 
 	\vspace*{1cm}
 	\begin{theorem}
-		If $u\in H^s(\Omega)$ with $\frac{d}{2}<s\le k+1$, there exists $c_1,c_2>0$ such that
+		If $u\in H^s(\Omega)$ with $\frac{d}{2}<s\le k+1$, $k\in\N$, there exists $c_1,c_2>0$ such that
 		\begin{align*}
 			\norma{u-u_h}_{H^1(\Omega)}&\le c_1 h^{s-1}\norma{u}_{H^s(\Omega)},\\
 			\norma{u-u_h}_{L^2(\Omega)}&\le c_2 h^{s}\norma{u}_{H^s(\Omega)}.
@@ -339,7 +349,7 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 	is the \alert{unique exact solution} ($\alert{u_{\text{ex}}\in H_0^1(\Omega)\cap H^2(\Omega)}$).
 	\end{frame}
 
-\begin{frame}{Solutions with $\mathbb{P}_1$ ($h\approx 1/4$)}
+\begin{frame}{Solutions with $\Pc_1(\T_h)$ ($h\approx 1/4$)}
 	\begin{figure}[h!]
 		\begin{subfigure}{0.49\textwidth}
 			\centering
@@ -353,7 +363,7 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 		\end{subfigure}
 	\end{figure}
 	\end{frame}
-	\begin{frame}{Solutions with $\mathbb{P}_1$ ($h\approx 1/32$)}
+	\begin{frame}{Solutions with $\Pc_1(\T_h)$ ($h\approx 1/32$)}
 		\begin{figure}[h!]
 			\begin{subfigure}{0.49\textwidth}
 				\centering
@@ -368,7 +378,7 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 		\end{figure}
 	\end{frame}
 
-\begin{frame}{Errors with $\mathbb{P}^2_1$}
+\begin{frame}{Errors with $\Pc_1(\T_h)$}
 	\begin{minipage}{0.50\textwidth}
 		\centering
 		\includegraphics[scale=0.30]{img/Difusion/errores_difusion_P1c.png}
@@ -394,7 +404,7 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 	\end{minipage}
 	\end{frame}
 
-	\begin{frame}{Errors with $\mathbb{P}^2_2$}
+	\begin{frame}{Errors with $\Pc_2(\T_h)$}
 		\begin{minipage}{0.50\textwidth}
 			\centering
 			\includegraphics[scale=0.30]{img/Difusion/errores_difusion_P2c.png}
@@ -422,7 +432,7 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 
 \subsection{Hyperbolic problem}
 
-\begin{frame}{Model problem}
+\begin{frame}{Hyperbollic problem}
 	We consider the convection-reaction problem:
 	\begin{block}{}
 	\begin{equation*}
@@ -438,7 +448,7 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 	\begin{itemize}
 		\item $\partial\Omega^-=\left\{x\in\partial\Omega\colon \beta(x)\mathbf{n}(x)<0\right\},$
 		\item $\mu\in L^\infty(\Omega)$,
-		\item $\beta\in\left[\text{Lip}(\Omega)\right]^d$,
+		\item $\beta\in\left[\text{Lip}(\Omega)\right]^d \Rightarrow \norma{\nabla\beta_i}_{L^\infty(\Omega)^d}\le C_\beta$ for some $C_\beta >0$.
 		\item $f\in L^2(\Omega)$.
 	\end{itemize}
 	\vspace*{.5cm}
@@ -550,6 +560,66 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 \end{frame}
 
 \subsubsection{Numerical experiments}
+\begin{frame}{Hyperbolic problem}
+	\scriptsize
+	We consider the hyperbolic problem:
+	\begin{block}{}
+	\begin{equation*}
+	\left\{
+	\begin{aligned}
+	\beta\cdot\nabla u+\mu u&=f & \text{en } &\Omega, \\
+	u&=0 & \text{en } &\partial\Omega^-,
+	\end{aligned}
+	\right.
+	\end{equation*}
+	\end{block}
+	with
+	\begin{itemize}
+		\item $d=2$;
+		\item $\Omega=\left\{(x,y)\in\R^2\colon x^2+y^2<1 \right\}$;
+		\item $A=10$, $x_0=y_0=0.3$;
+		\item $\mu=2A$;
+		\item $\beta(x,y)\coloneqq(y,-x)$;
+		\item $f\colon\Omega\to\R$, $f(x,y)\coloneqq \mu e^{-A\left((x-x_0)^2+(y-y_0)^2\right)}(x_0 y -x y_0 + 1)$.
+	\end{itemize}
+	
+	\vspace*{0.3cm}
+	$u_{\text{ex}}\colon\Omega\to\R$ defined as
+	\begin{equation*}
+	\uex (x,y)\coloneqq e^{-A\left((x-x_0)^2+(y-y_0)^2\right)}
+	\end{equation*}
+	is the \alert{unique exact solution} ($\alert{u_\text{ex}\in V}$).
+	
+	\end{frame}
+
+	\begin{frame}{Solutions with $\Pc_1(\T_h)$ ($h\approx \pi/32$)}
+		\begin{figure}[h!]
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.23]{img/Conveccion_Reaccion/weak/conv_react_u_ex_nx-64.png}
+				\caption{Exact.}
+			\end{subfigure}
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[scale=0.23]{img/Conveccion_Reaccion/weak/conv_react_u_FE_nx-64.png}
+				\caption{Approx.}
+			\end{subfigure}
+		\end{figure}
+		\end{frame}
+		% \begin{frame}{Solutions with $\Pc_1(\T_h)$ ($h\approx \pi/128$)}
+		% 	\begin{figure}[h!]
+		% 		\begin{subfigure}{0.49\textwidth}
+		% 			\centering
+		% 			\includegraphics[scale=0.23]{img/Conveccion_Reaccion/weak/conv_react_u_ex_nx-256.png}
+		% 			\caption{Exact.}
+		% 		\end{subfigure}
+		% 		\begin{subfigure}{0.49\textwidth}
+		% 			\centering
+		% 			\includegraphics[scale=0.23]{img/Conveccion_Reaccion/weak/conv_react_u_FE_nx-256.png}
+		% 			\caption{Approx.}
+		% 		\end{subfigure}
+		% 	\end{figure}
+		% \end{frame}
 
 \begin{frame}{Hyperbolic problem}
 	\scriptsize
@@ -571,42 +641,42 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 		\item $A=10$, $x_0=y_0=0.3$;
 		\item $\mu=2A$;
 		\item $\beta(x,y)\coloneqq10^6(y,-x)$;
-		\item $f\colon\Omega\to\R$, $f(x,y)\coloneqq 1000\mu e^{-100A\left((x-x_0)^2+(y-y_0)^2\right)}(100(x_0 y -x y_0) + 1)$.
+		\item $f\colon\Omega\to\R$, $f(x,y)\coloneqq \mu e^{-1000A\left((x-x_0)^2+(y-y_0)^2\right)}(1000(x_0 y -x y_0) + 1)$.
 	\end{itemize}
 	
 	\vspace*{0.3cm}
 	$u_{\text{ex}}\colon\Omega\to\R$ defined as
 	\begin{equation*}
-	\uex (x,y)\coloneqq 1000e^{-100A\left((x-x_0)^2+(y-y_0)^2\right)}
+	\uex (x,y)\coloneqq e^{-1000A\left((x-x_0)^2+(y-y_0)^2\right)}
 	\end{equation*}
 	is the \alert{unique exact solution} ($\alert{u_\text{ex}\in V}$).
 	
 	\end{frame}
 
-\begin{frame}{Solutions with $\mathbb{P}_1$ ($h\approx \pi/32$)}
+\begin{frame}{Solutions with $\Pc_1(\T_h)$ ($h\approx \pi/32$)}
 	\begin{figure}[h!]
 		\begin{subfigure}{0.49\textwidth}
 			\centering
-			\includegraphics[scale=0.2]{img/Conveccion_Reaccion/strong/conv_react_u_ex_nx-64.png}
+			\includegraphics[scale=0.23]{img/Conveccion_Reaccion/strong/conv_react_u_ex_nx-64.png}
 			\caption{Exact.}
 		\end{subfigure}
 		\begin{subfigure}{0.49\textwidth}
 			\centering
-			\includegraphics[scale=0.2]{img/Conveccion_Reaccion/strong/conv_react_u_FE_nx-64.png}
+			\includegraphics[scale=0.23]{img/Conveccion_Reaccion/strong/conv_react_u_FE_nx-64.png}
 			\caption{Approx.}
 		\end{subfigure}
 	\end{figure}
 	\end{frame}
-	\begin{frame}{Solutions with $\mathbb{P}_1$ ($h\approx \pi/128$)}
+	\begin{frame}{Solutions with $\Pc_1(\T_h)$ ($h\approx \pi/128$)}
 		\begin{figure}[h!]
 			\begin{subfigure}{0.49\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/strong/conv_react_u_ex_nx-256.png}
+				\includegraphics[scale=0.23]{img/Conveccion_Reaccion/strong/conv_react_u_ex_nx-256.png}
 				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}{0.49\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/strong/conv_react_u_FE_nx-256.png}
+				\includegraphics[scale=0.23]{img/Conveccion_Reaccion/strong/conv_react_u_FE_nx-256.png}
 				\caption{Approx.}
 			\end{subfigure}
 		\end{figure}
@@ -709,17 +779,17 @@ In practice: \structure{\textbf{simplicial Lagrange finite elements}}.
 \end{frame}
 
 \begin{frame}{Finite-dimensional space}
-\textbf{Finite-dimensional space}:{\small $$\alert{\mathbb{P}_k^d(\T_h)}\coloneqq\left\{v_h\in L^2(\Omega)\colon v_{h|_{K_i}}\in\mathbb{P}_k(K_i)\text{ con } K_i\in\T_h,\forall i\in\left\{1,2,\ldots,N_{\T_h}\right\}\right\}$$ with the basis $\left\{\phi_i\right\}_{i=1}^{N_h^{\text{sip}}}$.}
+\textbf{Finite-dimensional space}:{\small $$\alert{\Pd_k(\T_h)}\coloneqq\left\{v_h\in L^2(\Omega)\colon v_{h|_{K_i}}\in\mathbb{P}_k(K_i)\text{ con } K_i\in\T_h,\forall i\in\left\{1,2,\ldots,N_{\T_h}\right\}\right\}$$ with the basis $\left\{\phi_i\right\}_{i=1}^{N_h^{\text{sip}}}$.}
 \vspace*{1cm}
 
 We denote
 \begin{itemize}\itemsep1em
-\item $\S_h\coloneqq\mathbb{P}_k^d(\T_h)$,
+\item $\S_h\coloneqq\Pd_k(\T_h)$,
 \item $\S_{*h}\coloneqq H^1_0(\Omega)\cap H^2(\Omega)+\S_h$.
 \end{itemize}
 \vspace*{1cm}
 \pause
-$\alert{\mathbb{P}_k^d(\T_h)\not\subset H_0^1(\Omega)}$ (non-conforming space \alert{!!})
+$\alert{\Pd_k(\T_h)\not\subset H_0^1(\Omega)}$ (non-conforming space \alert{!!})
 \end{frame}
 
 \begin{frame}{Symmetric Interior Penalty Method}
@@ -783,12 +853,12 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 \framebreak
 {\small
 \begin{lemma}
-	There is $C>0$ such that $$\asip{u_h}{v_h}\leq C\norma{u_h}_{\text{sip}}\normasip{v_h}\text{ for every }u_h,v_h\in\mathbb{P}_k^d(\T_h).$$ Therefore, $\asip{\cdot}{\cdot}$ is continuous in $\S_h\times\S_h$.
+	There is $C>0$ such that $$\asip{u_h}{v_h}\leq C\norma{u_h}_{\text{sip}}\normasip{v_h}\text{ for every }u_h,v_h\in\Pd_k(\T_h).$$ Therefore, $\asip{\cdot}{\cdot}$ is continuous in $\S_h\times\S_h$.
 \end{lemma}
 
 \begin{lemma}
 	\label{lemma:eliptico_coercitividad}
-	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ then there exists $C(\sigma)>0$ such that $$\asip{u_h}{u_h}\geq C(\sigma)\norma{u_h}_{\text{sip}}^2\text{ for every }u_h\in\mathbb{P}_k^d(\T_h).$$ Therefore, $\asip{\cdot}{\cdot}$ is coercive in $\S_h\times\S_h$.
+	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ then there exists $C(\sigma)>0$ such that $$\asip{u_h}{u_h}\geq C(\sigma)\norma{u_h}_{\text{sip}}^2\text{ for every }u_h\in\Pd_k(\T_h).$$ Therefore, $\asip{\cdot}{\cdot}$ is coercive in $\S_h\times\S_h$.
 \end{lemma}
 }
 \framebreak
@@ -808,7 +878,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 \small
 \begin{theorem}
 	\label{theorem:eliptico_orden_norma_SIP}
-	Let $u\in H^{k+1}(\Omega)$, $k\in\N$, be the solution of the continuous variational formulation. Let $u_h\in\mathbb{P}_d^k(\T_h)$ be the solution of the discrete problem.
+	Let $u\in H^{k+1}(\Omega)$, $k\in\N$, be the solution of the continuous variational formulation. Let $u_h\in\Pd_k(\T_h)$ be the solution of the discrete problem.
 	
 	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ there is $C>0$ (independent of $h$) so that $$\norma{u-u_h}_{\text{sip}}\leq C\norma{u}_{H^{k+1}(\Omega)}h^k.$$
 \end{theorem}
@@ -821,7 +891,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 
 \begin{theorem}
 	\label{corolario:eliptico_orden_norma_L2}
-	Assume $d\in\{2,3\}$. Let $u\in H^{k+1}(\Omega)$, $k\in\N$ be the solution of the continuous variational formulation. Let $u_h\in\mathbb{P}_d^k(\T_h)$ the solution of the discrete problem.
+	Assume $d\in\{2,3\}$. Let $u\in H^{k+1}(\Omega)$, $k\in\N$ be the solution of the continuous variational formulation. Let $u_h\in\Pd_k(\T_h)$ the solution of the discrete problem.
 	
 	There is $\sigma_0>0$ such that if $\sigma>\sigma_0$ there exists $C>0$ (independent of $h$) so that $$\norma{u-u_h}_{L^2(\Omega)}\leq C\norma{u}_{H^{k+1}(\Omega)}h^{k+1}.$$
 \end{theorem}
@@ -857,7 +927,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		is the \alert{unique exact solution} ($\alert{u_{\text{ex}}\in H_0^1(\Omega)\cap H^2(\Omega)}$).
 		\end{frame}
 
-	\begin{frame}{Solutions with $\sigma=4$ y $\mathbb{P}^2_1(\T_h)$}
+	\begin{frame}{Solutions with $\sigma=4$ y $\Pd_1(\T_h)$}
 		\begin{figure}[h!]
 			\begin{subfigure}[b]{0.2\textwidth}
 				\centering
@@ -917,7 +987,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		\end{figure}
 		\end{frame}
 		
-		\begin{frame}{Errors with $\sigma=4$ and $\mathbb{P}^2_1(\T_h)$}
+		\begin{frame}{Errors with $\sigma=4$ and $\Pd_1(\T_h)$}
 		\begin{minipage}{0.50\textwidth}
 			\centering
 			\includegraphics[scale=0.30]{img/Difusion/errores_difusion_P1dc.png}
@@ -944,7 +1014,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		\end{frame}
 		
 		
-		\begin{frame}{Errors with $\sigma=10$ and $\mathbb{P}^2_2(\T_h)$}
+		\begin{frame}{Errors with $\sigma=10$ and $\Pd_2(\T_h)$}
 		\begin{minipage}{0.49\textwidth}
 			\centering
 			\begin{tabular}{|c|c|c|}
@@ -970,7 +1040,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		\end{minipage}
 		\end{frame}
 		
-		\begin{frame}{Solutions with different $\sigma$ and $\mathbb{P}_1^2(\T_h)$}
+		\begin{frame}{Solutions with different $\sigma$ and $\Pd_1(\T_h)$}
 		
 		\begin{figure}[h!]
 			\begin{subfigure}[b]{0.27\textwidth}
@@ -1031,7 +1101,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 
 	\subsection{Hyperbollic problem}
 	
-	\begin{frame}{Model problem}
+	\begin{frame}{Hyperbollic problem}
 		We consider the convection-reaction problem:
 		\begin{block}{}
 		\begin{equation*}
@@ -1059,7 +1129,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 	
 	\begin{frame}{Finite-dimensional space}
 	
-	\textbf{Finite-dimensional space}: $$V_h\coloneqq\alert{\mathbb{P}_k^d(\T_h)}$$ with basis $\left\{\phi_i\right\}_{i=1}^{N_h^{\text{cf}}}$.
+	\textbf{Finite-dimensional space}: $$V_h\coloneqq\alert{\Pd_k(\T_h)}$$ with basis $\left\{\phi_i\right\}_{i=1}^{N_h^{\text{cf}}}$.
 	\vspace*{1cm}
 	
 	We denote:
@@ -1135,7 +1205,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 	\begin{frame}{Error analysis}
 	\begin{theorem}
 		\label{theorem:hiperbolico_CF_orden_norma_CF}
-		Let $u\in H^{k+1}(\Omega)$, $k\in\N$ be the solution of the model problem and $u_h\in \mathbb{P}_k^d(\T_h)$ the solution of the discrete problem.
+		Let $u\in H^{k+1}(\Omega)$, $k\in\N$ be the solution of the model problem and $u_h\in \Pd_k(\T_h)$ the solution of the discrete problem.
 		
 		Then, there is $C>0$ independent of $h$ and depending on the data only through the factor $\left(\min\{1,\max\{\norma{\mu}_{L^\infty(\Omega)},C_\beta\}\mu_0\}\right)^{-1}$ so that
 		\begin{equation*}
@@ -1208,7 +1278,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 	
 	\begin{frame}{Error analysis}
 	\begin{theorem}
-		Let $u\in H^{k+1}(\Omega)$, $k\in\N$ the solution of the model problem and $u_h\in \mathbb{P}_k^d(\T_h)$ the solution of the discrete problem.
+		Let $u\in H^{k+1}(\Omega)$, $k\ge 0$ the solution of the model problem and $u_h\in \Pd_k(\T_h)$ the solution of the discrete problem.
 		
 		Then, there is $C>0$ independent of $h$ and depending on the data only through the factor  $\left(\min\{1,\max\{\norma{\mu}_{L^\infty(\Omega)},C_\beta\}\mu_0\}\right)^{-1}$ such that $$\normaupw{u-u_h}\leq C\norma{u}_{H^{k+1}(\Omega)}h^{k+1/2}.$$
 	\end{theorem}
@@ -1247,109 +1317,109 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		
 		\end{frame}
 		
-		\begin{frame}{Solutions with $\mathbb{P}_1^2(\T_h)$}
-		\vspace{-0.2cm}
+		\begin{frame}{Solutions with $\Pd_1(\T_h)$}
 		\begin{figure}[h!]
+			\vspace*{-0.2cm}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_32.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_32.png}
 				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_32.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_32.png}
 				\caption{Centered fluxes.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_32.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_32.png}
 				\caption{Upwind.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
 				%\caption*{ }
 			\end{subfigure}
 			\caption{Solutions obtained with $h\approx\frac{\pi}{16}$.}
 		\end{figure}
-		\vspace{-0.7cm}
 		\begin{figure}[h!]
+			\vspace*{-0.5cm}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_64.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_64.png}
 				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_64.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_64.png}
 				\caption{Centered fluxes.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_64.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_64.png}
 				\caption{Upwind.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
-				\includegraphics[scale=0.2]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
 				%\caption*{ }
 			\end{subfigure}
 			\caption{Solutions obtained with $h\approx\frac{\pi}{32}$.}
 		\end{figure}
 		\end{frame}
 		
-		\begin{frame}{Solutions with $\mathbb{P}_1^2(\T_h)$}
-		\vspace{-0.2cm}
+		\begin{frame}{Solutions with $\Pd_1(\T_h)$}
 		\begin{figure}[h!]
+			\vspace{-0.2cm}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_128.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_128.png}
 				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_128.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_128.png}
 				\caption{Centered fluxes.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_128.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_128.png}
 				\caption{Upwind.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
 				%\caption*{ }
 			\end{subfigure}
 			\caption{Solutions obtained with $h\approx\frac{\pi}{64}$.}
 		\end{figure}
-		\vspace{-0.7cm}
 		\begin{figure}[h!]
+			\vspace*{-0.5cm}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_256.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_exact_n_256.png}
 				\caption{Exact.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_256.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_CF_n_256.png}
 				\caption{Centered fluxes.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.27\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_256.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_approx_UPW_n_256.png}
 				\caption{Upwind.}
 			\end{subfigure}
 			\begin{subfigure}[b]{0.15\textwidth}
 				\centering
-				\includegraphics[scale=0.22]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
+				\includegraphics[scale=0.18]{img/Conveccion_Reaccion/Recortes/steady_convect_react_values.png}
 				%\caption*{ }
 			\end{subfigure}
 			\caption{Solutions obtained with $h\approx\frac{\pi}{128}$.}
 		\end{figure}
 		\end{frame}
 		
-		\begin{frame}{Errors with $\mathbb{P}_1^2(\T_h)$}
+		\begin{frame}{Errors with $\Pd_1(\T_h)$}
 		\hspace{-0.3cm}
 		\begin{minipage}{0.5\textwidth}
 			\centering
@@ -1397,7 +1467,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 		
 		\end{frame}
 		
-		\begin{frame}{Errors with $\mathbb{P}_2^2(\T_h)$}
+		\begin{frame}{Errors with $\Pd_2(\T_h)$}
 		\hspace*{-0.5cm}
 		\begin{minipage}{0.48\textwidth}
 			\scriptsize
@@ -1465,19 +1535,19 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 				\item $A=10$, $x_0=y_0=0.3$;
 				\item $\mu=2A$;
 				\item $\beta(x,y)\coloneqq10^6(y,-x)$;
-				\item $f\colon\Omega\to\R$, $f(x,y)\coloneqq 1000\mu e^{-100A\left((x-x_0)^2+(y-y_0)^2\right)}(100(x_0 y -x y_0) + 1)$.
+				\item $f\colon\Omega\to\R$, $f(x,y)\coloneqq \mu e^{-1000A\left((x-x_0)^2+(y-y_0)^2\right)}(1000(x_0 y -x y_0) + 1)$.
 			\end{itemize}
 			
 			\vspace*{0.3cm}
 			$u_{\text{ex}}\colon\Omega\to\R$ defined as
 			\begin{equation*}
-			\uex (x,y)\coloneqq 1000e^{-100A\left((x-x_0)^2+(y-y_0)^2\right)}
+			\uex (x,y)\coloneqq e^{-1000A\left((x-x_0)^2+(y-y_0)^2\right)}
 			\end{equation*}
 			is the \alert{unique exact solution} ($\alert{u_\text{ex}\in V}$).
 			
 			\end{frame}
 
-			\begin{frame}{Solutions with $\mathbb{P}_1^2(\T_h)$ ($h\approx\frac{\pi}{32}$)}
+			\begin{frame}{Solutions with $\Pd_1(\T_h)$ ($h\approx\frac{\pi}{32}$)}
 				\vspace*{-0.5cm}
 				\begin{figure}[h!]
 					\begin{subfigure}[b]{0.49\textwidth}
@@ -1503,7 +1573,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 					% \caption{Solutions obtained with $h\approx\frac{\pi}{16}$.}
 				\end{figure}
 			\end{frame}
-			\begin{frame}{Solutions with $\mathbb{P}_1^2(\T_h)$ ($h\approx\frac{\pi}{128}$)}
+			\begin{frame}{Solutions with $\Pd_1(\T_h)$ ($h\approx\frac{\pi}{128}$)}
 				\vspace*{-0.5cm}
 				\begin{figure}[h!]
 					\begin{subfigure}[b]{0.49\textwidth}
@@ -1531,7 +1601,7 @@ The model problem and the discrete problem are \alert{equivalent} in $H_0^1(\Ome
 				\end{frame}
 
 	\section{Nontrivial examples}
-		\begin{frame}{Properties of upwind $\mathbb{P}_0(\T_h)$ DG methods}
+		\begin{frame}{Properties of upwind $\Pd_0(\T_h)$ DG methods}
 		Generalizing the upwind DG approximation and using $\mathbb{P}_0(\T_h)$ we have been able to develop approximations of several models that satisfy: 
 		\vspace*{0.5cm}
 			\begin{itemize}\itemsep1em

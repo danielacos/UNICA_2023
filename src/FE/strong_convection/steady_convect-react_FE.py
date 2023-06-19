@@ -60,6 +60,7 @@ class problem_FE(object):
         A_coef = conv_react.A_coef = float(p.A)
         conv = conv_react.conv = float(p.conv)
         mu = conv_react.mu = 2 * A_coef
+        exp_coef = conv_react.exp_coef = float(p.exp)
 
         file_path = os.path.dirname(os.path.abspath(__file__))
         printMPI(f"file_path = {file_path}")
@@ -87,11 +88,11 @@ class problem_FE(object):
 
         x = SpatialCoordinate(conv_react.mesh)
 
-        u_exact = conv_react.u_exact = Expression(exp(-A_coef * 1000 * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)), conv_react.Vh.element.interpolation_points())
+        u_exact = conv_react.u_exact = Expression(exp(-A_coef * exp_coef * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)), conv_react.Vh.element.interpolation_points())
         conv_react.u_exact = Function(conv_react.Vh)
         conv_react.u_exact.interpolate(u_exact)
 
-        f = conv_react.f = mu * exp(-A_coef * 1000 * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)) * (1000 * conv * 0.3 * x[1] - 1000 * conv * 0.3 * x[0] + 1)
+        f = conv_react.f = mu * exp(-A_coef * exp_coef * ((x[0] - 0.3)**2 + (x[1] - 0.3)**2)) * (exp_coef * conv * 0.3 * x[1] - exp_coef * conv * 0.3 * x[0] + 1)
 
         def beta(x):
             vals = np.zeros((mesh.geometry.dim, x.shape[1]))
@@ -164,6 +165,7 @@ def define_parameters():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--A', default=10)
+    parser.add_argument('--exp', default=1000)
     parser.add_argument('--conv', default=1e6)
 
     # Define remaining parameters
@@ -362,10 +364,14 @@ if(__name__ == "__main__"):
         img = Image.open(f"./{base_name_save}_u_FE_nx-{int(p.nx)}.png")
         width, height = img.size
         # Setting the points for cropped image
-        left = 0.3 * width
+        # left = 0.3 * width
+        # top = 0.15 * height
+        # right = 0.93 * width
+        # bottom = 0.9 * height
+        left = 0.2 * width
         top = 0.15 * height
         right = 0.93 * width
-        bottom = 0.9 * height
+        bottom = 0.85 * height
         im_cropped = img.crop((left, top, right, bottom)) # default window size is 1024x768
         im_cropped.save(f"./{base_name_save}_u_FE_nx-{int(p.nx)}.png")
     else:
