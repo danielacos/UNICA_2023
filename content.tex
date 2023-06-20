@@ -19,7 +19,7 @@
 
 \begin{itemize}\itemsep1em
 	\item $\Omega\subset\R^d$ open and bounded set.
-	\item $\D(\Omega)=\{\varphi\in\mathcal{C}^\infty(\Omega)\colon\varphi\text{ tiene soporte compacto en }\Omega\}$. 
+	\item $\D(\Omega)=\{\varphi\in\mathcal{C}^\infty(\Omega)\colon\varphi\text{ has compact support in }\Omega\}$. 
 	
 	\item \structure{\textbf{Space of distributions}}: $\D'(\Omega)$ (dual space)
 	\begin{itemize}\itemsep1em
@@ -59,7 +59,7 @@ Assume that $m\in\N\cup\left\{0\right\}$ and $1\leq p\leq+\infty$, $p\in\N$.
 		
 		The trace mapping
 		\begin{align*}
-		\alert{\gamma}\colon H^1(\Omega)\cap\mathcal{C}^0(\bar{\Omega})&\to L^2(\partial\Omega)\cap \mathcal{C}(\bar{\partial\Omega})\\
+		\alert{\gamma}\colon H^1(\Omega)\cap\mathcal{C}^0(\overline{\Omega})&\to L^2(\partial\Omega)\cap \mathcal{C}^0(\overline{\partial\Omega})\\
 		v	&\mapsto\alert{\gamma(v)}\coloneqq v_{|_{\partial\Omega}}.
 		\end{align*}
 		is extended by continuity to a continuous linear mapping of $H^1(\Omega)$ into $L^2(\partial\Omega)$,  again called $\gamma$.
@@ -99,7 +99,7 @@ Assume that $m\in\N\cup\left\{0\right\}$ and $1\leq p\leq+\infty$, $p\in\N$.
 \begin{frame}{Integration by parts formula}
 	\begin{theorem}[Integration by parts formula]
 		
-		Let $u, v\in H^1(\bar\Omega)$, they satisfy
+		Let $u, v\in H^1(\Omega)$, they satisfy
 		\begin{equation*}
 		\label{formula_int_por_partes}
 		\int_\Omega u(x)\frac{\partial v}{\partial x_i}(x)dx=-\int_\Omega v(x)\frac{\partial u}{\partial x_i}(x)dx+\int_{\partial \Omega}u(x)v(x)\mathbf{n}_i(x)ds.
@@ -126,7 +126,7 @@ Assume that $m\in\N\cup\left\{0\right\}$ and $1\leq p\leq+\infty$, $p\in\N$.
 	\begin{definicion}
 		Let $V$ a Hilbert space and let $a(\cdot,\cdot):V\times V\longrightarrow\R$ a bilinear form. Then, $a(\cdot,\cdot)$ is
 		\begin{itemize}
-			\item \structure{\textbf{continuous}} if there is $M>0$ such that $$a(v,w)\geq\nu\norma{v}\norma{w}\text{ for every } v,w\in V.$$
+			\item \structure{\textbf{continuous}} if there is $M>0$ such that $$a(v,w)\le M\norma{v}\norma{w}\text{ for every } v,w\in V.$$
 			\item \structure{\textbf{coercive}} if there is $\nu>0$ such that $$a(v,v)\geq\nu\norma{v}^2\text{ for every } v\in V.$$
 		\end{itemize}
 	\end{definicion}
@@ -167,7 +167,7 @@ where $f\in L^2\left(\Omega\right)$.
 
 \begin{frame}[allowframebreaks]{Continuous variational formulation}
 
-\textbf{Space of solutions}: $\alert{H_0^1(\Omega)}$.
+\textbf{Space of solutions}: $\alert{V=H_0^1(\Omega)}$.
 \begin{itemize}\itemsep1em
 	\item $a\colon H^1_0(\Omega)\times H_0^1(\Omega)\to\R$, $\displaystyle \alert{a(u,v)}\coloneqq\int_\Omega\nabla u\nabla v$;
 	\item $L\colon H_0^1(\Omega)\to\R$, $\displaystyle \alert{L(v)}\coloneqq\int_\Omega f v$.
@@ -256,14 +256,14 @@ where $f\in L^2\left(\Omega\right)$.
 
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Mesh of $\bar{\Omega}$}
+\begin{frame}[allowframebreaks]{Mesh of $\overline{\Omega}$}
 
 \begin{definicion}
-	A \structure{\textbf{mesh}} of $\bar{\Omega}$ is a set $\alert{\mathcal{T}_h}$ of non-degenerated $d$-simplices $\left(K_i\right)_{i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}}$ that satisfy:
+	A \structure{\textbf{mesh}} of $\overline{\Omega}$ is a set $\alert{\mathcal{T}_h}$ of non-degenerated $d$-simplices $\left(K_i\right)_{i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}}$ that satisfy:
 	\begin{itemize}
-		\item $K_i\subseteq\bar\Omega$ for every $i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}$;
+		\item $K_i\subseteq\overline\Omega$ for every $i\in\left\{1,2,\ldots,N_{\mathcal{T}_h}\right\}$;
 		\item $\text{int}\left(K_i\right)\cap\text{int}\left(K_j\right)=\varnothing$ for $i,j\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}$ with $i\neq j$;
-		\item $\displaystyle \bigcup_{i=1}^{N_{\mathcal{T}_h}} K_i=\bar\Omega$.
+		\item $\displaystyle \bigcup_{i=1}^{N_{\mathcal{T}_h}} K_i=\overline\Omega$.
 	\end{itemize}	
 	The mesh is \structure{\textbf{conforming}} if it also satisfies that:
 	\begin{itemize}
@@ -288,7 +288,7 @@ where $f\in L^2\left(\Omega\right)$.
 Finite-dimensional space:
 \begin{block}{}
 	\begin{center}
-	$V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathcal{P}_i \text{ with } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}$
+	$V_h=\left\{v_h\in \mathcal{C}^0\left(\overline\Omega\right)\colon v_{h|_{K_i}}\in \mathcal{P}_i \text{ with } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}$
 	\end{center}
 	\end{block}
 	
@@ -306,7 +306,7 @@ Finite-dimensional space:
 	We consider
 	\begin{block}{}
 		\begin{center}
-		{\scriptsize $V_h=\left\{v_h\in \mathcal{C}^0\left(\bar\Omega\right)\colon v_{h|_{K_i}}\in \mathbb{P}_k(K_i) \text{ con } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}\eqqcolon\Pc_k(\T_h)$}
+		{\scriptsize $V_h=\left\{v_h\in \mathcal{C}^0\left(\overline\Omega\right)\colon v_{h|_{K_i}}\in \mathbb{P}_k(K_i) \text{ con } K_i\in\mathcal{T}_h, \forall i\in\left\{1,2,\ldots,N_{\mathcal{T}_h} \right\}\right\}\eqqcolon\Pc_k(\T_h)$}
 		\end{center}
 	\end{block}
 
@@ -469,12 +469,12 @@ Finite-dimensional space:
 	
 	\begin{frame}[allowframebreaks]{Traces and integration by parts}
 		\begin{definicion}
-			We define the \structure{\textbf{weighted Lebesgue space}} $$\alert{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}\coloneqq\left\{v\text{ is measurable in }\Omega\colon\int_{\partial\Omega}|\beta\cdot\mathbf{n}|v^2<\infty \right\}$$ and the norm $\forall v\in L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)$ as $$\alert{\norma{v}_{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}}\coloneqq\norma{\sqrt{|\beta\cdot\mathbf{n}|}v}_{L^2(\partial\Omega)}.$$
+			We define the \structure{\textbf{weighted Lebesgue space}} $$\alert{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}\coloneqq\left\{v\text{ is measurable on }\partial\Omega\colon\int_{\partial\Omega}|\beta\cdot\mathbf{n}|v^2<\infty \right\}$$ and the norm $\forall v\in L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)$ as $$\alert{\norma{v}_{L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)}}\coloneqq\norma{\sqrt{|\beta\cdot\mathbf{n}|}v}_{L^2(\partial\Omega)}.$$
 			\end{definicion}
 	\begin{lemma}[Traces and integration by parts]
 	The trace mapping
 	\begin{align*}
-	\alert{\gamma}\colon {C}^0(\bar{\Omega})&\to L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)\\
+	\alert{\gamma}\colon {C}^0(\overline{\Omega})&\to L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)\\
 	v	&\mapsto\alert{\gamma(v)}\coloneqq v_{|_{\partial\Omega}}.
 	\end{align*}
 	is extended by continuity to a continuous linear mapping of $V$ into $L^2(|\beta\cdot\mathbf{n}|;\partial\Omega)$.
